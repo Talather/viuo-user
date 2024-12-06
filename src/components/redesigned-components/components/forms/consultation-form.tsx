@@ -2,8 +2,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
+// import { Button } from "@nextui-org/button";
+// import { Input } from "@nextui-org/input";
 import { ConsultationSchema } from "../../../../lib/validations";
 import { useToast } from "../../../../hooks/use-toast";
 import {
@@ -13,7 +13,14 @@ import {
   Form,
   FormMessage,
 } from "../../../ui/form";
-import { Checkbox, Image, Select, SelectItem } from "@nextui-org/react";
+import {
+  Checkbox,
+  Image,
+  Input,
+  Select,
+  Button,
+  SelectItem,
+} from "@nextui-org/react";
 import { Popover, PopoverContent, PopoverTrigger } from "../../../ui/popover";
 import { cn } from "../../../../lib/utils";
 import { format } from "date-fns";
@@ -99,7 +106,7 @@ const ConsultationForm = () => {
     }
   };
   return (
-    <div className="min-h-screen   md:mt-5  lg:mt-16 px-4 w-[95vw] grid md:grid-cols-2">
+    <div className="min-h-screen   md:mt-5  lg:mt-12 px-4 w-[95vw] grid md:grid-cols-2">
       {/* Left side - Image */}
       <div className="relative hidden md:block">
         <Image
@@ -196,60 +203,63 @@ const ConsultationForm = () => {
                   </FormItem>
                 )}
               />
-              <Select
-                {...register("timeSlot")}
-                variant="bordered"
-                size="lg"
-                placeholder="Select a time slot"
-                errorMessage={errors.timeSlot?.message}
-                isInvalid={!!errors.timeSlot?.message}
-              >
-                <SelectItem key="Morning 6-11am">Morning 6-11am</SelectItem>
-                <SelectItem key="Afternoon 12-6pm">Afternoon 12-6pm</SelectItem>
-                <SelectItem key="Evening 7-11pm">Evening 7-11pm</SelectItem>
-              </Select>
-              <FormField
-                control={form.control}
-                name="date"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    {/* <FormLabel>Date of birth</FormLabel> */}
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="bordered"
-                            size="lg"
-                            disableRipple
-                            className={cn(
-                              " pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>Pick a date</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="center">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) => date < new Date("1900-01-01")}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
+              <div className="grid md:grid-cols-2 gap-3">
+                <Select
+                  {...register("timeSlot")}
+                  variant="bordered"
+                  size="lg"
+                  placeholder="Select a time slot"
+                  errorMessage={errors.timeSlot?.message}
+                  isInvalid={!!errors.timeSlot?.message}
+                >
+                  <SelectItem key="Morning 6-11am">Morning 6-11am</SelectItem>
+                  <SelectItem key="Afternoon 12-6pm">
+                    Afternoon 12-6pm
+                  </SelectItem>
+                  <SelectItem key="Evening 7-11pm">Evening 7-11pm</SelectItem>
+                </Select>
+                <FormField
+                  control={form.control}
+                  name="date"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col relative">
+                      {/* <FormLabel>Date of birth</FormLabel> */}
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant="bordered"
+                              size="lg"
+                              disableRipple
+                              className={cn(
+                                " pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>Pick a date</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="center">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) => date < new Date("1900-01-01")}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage className="text-xs absolute -bottom-5 md:bottom-1" />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <Checkbox {...register("agreeToPromotionalMessages")}>
                 <p className="text-xs mt-3 md:mt-0">
                   By checking this box I agree to receive automated promotional
