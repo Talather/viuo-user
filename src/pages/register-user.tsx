@@ -17,7 +17,7 @@ import { Checkbox, Image } from "@nextui-org/react";
 type RegisterUserFormData = z.infer<typeof RegisterUserSchema>;
 
 const RegisterUser = () => {
-  const { login } = useAuth();
+  const { login,registerUser } = useAuth();
   const { toast } = useToast();
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -45,49 +45,47 @@ const RegisterUser = () => {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const onSubmit = async () =>
-    // values: RegisterUserFormData
-    {
-      setIsLoading(true);
-      try {
-        // const formData = {
-        //   subject: "New User Registered",
-        //   name: `${values.name}`,
-        //   email: `${values.email}`,
-        //   message: `
-        //   Name: ${values.name}
-        //   Email: ${values.email}
-        //   Promotional Messages: ${
-        //     values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
-        //   }`,
-        // };
+  const onSubmit = async (values: RegisterUserFormData) => {
+    setIsLoading(true)
+    try {
+      // const formData = {
+      //   subject: "New User Registered",
+      //   name: `${values.name}`,
+      //   email: `${values.email}`,
+      //   message: `
+      //   Name: ${values.name}
+      //   Email: ${values.email}
+      //   Promotional Messages: ${
+      //     values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
+      //   }`,
+      // };
 
-        // await emailjs.send(
-        //   import.meta.env.VITE_EMAIL_JS_SERVICE_KEY,
-        //   import.meta.env.VITE_EMAIL_JS_TEMPLATE_ID,
-        //   formData,
-        //   {
-        //     publicKey: import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY,
-        //   }
-        // );
+      // await emailjs.send(
+      //   import.meta.env.VITE_EMAIL_JS_SERVICE_KEY,
+      //   import.meta.env.VITE_EMAIL_JS_TEMPLATE_ID,
+      //   formData,
+      //   {
+      //     publicKey: import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY,
+      //   }
+      // );
 
-        setIsLoading(false);
-        login(dummyUser);
+      setIsLoading(false)
+      registerUser(values.email,values.password)
 
-        toast({
-          title: "Account Created Successfully.",
-          description: "Use your email and password to login again anytime.",
-        });
-        navigate(from, { replace: true });
-      } catch (error) {
-        setIsLoading(false);
-        toast({
-          title: "Error",
-          description: `Unable to create account right now.`,
-          variant: "destructive",
-        });
-      }
-    };
+      toast({
+        title: "Account Created Successfully.",
+        description: "Use your email and password to login again anytime.",
+      })
+      navigate(from, { replace: true })
+    } catch (error) {
+      setIsLoading(false)
+      toast({
+        title: "Error",
+        description: `Unable to create account right now.`,
+        variant: "destructive",
+      })
+    }
+  }
   return (
     <div className="md:min-h-screen gap-5 lg:gap-10  md:mt-5  lg:mt-16 px-4 w-[95vw] grid md:grid-cols-2">
       <div className="relative hidden md:block">

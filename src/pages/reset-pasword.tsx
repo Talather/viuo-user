@@ -1,67 +1,82 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { NavLink } from "react-router-dom";
-import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
-import { useState } from "react";
-import { useToast } from "../hooks/use-toast";
-import { useAuth } from "../hooks/useAuth";
-import { ResetPasswordSchema } from "../lib/validations";
-import { FormField, Form, FormItem, FormControl } from "../components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { NavLink } from "react-router-dom"
+import { Input } from "@nextui-org/input"
+import { Button } from "@nextui-org/button"
+import { useState } from "react"
+import { useToast } from "../hooks/use-toast"
+import { useAuth } from "../hooks/useAuth"
+import { ResetPasswordSchema } from "../lib/validations"
+import { FormField, Form, FormItem, FormControl } from "../components/ui/form"
 // import { sendPasswordResetEmail } from "firebase/auth";
+import { useNavigate, useLocation } from "react-router-dom"
 
-type ResetPasswordFormData = z.infer<typeof ResetPasswordSchema>;
-const ForgetPassword = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { user,sendResetPasswordEmail } = useAuth();
-  const { toast } = useToast();
+
+type ResetPasswordFormData = z.infer<typeof ResetPasswordSchema>
+const ResetPassword = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { user, sendResetPasswordEmail ,resetPassword} = useAuth()
+    const { toast } = useToast()
+    
+const navigate = useNavigate()
+const location = useLocation()
+
+    
+    
+ const queryParams:any = new URLSearchParams(location.search)
+ const oobCode:any = queryParams.get("oobCode")
+
+ if (!oobCode) {
+//    setError("Invalid password reset link.")
+   return <div>error 500</div>
+    }
+    
 
   const form = useForm<ResetPasswordFormData>({
     resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       email: user?.email || "",
     },
-  });
+  })
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = form;
+  } = form
 
   const handleReset = (values: ResetPasswordFormData) => {
-    setIsLoading(true);
+    setIsLoading(true)
     try {
-      sendResetPasswordEmail(values.email)
+      resetPassword(values.password,oobCode)
       setTimeout(() => {
-        setIsLoading(false);
-        console.log(values);
+        setIsLoading(false)
+        console.log(values)
         toast({
           title: "Email Sent",
           description: "Check your email to reset your password",
-        });
-      }, 3000);
+        })
+      }, 3000)
     } catch (error) {
-      console.log(error);
+      console.log(error)
       toast({
         title: "Error",
         description: "Unable to sent email right now",
         variant: "destructive",
-      });
-      setIsLoading(false);
+      })
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <div className="w-full flex-col flex items-center justify-center ">
       <div className="mb-5 w-full">
         <h2 className="md:text-3xl text-5xl md:mb-2 font-semibold mb-5">
-          Password Recovery
+          Reset Password
         </h2>
         <p className="text-secondary-text mb-5 text-sm">
-          Password recovery Please fill in the email you've used to create a
-          Vuior account and we'll send you a reset link
+          Enter new password for your account.
         </p>
       </div>
       <Form {...form}>
@@ -71,7 +86,7 @@ const ForgetPassword = () => {
         >
           <FormField
             control={control}
-            name="email"
+            name="password"
             render={({ field }) => (
               <FormItem className=" relative  items-center lg:gap-3">
                 {/* <FormLabel>Email</FormLabel> */}
@@ -80,10 +95,34 @@ const ForgetPassword = () => {
                     <Input
                       variant="bordered"
                       size="md"
-                      type="email"
-                      label="Email"
-                      errorMessage={errors.email?.message}
-                      isInvalid={!!errors.email?.message}
+                      type="password"
+                      label="New Password"
+                      errorMessage={errors.password?.message}
+                      isInvalid={!!errors.password?.message}
+                      {...field}
+                    />
+                  </FormControl>
+                  {/* <FormMessage className="mt-1.5 absolute text-xs" /> */}
+                </div>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem className=" relative  items-center lg:gap-3">
+                {/* <FormLabel>Email</FormLabel> */}
+                <div className="w-full ">
+                  <FormControl>
+                    <Input
+                      variant="bordered"
+                      size="md"
+                      type="password"
+                      label=" Confirm Password"
+                      errorMessage={errors.confirmPassword?.message}
+                      isInvalid={!!errors.confirmPassword?.message}
                       {...field}
                     />
                   </FormControl>
@@ -113,7 +152,7 @@ const ForgetPassword = () => {
               variant="faded"
               type="submit"
             >
-              Send Email
+              Reset Password
             </Button>
           </div>
         </form>
@@ -132,7 +171,7 @@ const ForgetPassword = () => {
         </p>
       </div> */}
     </div>
-  );
-};
+  )
+}
 
-export default ForgetPassword;
+export default ResetPassword

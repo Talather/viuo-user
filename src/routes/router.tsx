@@ -12,6 +12,7 @@ import AuthLayout from "./layouts/AuthLayout";
 import LoginPage from "../pages/login-page";
 import RegisterUser from "../pages/register-user";
 import ForgetPassword from "../pages/forget-password";
+import ResetPassword from "../pages/reset-pasword"
 import OpenPositions from "../pages/open-positions";
 import JobDetails from "../pages/job-details";
 import JobApplication from "../pages/job-application";
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
           },
           {
             element: <ForgetPassword />,
+            path: "forget-password",
+          },
+          {
+            element: <ResetPassword />,
             path: "reset-password",
           },
           {
@@ -125,7 +130,7 @@ export const router = createBrowserRouter([
     path: "dashboard",
     element: (
       // <ProtectedRoute>
-        <DashboardLayout />
+      <DashboardLayout />
       // </ProtectedRoute>
     ),
     children: [
@@ -143,7 +148,4 @@ export const router = createBrowserRouter([
       },
     ],
   },
-
-
-
 ])

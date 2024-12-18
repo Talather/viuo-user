@@ -163,7 +163,7 @@ const LoginPage = () => {
             <div className="flex items-center justify-between mt-10">
               <div>
                 <NavLink
-                  to={"/reset-password"}
+                  to={"/forget-password"}
                   className={
                     "text-button-gpt font-semibold hover:underline transition-all"
                   }
