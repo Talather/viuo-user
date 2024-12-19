@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
@@ -14,7 +14,7 @@ import { FormField, Form, FormItem, FormControl } from "../components/ui/form";
 type ResetPasswordFormData = z.infer<typeof ResetPasswordSchema>;
 const ForgetPassword = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { user,sendResetPasswordEmail } = useAuth();
+  const { user, sendResetPasswordEmail } = useAuth();
   const { toast } = useToast();
 
   const form = useForm<ResetPasswordFormData>({
@@ -33,7 +33,7 @@ const ForgetPassword = () => {
   const handleReset = (values: ResetPasswordFormData) => {
     setIsLoading(true);
     try {
-      sendResetPasswordEmail(values.email)
+      sendResetPasswordEmail(values.email);
       setTimeout(() => {
         setIsLoading(false);
         console.log(values);
