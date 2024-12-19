@@ -40,32 +40,33 @@ const LoginPage = () => {
     formState: { errors },
   } = form;
 
-  const handleLogin = (values: LoginFormData) => {
-    setIsLoading(true);
-    try {
-      console.log(values);
+const handleLogin = async (values: LoginFormData) => {
+  setIsLoading(true)
+  try {
+    console.log(values)
 
-      setTimeout(() => {
-        setIsLoading(false);
-        login(values.email, values.password);
+    // Simulate delay using a promise
+    await new Promise((resolve) => setTimeout(resolve, 3000))
 
-        toast({
-          title: "Success",
-          description: "Login Success",
-        });
+    await login(values.email, values.password)
 
-        navigate("/dashboard", { replace: true });
-      }, 3000);
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: "Error",
-        description: "Unable to login right now",
-        variant: "destructive",
-      });
-      setIsLoading(false);
-    }
-  };
+    toast({
+      title: "Success",
+      description: "Login Success",
+    })
+
+    navigate("/dashboard", { replace: true })
+  } catch (error) {
+    console.error(error)
+    toast({
+      title: "Error",
+      description: "Unable to login right now",
+      variant: "destructive",
+    })
+  } finally {
+    setIsLoading(false)
+  }
+}
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
