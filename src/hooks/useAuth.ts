@@ -3,7 +3,7 @@
 
 // import { AuthContext } from "@/context/AuthContext";
 
-// import { useEffect } from "react";
+import { useState } from "react";
 // import { useToast } from './use-toast'
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 // };
 
 import { AuthContext } from "@/context/AuthContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useToast } from "./use-toast";
 import {
   createUserWithEmailAndPassword,
@@ -60,12 +60,36 @@ export const useAuth = () => {
 
   // const context = useContext(AuthContext);
   // const { toast } = useToast();
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [user, setUser] = useState<any>(null);
   // const navigate = useNavigate();
 
   if (context === undefined) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
+
+
+
+
+
+
+  // useEffect(() => {
+  
+  //   const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+  //     if (firebaseUser) {
+  //       setUser(firebaseUser);
+  //       // setLoading(false);
+  //     }
+  //     else {
+        
+  //       setUser(null)
+
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
+
+
 
   const registerUser = async (email: string, password: string) => {
     setIsLoading(true);
@@ -92,13 +116,13 @@ export const useAuth = () => {
       });
 
       // Log the user in
-      context.login({
-        id: user.uid,
-        email: user.email!,
-        name: email.split("@")[0],
-        role: "user",
-        avatar: DEFAULT_AVATAR,
-      });
+      // context.login({
+      //   id: user.uid,
+      //   email: user.email!,
+      //   name: email.split("@")[0],
+      //   role: "user",
+      //   avatar: DEFAULT_AVATAR,
+      // });
 
       setIsLoading(false);
       return { success: true, user };
@@ -128,15 +152,15 @@ export const useAuth = () => {
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        console.log("cheel", userData);
+        // console.log("cheel", userData);
 
-        context.login({
-          id: user.uid,
-          email: user.email!,
-          name: userData.name,
-          role: userData.role,
-          avatar: userData.avatar,
-        });
+        // context.login({
+        //   id: user.uid,
+        //   email: user.email!,
+        //   name: userData.name,
+        //   role: userData.role,
+        //   avatar: userData.avatar,
+        // });
 
         toast({
           title: "Login Successful",
@@ -220,16 +244,19 @@ export const useAuth = () => {
 
   // console.log(...context)
 
-  //   let isAuthenticated;
-  //   if(!user){
-  //     isAuthenticated=false
-  //   }
-  //   else{
-  // isAuthenticated=true
-  //   }
+  let isAuthenticated:boolean;
+  if (!context.user) {
+    isAuthenticated = false
+  }
+  else {
+    isAuthenticated = true
+  }
 
+  console.log('mali', context.user)
   return {
     ...context,
+    isAuthenticated,
+    // user:context.user,
     registerUser,
     login,
     sendResetPasswordEmail,

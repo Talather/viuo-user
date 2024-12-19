@@ -1,13 +1,18 @@
 import { useAuth } from "@/hooks/useAuth"
 import { ReactNode } from "react"
 import { Navigate, useLocation } from "react-router-dom"
+// import { User } from 'lucide-react';
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const { isAuthenticated } = useAuth()
+  const { user } = useAuth()
   const location = useLocation()
-  console.log("kraw sadem",isAuthenticated)
-  if (!isAuthenticated) {
-    return <Navigate to={"/login"} state={{ from: location }} replace />
+  // console.log("kraw sadem")
+  if (!user) {
+    console.log("chl bahir nikl bhrwyyyyyyyyyyyyyyyyyyy", {
+      user,
+      
+    })
+    return <Navigate to={"/login"} state={{ from: location }}  />
   }
 
   return <>{children}</>
