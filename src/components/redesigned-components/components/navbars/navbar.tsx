@@ -128,6 +128,20 @@ const Navbar = () => {
                 onClick={logout}
               >
                 Logout
+
+
+
+
+                 <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "text-button-gpt" : ""
+                  }
+                  to={"/dashboard"}
+                >
+                  Dashboard
+                </NavLink>
+
+                
               </ShinyButton>
             ) : (
               <>

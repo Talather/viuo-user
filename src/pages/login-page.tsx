@@ -22,7 +22,7 @@ const LoginPage = () => {
   const location = useLocation();
   const { login } = useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const from = location?.state?.from?.pathname || "/";
+  // const from = location?.state?.from?.pathname || "/";
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const form = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
@@ -53,7 +53,7 @@ const LoginPage = () => {
           description: "Login Success",
         });
 
-        navigate(from, { replace: true });
+        navigate("/dashboard", { replace: true });
       }, 3000);
     } catch (error) {
       console.log(error);

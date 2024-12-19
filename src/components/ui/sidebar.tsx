@@ -1,6 +1,7 @@
 // src/components/ui/sidebar.js
 
 import { useState } from "react"
+import "@fortawesome/fontawesome-free/css/all.min.css"
 
 export const SidebarTrigger = ({ className,onClick,isOpen }) => {
   // const [isOpen, setIsOpen] = useState(false)
@@ -11,10 +12,13 @@ export const SidebarTrigger = ({ className,onClick,isOpen }) => {
 
   return (
     <button
-      className={`${className} p-2 text-white bg-blue-500 rounded-full`}
+      className={"hamburger-icon"}
       onClick={onClick}
     >
-      {isOpen ? "Close Sidebar" : "Open Sidebar"}
+      {/* {isOpen ? "Close Sidebar" : "Open Sidebar"} */}
+
+    <i class="fas fa-bars"></i> 
+
     </button>
   )
 }

@@ -1,27 +1,75 @@
-import { Home, LucidePaperclip, Settings } from "lucide-react"
+import { History, Home, LucidePaperclip, User2} from "lucide-react"
 import { NavLink } from "react-router-dom"
 import logo from "../../../../../public/assets/icons/logo.png"
 import { useAuth } from "@/hooks/useAuth"
+import {
+  FileText,
+  Award,
+  CreditCard,
+  Settings,
+  User,
+  UserCircle,
+  Bell,
+} from "lucide-react"
 
 // Menu items.
 const items = [
   {
-    title: "Home",
+    title: "Bills",
     url: "/dashboard",
-    icon: Home,
+    icon: FileText,
+  },
+  // {
+  //   title: "Templates",
+  //   url: "/select",
+  //   icon: LucidePaperclip,
+  // },
+
+  // {
+  //   title: "Templates",
+  //   url: "/select",
+  //   icon: LucidePaperclip,
+  // },
+  {
+    title: "Rewards Tracker",
+    url: "/select",
+    icon: Award,
   },
   {
-    title: "Templates",
+    title: "Payments History",
     url: "/select",
-    icon: LucidePaperclip,
+    icon: History,
+  },
+  {
+    title: "Account Settings",
+    url: "/select",
+    icon: Settings,
+  },
+  {
+    title: "Profile",
+    url: "/select",
+    icon: User,
   },
 ]
+
+
+// Bills Management
+// Rewards Tracker
+// Payment History
+// Account Settings
+// User Profile Icon: Dropdown for:
+// Profile
+// Notifications
 
 export function AppSidebar() {
   const { user } = useAuth()
 
   return (
-    <div className="flex flex-col w-64 p-4 text-white bg-gray-800" style={{height:"100vh"}}>
+    <div
+      className="flex flex-col w-64 p-4 text-white bg-active-color min-h-screen overflow-auto"
+      // style={{ height: "100vh" }
+      // }
+    >
       {/* Logo Section */}
       <div className="flex items-center justify-center mb-6">
         <NavLink to="/">
@@ -39,8 +87,8 @@ export function AppSidebar() {
                 className={({ isActive }) =>
                   `flex items-center gap-4 p-3 rounded-md ${
                     isActive
-                      ? "bg-blue-600 text-white font-semibold"
-                      : "hover:bg-gray-700"
+                      ? "bg-button-gpt-hover text-white font-semibold"
+                      : null
                   }`
                 }
               >

@@ -20,7 +20,11 @@ const DashboardLayout = () => {
 
         <main className="w-full">
           <div className="flex items-center w-full gap-4 p-2 py-4 shadow-sm">
-            <SidebarTrigger className="p-0 " onClick={toggleSidebar} isOpen={isSidebarOpen} />
+            <SidebarTrigger
+              className="p-0 "
+              onClick={toggleSidebar}
+              isOpen={isSidebarOpen}
+            />
             <div className="flex items-center justify-between w-full">
               <h2 className="hidden text-2xl font-bold md:block">
                 My Dashboard
@@ -42,9 +46,12 @@ const DashboardLayout = () => {
                     Create New
                   </NavLink> */}
                 {/* </Button> */}
-                <ShinyButton className="h-10" href="/select">
+
+
+                {/* <ShinyButton className="h-10 bg-button-gpt" href="/select">
                   Create New
-                </ShinyButton>
+                </ShinyButton> */}
+                
               </div>
             </div>
           </div>
@@ -52,11 +59,6 @@ const DashboardLayout = () => {
             <Outlet />
           </div>
         </main>
-
-
-
-
-        
       </SidebarProvider>
     </div>
   )

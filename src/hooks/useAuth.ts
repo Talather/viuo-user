@@ -2,7 +2,7 @@
 // import { AuthContext } from "../context/AuthContext";
 
 // import { AuthContext } from "@/context/AuthContext";
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { useToast } from './use-toast'
 import { useNavigate } from 'react-router-dom'
 // import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
@@ -27,7 +27,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   confirmPasswordReset,
-  verifyPasswordResetCode
+  verifyPasswordResetCode,
+  onAuthStateChanged
 } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { auth, db } from '@/lib/firebaseConfig'
@@ -40,6 +41,39 @@ export const useAuth = () => {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const navigate = useNavigate()
+    const [user, setUser] = useState(null);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  useEffect(() => {
+
+    
+     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      // setLoading(false); // Set loading to false once the user state is determined
+    });
+
+    // Cleanup the subscription on unmount
+    return () => unsubscribe();
+
+   
+  }, []);
 
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider')
@@ -101,11 +135,14 @@ export const useAuth = () => {
         password
       )
       const user = userCredential.user
+      
 
       // Fetch user data from Firestore
       const userDoc = await getDoc(doc(db, 'users', user.uid))
       if (userDoc.exists()) {
+        
         const userData = userDoc.data()
+        console.log("cheel",userData)
         context.login({
           id: user.uid,
           email: user.email!,
@@ -197,7 +234,22 @@ export const useAuth = () => {
     }
   }
 
-  return {
+  // console.log(...context)
+  
+//   let isAuthenticated;
+//   if(!user){
+//     isAuthenticated=false
+//   }
+//   else{
+// isAuthenticated=true
+//   }
+
+
+
+
+
+  return{
+    
     ...context,
     registerUser,
     login,
