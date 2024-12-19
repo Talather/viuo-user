@@ -14,8 +14,10 @@ const DashboardLayout = () => {
      setIsSidebarOpen(!isSidebarOpen)
    }
   return (
-    <div className="min-h-screen">
-      <SidebarProvider>
+    <div className="
+    min-h-screen
+    ">
+      <SidebarProvider >
         {isSidebarOpen && <AppSidebar />}
 
         <main className="w-full">
