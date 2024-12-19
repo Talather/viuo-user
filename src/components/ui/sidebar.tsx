@@ -82,8 +82,11 @@
 
 // import { useState } from "react"
 import "@fortawesome/fontawesome-free/css/all.min.css"
-
-export const SidebarTrigger = ({ onClick }) => {
+interface SidebarTriggerProps {
+  onClick: React.MouseEventHandler<HTMLButtonElement>
+ // Include this if needed
+}
+export const SidebarTrigger = ({ onClick }: SidebarTriggerProps) => {
   // const [isOpen, setIsOpen] = useState(false)
 
   // const toggleSidebar = () => {
@@ -91,18 +94,14 @@ export const SidebarTrigger = ({ onClick }) => {
   // }
 
   return (
-    <button
-      className={"hamburger-icon"}
-      onClick={onClick}
-    >
+    <button className={"hamburger-icon"} onClick={onClick}>
       {/* {isOpen ? "Close Sidebar" : "Open Sidebar"} */}
 
-    <i class="fas fa-bars"></i> 
-
+      <i className="fas fa-bars"></i>
     </button>
   )
 }
 
-export const SidebarProvider = ({ children }) => {
+export const SidebarProvider = ({ children }: { children: React.ReactNode }) => {
   return <div className="flex">{children}</div>
 }

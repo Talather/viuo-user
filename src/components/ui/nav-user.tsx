@@ -13,12 +13,12 @@
 //   DropdownMenuSeparator,
 //   DropdownMenuTrigger,
 // } from "../../components/ui/dropdown-menu";
-import {
-  SidebarMenu,
-  // SidebarMenuButton,
-  // SidebarMenuItem,
-  // useSidebar,
-} from "../../components/ui/sidebar";
+// import {
+//   // SidebarMenu,
+//   // SidebarMenuButton,
+//   // SidebarMenuItem,
+//   // useSidebar,
+// } from "../../components/ui/sidebar";
 // import { CaretSortIcon } from "@radix-ui/react-icons";
 // import { useAuth } from "../../hooks/useAuth";
 
@@ -36,7 +36,8 @@ export function NavUser({
   // const { logout } = useAuth();
 
   return (
-    <SidebarMenu>
+    // <SidebarMenu>
+    <>
       <h1> Hi</h1>
       {/* <SidebarMenuItem>
         <DropdownMenu>
@@ -82,6 +83,6 @@ export function NavUser({
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem> */}
-    </SidebarMenu>
-  );
+    </>
+  )
 }

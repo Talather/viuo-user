@@ -23,9 +23,9 @@ const DashboardLayout = () => {
         <main className="w-full">
           <div className="flex items-center w-full gap-4 p-2 py-4 shadow-sm">
             <SidebarTrigger
-              className="p-0 "
+              // className="p-0 "
               onClick={toggleSidebar}
-              isOpen={isSidebarOpen}
+              // isOpen={isSidebarOpen}
             />
             <div className="flex items-center justify-between w-full">
               <h2 className="hidden text-2xl font-bold md:block">
