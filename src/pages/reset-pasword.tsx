@@ -10,16 +10,18 @@ import { useAuth } from "../hooks/useAuth"
 import { ResetPasswordSchema } from "../lib/validations"
 import { FormField, Form, FormItem, FormControl } from "../components/ui/form"
 // import { sendPasswordResetEmail } from "firebase/auth";
-import { useNavigate, useLocation } from "react-router-dom"
+import { 
+  // useNavigate,
+   useLocation } from "react-router-dom"
 
 
 type ResetPasswordFormData = z.infer<typeof ResetPasswordSchema>
 const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { user, sendResetPasswordEmail ,resetPassword} = useAuth()
+  const { user ,resetPassword} = useAuth()
     const { toast } = useToast()
     
-const navigate = useNavigate()
+// const navigate = useNavigate()
 const location = useLocation()
 
     
@@ -49,7 +51,7 @@ const location = useLocation()
   const handleReset = (values: ResetPasswordFormData) => {
     setIsLoading(true)
     try {
-      resetPassword(values.password,oobCode)
+      resetPassword(values?.password,oobCode)
       setTimeout(() => {
         setIsLoading(false)
         console.log(values)
@@ -97,8 +99,8 @@ const location = useLocation()
                       size="md"
                       type="password"
                       label="New Password"
-                      errorMessage={errors.password?.message}
-                      isInvalid={!!errors.password?.message}
+                      errorMessage={errors?.password?.message}
+                      isInvalid={!!errors?.password?.message}
                       {...field}
                     />
                   </FormControl>
@@ -121,8 +123,8 @@ const location = useLocation()
                       size="md"
                       type="password"
                       label=" Confirm Password"
-                      errorMessage={errors.confirmPassword?.message}
-                      isInvalid={!!errors.confirmPassword?.message}
+                      errorMessage={errors?.confirmPassword?.message}
+                      isInvalid={!!errors?.confirmPassword?.message}
                       {...field}
                     />
                   </FormControl>

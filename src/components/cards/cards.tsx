@@ -1,6 +1,6 @@
 // import { Card, Text, Button, Grid } from "@nextui-org/react"
 
-const CreateCard = ({ handleClick, title, subTitle }) => {
+const CreateCard = ({ handleClick:any, title:any, subTitle:any }) => {
   return (
     <div
       className="overflow-hidden bg-white rounded-lg shadow-lg cursor-pointer hover:shadow-xl"

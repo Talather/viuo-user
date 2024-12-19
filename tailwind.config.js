@@ -17,6 +17,7 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			colors: {
+				// 'active-color-light':"",
 				'button-gpt': '#10a37f',
 				'button-gpt-hover': '#095c46',
 				'main-background': '#ffffff',

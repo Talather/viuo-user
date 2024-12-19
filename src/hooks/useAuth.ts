@@ -2,7 +2,12 @@
 // import { AuthContext } from "../context/AuthContext";
 
 // import { AuthContext } from "@/context/AuthContext";
-import { useNavigate } from "react-router-dom";
+
+import { useEffect } from 'react'
+// import { useToast } from './use-toast'
+import { useNavigate } from 'react-router-dom'
+
+
 // import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 // import { doc, getDoc, setDoc } from "firebase/firestore";
 // import { auth, db } from "@/lib/firebaseConfig";
@@ -26,18 +31,73 @@ import {
   signOut,
   confirmPasswordReset,
   verifyPasswordResetCode,
-} from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "@/lib/firebaseConfig";
+
+  onAuthStateChanged
+} from 'firebase/auth'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { auth, db } from '@/lib/firebaseConfig'
+// } from "firebase/auth";
+
 
 const DEFAULT_AVATAR =
   "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
-  const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
+
+  const context = useContext(AuthContext)
+  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const navigate = useNavigate()
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // useEffect(() => {
+
+    
+  //    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     setUser(currentUser);
+  //     // setLoading(false); // Set loading to false once the user state is determined
+  //   });
+
+  //   // Cleanup the subscription on unmount
+  //   return () => unsubscribe();
+
+   
+  // }, []);
+
+
+
+
+
+
+
+
+
+
+  
+
+  // const context = useContext(AuthContext);
+  // const { toast } = useToast();
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const navigate = useNavigate();
+
 
   if (context === undefined) {
     throw new Error("useAuth must be used within an AuthProvider");
@@ -97,13 +157,21 @@ export const useAuth = () => {
         auth,
         email,
         password
-      );
-      const user = userCredential.user;
+
+      )
+      const user = userCredential.user
+  
+     
 
       // Fetch user data from Firestore
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
-        const userData = userDoc.data();
+
+        
+        const userData = userDoc.data()
+        console.log("cheel",userData)
+
+       
         context.login({
           id: user.uid,
           email: user.email!,
@@ -192,7 +260,22 @@ export const useAuth = () => {
     }
   };
 
-  return {
+  // console.log(...context)
+  
+//   let isAuthenticated;
+//   if(!user){
+//     isAuthenticated=false
+//   }
+//   else{
+// isAuthenticated=true
+//   }
+
+
+
+
+
+  return{
+    
     ...context,
     registerUser,
     login,
