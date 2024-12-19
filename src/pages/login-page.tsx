@@ -1,4 +1,5 @@
-import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
+// useLocation
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +10,7 @@ import { Button } from "@nextui-org/button";
 import { useToast } from "../hooks/use-toast";
 import { useAuth } from "../hooks/useAuth";
 import { LoginSchema } from "../lib/validations";
-import { dummyUser } from "../components/constants/dummyuser";
+// import { dummyUser } from "../components/constants/dummyuser";
 import { FormField, FormItem, FormControl, Form } from "../components/ui/form";
 import { Image } from "@nextui-org/react";
 
@@ -19,7 +20,7 @@ const LoginPage = () => {
   const { toast } = useToast();
 
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const { login } = useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const from = location?.state?.from?.pathname || "/";
@@ -65,19 +66,6 @@ const LoginPage = () => {
       setIsLoading(false);
     }
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { RegisterUserSchema } from "../lib/validations";
 import { useAuth } from "../hooks/useAuth";
 import { useToast } from "../hooks/use-toast";
-import { dummyUser } from "../components/constants/dummyuser";
+// import { dummyUser } from "../components/constants/dummyuser";
 import { Form, FormControl, FormField, FormItem } from "../components/ui/form";
 import { Checkbox, Image } from "@nextui-org/react";
 // import emailjs from "@emailjs/browser";
@@ -17,7 +17,7 @@ import { Checkbox, Image } from "@nextui-org/react";
 type RegisterUserFormData = z.infer<typeof RegisterUserSchema>;
 
 const RegisterUser = () => {
-  const { login,registerUser } = useAuth();
+  const { registerUser } = useAuth();
   const { toast } = useToast();
   const [isVisible, setIsVisible] = useState<boolean>(false);
 

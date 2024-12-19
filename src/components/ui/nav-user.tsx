@@ -4,7 +4,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "../../cv-components/ui/avatar"
+} from "../../components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,13 +12,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../cv-components/ui/dropdown-menu"
+} from "../../components/ui/dropdown-menu"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "../../cv-components/ui/sidebar"
+} from "../../components/ui/sidebar"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import { useAuth } from "../../hooks/useAuth"
 

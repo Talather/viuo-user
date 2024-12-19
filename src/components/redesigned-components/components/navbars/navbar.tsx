@@ -11,7 +11,7 @@ export type Position = {
 };
 
 const Navbar = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [isHovered] = useState<boolean>(false);
 
   useEffect(() => {
@@ -120,19 +120,14 @@ const Navbar = () => {
           </div>
           <div className="flex gap-3">
             {isAuthenticated ? (
-              <ShinyButton
+             <ShinyButton
                 hideIcon
                 className="relative h-10 z-10 flex items-center overflow-hidden text-white  justify-center w-full px-4  bg-button-gpt hover:bg-[#095c46] transition-all duration-200 before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-[200%] before:h-full 
               rounded-full
       "
-                onClick={logout}
+                // onClick={logout}
               >
-                Logout
-
-
-
-
-                 <NavLink
+                <NavLink
                   className={({ isActive }) =>
                     isActive ? "text-button-gpt" : ""
                   }
@@ -140,9 +135,7 @@ const Navbar = () => {
                 >
                   Dashboard
                 </NavLink>
-
-                
-              </ShinyButton>
+            </ShinyButton>
             ) : (
               <>
                 <li className="relative z-50">

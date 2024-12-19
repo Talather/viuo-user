@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect } from "react"
+import  { useState, useEffect } from "react"
 // import { Table, Skeleton, Card } from "@nextui-org/react"
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
 
@@ -6,32 +6,13 @@ import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyV
 
 // const columns = [...];
 // Mock function to simulate fetching data from an API
-const fetchBills = async () => {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      resolve([
-        { id: 1, date: "2024-12-01", amount: 250.0, status: "Paid" },
-        { id: 2, date: "2024-12-05", amount: 175.0, status: "Pending" },
-        { id: 3, date: "2024-12-10", amount: 320.0, status: "Paid" },
-        { id: 4, date: "2024-12-12", amount: 150.0, status: "Overdue" },
-      ])
-    }, 1500)
-  )
-}
 
-const BillsTable = () => {
-  const [bills, setBills] = useState<any[]>([])
 
-  useEffect(() => {
-    const loadBills = async () => {
-      const data = await fetchBills()
-      setBills(data)
-    }
-    loadBills()
-  }, [])
+
 
     
-    
+const BillsTable: React.FC<CreateCardProps> = () => {
+
    const rows = [
      {
        key: 1,

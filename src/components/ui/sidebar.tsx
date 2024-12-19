@@ -1,9 +1,9 @@
 // src/components/ui/sidebar.js
 
-import { useState } from "react"
+// import { useState } from "react"
 import "@fortawesome/fontawesome-free/css/all.min.css"
 
-export const SidebarTrigger = ({ className,onClick,isOpen }) => {
+export const SidebarTrigger = ({ onClick:any }) => {
   // const [isOpen, setIsOpen] = useState(false)
 
   // const toggleSidebar = () => {
@@ -23,6 +23,6 @@ export const SidebarTrigger = ({ className,onClick,isOpen }) => {
   )
 }
 
-export const SidebarProvider = ({ children }) => {
+export const SidebarProvider = ({ children:any }) => {
   return <div className="flex">{children}</div>
 }

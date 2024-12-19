@@ -1,15 +1,14 @@
-import { History, Home, LucidePaperclip, User2} from "lucide-react"
+import { History} from "lucide-react"
 import { NavLink } from "react-router-dom"
 import logo from "../../../../../public/assets/icons/logo.png"
 import { useAuth } from "@/hooks/useAuth"
 import {
   FileText,
   Award,
-  CreditCard,
   Settings,
   User,
-  UserCircle,
-  Bell,
+ 
+  
 } from "lucide-react"
 
 // Menu items.
@@ -62,7 +61,7 @@ const items = [
 // Notifications
 
 export function AppSidebar() {
-  const { user } = useAuth()
+  const { user:any } = useAuth()
 
   return (
     <div
@@ -113,11 +112,11 @@ export function AppSidebar() {
         {user && (
           <div className="flex items-center gap-4 mt-4">
             <img
-              src={user.photoURL || "/default-avatar.png"}
+              src={user?.photoURL || "/default-avatar.png"}
               alt="User Avatar"
               className="w-10 h-10 rounded-full"
             />
-            <span className="text-sm">{user.displayName}</span>
+            <span className="text-sm">{user?.displayName}</span>
           </div>
         )}
       </div>

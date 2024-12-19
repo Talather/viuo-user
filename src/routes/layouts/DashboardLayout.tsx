@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 // import { BellIcon } from "lucide-react";
 // import { Button } from "@nextui-org/button";
-import react,{useState} from "react"
+import {useState} from "react"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/redesigned-components/components/navbars/AppSidebar";
 // import SearchModal from "@/components/SearchModal";
-import ShinyButton from "@/components/ShinyButton"
+// import ShinyButton from "@/components/ShinyButton"
 
 const DashboardLayout = () => {
    const [isSidebarOpen, setIsSidebarOpen] = useState(true)

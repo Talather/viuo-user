@@ -9,9 +9,9 @@ interface ShinyButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 const ShinyButton = ({
-  children,
-  className,
-  href,
+  children:any,
+  className:any,
+  href:any,
   hideIcon = false,
   ...props
 }: ShinyButtonProps) => {

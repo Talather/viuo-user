@@ -1,4 +1,5 @@
 // import CreateCard from "@/components/cards/cards"
+// <<<<<<< HEAD
 // import DashBoardTabs from "@/components/tabs"
 // import { useAuth } from "../hooks/useAuth"
 // import { useNavigate } from "react-router-dom"
@@ -65,19 +66,30 @@
 
 
 
-import CreateCard from "@/components/cards/cards";
-import DashBoardTabs from "@/components/tabs";
+// import CreateCard from "@/components/cards/cards";
+// import DashBoardTabs from "@/components/tabs";
 import { useAuth } from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import BillsTable from "@/components/table";
+// import { useNavigate } from "react-router-dom";
+// import BillsTable from "@/components/table";
+
+// import DashBoardTabs from "@/components/tabs";
+// import { useAuth } from "../hooks/useAuth";
+// import { useNavigate } from "react-router-dom"
+
 import BillCard from "@/components/cards/billCard";
 import { Grid, Box } from "@mui/material";
 
+// const sortedFiles = [1, 2, 3, 4, 5];
 const Dashboard = () => {
   const { user } = useAuth();
+
   console.log("currentUser -->", user);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const sortedFiles = [1, 2, 3, 4, 5];
+
+  // console.log("currentUser-->", user);
+  // const navigate = useNavigate()
+
 
   return (
     <div className="px-4">
@@ -88,6 +100,7 @@ const Dashboard = () => {
       >
         {/* <BillsTable /> */}
         <div className="w-[290px]">
+
           <h2 className="text-2xl font-bold">Hey, {user?.name}!</h2>
           <p className="mt-2 text-gray-500">Upcoming Bills</p>
         </div>
@@ -120,7 +133,7 @@ const Dashboard = () => {
         >
           <Box sx={{ flexGrow: 1, paddingTop: "1em" }}>
             <Grid container justifyContent="center" spacing={2}>
-              {sortedFiles.map((file, index) => (
+              {sortedFiles.map((files,index) => (
                 <Grid item key={index}>
                   <BillCard indexC={index} />
                 </Grid>

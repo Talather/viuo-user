@@ -95,6 +95,7 @@ const ConsultationForm = () => {
 
       form.reset();
     } catch (error) {
+      console.log(error);
       setIsLoading(false);
       toast({
         title: "Error",
