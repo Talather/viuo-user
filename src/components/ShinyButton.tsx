@@ -1,6 +1,17 @@
-// src/components/ShinyButton.js
+// src/components/ShinyButton.tsx
+import React from "react";
 
-const ShinyButton = ({ className, children, href }) => {
+interface ShinyButtonProps {
+  className?: string;
+  children?: React.ReactNode;
+  href: string;
+}
+
+const ShinyButton: React.FC<ShinyButtonProps> = ({
+  className = "",
+  children,
+  href,
+}) => {
   return (
     <a
       href={href}
@@ -8,7 +19,7 @@ const ShinyButton = ({ className, children, href }) => {
     >
       {children}
     </a>
-  )
-}
+  );
+};
 
-export default ShinyButton
+export default ShinyButton;

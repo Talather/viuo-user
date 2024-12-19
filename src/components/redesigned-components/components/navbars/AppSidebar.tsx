@@ -1,15 +1,14 @@
-import { History} from "lucide-react"
-import { NavLink } from "react-router-dom"
-import logo from "../../../../../public/assets/icons/logo.png"
-import { useAuth } from "@/hooks/useAuth"
-import {
-  FileText,
-  Award,
-  Settings,
-  User,
- 
-  
-} from "lucide-react"
+import { History } from "lucide-react";
+import { NavLink } from "react-router-dom";
+import logo from "../../../../../public/assets/icons/logo.png";
+import { useAuth } from "@/hooks/useAuth";
+import { FileText, Award, Settings, User } from "lucide-react";
+
+// Define the type for the `user` object.
+interface User {
+  displayName: string;
+  photoURL: string | null;
+}
 
 // Menu items.
 const items = [
@@ -18,17 +17,6 @@ const items = [
     url: "/dashboard",
     icon: FileText,
   },
-  // {
-  //   title: "Templates",
-  //   url: "/select",
-  //   icon: LucidePaperclip,
-  // },
-
-  // {
-  //   title: "Templates",
-  //   url: "/select",
-  //   icon: LucidePaperclip,
-  // },
   {
     title: "Rewards Tracker",
     url: "/select",
@@ -49,26 +37,13 @@ const items = [
     url: "/select",
     icon: User,
   },
-]
-
-
-// Bills Management
-// Rewards Tracker
-// Payment History
-// Account Settings
-// User Profile Icon: Dropdown for:
-// Profile
-// Notifications
+];
 
 export function AppSidebar() {
-  const { user:any } = useAuth()
+  const { user } = useAuth() as { user: User | null };
 
   return (
-    <div
-      className="flex flex-col w-64 p-4 text-white bg-active-color min-h-screen overflow-auto"
-      // style={{ height: "100vh" }
-      // }
-    >
+    <div className="flex flex-col w-64 p-4 text-white bg-active-color min-h-screen overflow-auto">
       {/* Logo Section */}
       <div className="flex items-center justify-center mb-6">
         <NavLink to="/">
@@ -112,14 +87,14 @@ export function AppSidebar() {
         {user && (
           <div className="flex items-center gap-4 mt-4">
             <img
-              src={user?.photoURL || "/default-avatar.png"}
+              src={user.photoURL || "/default-avatar.png"}
               alt="User Avatar"
               className="w-10 h-10 rounded-full"
             />
-            <span className="text-sm">{user?.displayName}</span>
+            <span className="text-sm">{user.displayName}</span>
           </div>
         )}
       </div>
     </div>
-  )
+  );
 }

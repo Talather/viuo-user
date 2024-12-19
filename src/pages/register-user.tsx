@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import {  useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, NavLink } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -12,6 +12,7 @@ import { useToast } from "../hooks/use-toast";
 // import { dummyUser } from "../components/constants/dummyuser";
 import { Form, FormControl, FormField, FormItem } from "../components/ui/form";
 import { Checkbox, Image } from "@nextui-org/react";
+
 // import emailjs from "@emailjs/browser";
 
 type RegisterUserFormData = z.infer<typeof RegisterUserSchema>;
@@ -46,7 +47,7 @@ const RegisterUser = () => {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const onSubmit = async (values: RegisterUserFormData) => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       // const formData = {
       //   subject: "New User Registered",
@@ -69,23 +70,24 @@ const RegisterUser = () => {
       //   }
       // );
 
-      setIsLoading(false)
-      registerUser(values.email,values.password)
+      setIsLoading(false);
+      registerUser(values.email, values.password);
 
       toast({
         title: "Account Created Successfully.",
         description: "Use your email and password to login again anytime.",
-      })
-      navigate(from, { replace: true })
+      });
+      navigate(from, { replace: true });
     } catch (error) {
-      setIsLoading(false)
+      console.log(error);
+      setIsLoading(false);
       toast({
         title: "Error",
         description: `Unable to create account right now.`,
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
   return (
     <div className="md:min-h-screen gap-5 lg:gap-10  md:mt-5  lg:mt-16 px-4 w-[95vw] grid md:grid-cols-2">
       <div className="relative hidden md:block">

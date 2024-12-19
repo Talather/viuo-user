@@ -1,42 +1,44 @@
-import { LogOut } from "lucide-react"
+// import { LogOut } from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../../components/ui/avatar"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu"
+// import {
+//   Avatar,
+//   AvatarFallback,
+//   AvatarImage,
+// } from "../../components/ui/avatar";
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+//   DropdownMenuLabel,
+//   DropdownMenuSeparator,
+//   DropdownMenuTrigger,
+// } from "../../components/ui/dropdown-menu";
 import {
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "../../components/ui/sidebar"
-import { CaretSortIcon } from "@radix-ui/react-icons"
-import { useAuth } from "../../hooks/useAuth"
+  // SidebarMenuButton,
+  // SidebarMenuItem,
+  // useSidebar,
+} from "../../components/ui/sidebar";
+// import { CaretSortIcon } from "@radix-ui/react-icons";
+// import { useAuth } from "../../hooks/useAuth";
 
 export function NavUser({
   user,
 }: {
   user: {
-    name: string
-    email: string
-    avatar: string
-  }
+    name: string;
+    email: string;
+    avatar: string;
+  };
 }) {
-  const { isMobile } = useSidebar()
-  const { logout } = useAuth()
+  console.log(user);
+  // const { isMobile } = useSidebar();
+  // const { logout } = useAuth();
 
   return (
     <SidebarMenu>
-      <SidebarMenuItem>
+      <h1> Hi</h1>
+      {/* <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
@@ -79,7 +81,7 @@ export function NavUser({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </SidebarMenuItem>
+      </SidebarMenuItem> */}
     </SidebarMenu>
-  )
+  );
 }

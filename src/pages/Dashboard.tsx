@@ -30,7 +30,6 @@
 //             subTitle="Better resume builder"
 //           /> */}
 
-
 //           {/* <div className="flex flex-col items-center gap-4 md:flex-row justify-evenly"></div> */}
 //       </div>
 //       <div
@@ -56,15 +55,12 @@
 //           </Box>
 //         </div>
 //       </div>
-      
+
 //     </div>
 //   )
 // }
 
 // export default Dashboard
-
-
-
 
 // import CreateCard from "@/components/cards/cards";
 // import DashBoardTabs from "@/components/tabs";
@@ -90,7 +86,6 @@ const Dashboard = () => {
   // console.log("currentUser-->", user);
   // const navigate = useNavigate()
 
-
   return (
     <div className="px-4">
       <div
@@ -100,15 +95,12 @@ const Dashboard = () => {
       >
         {/* <BillsTable /> */}
         <div className="w-[290px]">
-
           <h2 className="text-2xl font-bold">Hey, {user?.name}!</h2>
           <p className="mt-2 text-gray-500">Upcoming Bills</p>
         </div>
       </div>
 
-      <div
-        className="flex flex-col items-center gap-4 md:flex-row justify-evenly"
-      >
+      <div className="flex flex-col items-center gap-4 md:flex-row justify-evenly">
         {/* Uncomment and use this block when ready */}
         {/* 
         <CreateCard
@@ -133,7 +125,7 @@ const Dashboard = () => {
         >
           <Box sx={{ flexGrow: 1, paddingTop: "1em" }}>
             <Grid container justifyContent="center" spacing={2}>
-              {sortedFiles.map((files,index) => (
+              {sortedFiles.map((index) => (
                 <Grid item key={index}>
                   <BillCard indexC={index} />
                 </Grid>
@@ -147,4 +139,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

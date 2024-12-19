@@ -6,18 +6,20 @@ import { cn } from "../../../lib/utils";
 interface ShinyButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   children?: ReactNode;
   hideIcon?: boolean;
+  href?: string;
+  className?: string;
 }
 
 const ShinyButton = ({
-  children:any,
-  className:any,
-  href:any,
+  children,
+  className = "",
+  href = "#",
   hideIcon = false,
   ...props
 }: ShinyButtonProps) => {
   return (
     <NavLink
-      to={href ?? "#"}
+      to={href}
       className={cn(
         "group relative flex transform gap-2 items-center justify-center overflow-hidden whitespace-nowrap rounded-md border border-white bg-button-gpt px-8 text-base/7 font-medium text-white transition-all duration-300 hover:ring-2 hover:bg-button-gpt-hover hover:ring-offset-2 focus:outline-none focus:ring-2 focus:ring-offset-2",
         className
@@ -26,7 +28,7 @@ const ShinyButton = ({
     >
       <span className="relative z-10 flex items-center gap-2">
         {children}
-        {hideIcon ? null : (
+        {!hideIcon && (
           <ArrowRight className="size-4 shrink-0 text-white transition-transform duration-300 ease-in-out group-hover:translate-x-[12px]" />
         )}
       </span>

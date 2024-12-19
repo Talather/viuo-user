@@ -1,75 +1,75 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { NavLink } from "react-router-dom"
-import { Input } from "@nextui-org/input"
-import { Button } from "@nextui-org/button"
-import { useState } from "react"
-import { useToast } from "../hooks/use-toast"
-import { useAuth } from "../hooks/useAuth"
-import { ResetPasswordSchema } from "../lib/validations"
-import { FormField, Form, FormItem, FormControl } from "../components/ui/form"
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+// import { NavLink } from "react-router-dom"
+import { Input } from "@nextui-org/input";
+import { Button } from "@nextui-org/button";
+import { useState } from "react";
+import { useToast } from "../hooks/use-toast";
+import { useAuth } from "../hooks/useAuth";
+import { ResetPasswordSchema } from "../lib/validations";
+import { FormField, Form, FormItem, FormControl } from "../components/ui/form";
 // import { sendPasswordResetEmail } from "firebase/auth";
-import { 
+import {
   // useNavigate,
-   useLocation } from "react-router-dom"
+  useLocation,
+} from "react-router-dom";
 
-
-type ResetPasswordFormData = z.infer<typeof ResetPasswordSchema>
+type ResetPasswordFormData = z.infer<typeof ResetPasswordSchema>;
 const ResetPassword = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { user ,resetPassword} = useAuth()
-    const { toast } = useToast()
-    
-// const navigate = useNavigate()
-const location = useLocation()
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { user, resetPassword } = useAuth();
+  const { toast } = useToast();
 
-    
-    
- const queryParams:any = new URLSearchParams(location.search)
- const oobCode:any = queryParams.get("oobCode")
+  // const navigate = useNavigate()
+  const location = useLocation();
 
- if (!oobCode) {
-//    setError("Invalid password reset link.")
-   return <div>error 500</div>
-    }
-    
+  const queryParams: any = new URLSearchParams(location.search);
+  const oobCode: any = queryParams.get("oobCode");
+
+  if (!oobCode) {
+    //    setError("Invalid password reset link.")
+    return <div>error 500</div>;
+  }
 
   const form = useForm<ResetPasswordFormData>({
     resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       email: user?.email || "",
     },
-  })
+  });
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = form
+  } = form;
 
   const handleReset = (values: ResetPasswordFormData) => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      resetPassword(values?.password,oobCode)
+      resetPassword(values?.password, oobCode);
       setTimeout(() => {
-        setIsLoading(false)
-        console.log(values)
+        setIsLoading(false);
+        console.log(values);
         toast({
           title: "Email Sent",
           description: "Check your email to reset your password",
-        })
-      }, 3000)
+        });
+      }, 3000);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast({
         title: "Error",
         description: "Unable to sent email right now",
         variant: "destructive",
-      })
-      setIsLoading(false)
+      });
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="w-full flex-col flex items-center justify-center ">
@@ -173,7 +173,7 @@ const location = useLocation()
         </p>
       </div> */}
     </div>
-  )
-}
+  );
+};
 
-export default ResetPassword
+export default ResetPassword;

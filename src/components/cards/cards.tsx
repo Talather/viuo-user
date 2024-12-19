@@ -1,6 +1,14 @@
-// import { Card, Text, Button, Grid } from "@nextui-org/react"
+interface CreateCardProps {
+  handleClick: () => void; // Function type for the onClick handler
+  title: string; // Title should be a string
+  subTitle: string; // SubTitle should also be a string
+}
 
-const CreateCard = ({ handleClick:any, title:any, subTitle:any }) => {
+const CreateCard: React.FC<CreateCardProps> = ({
+  handleClick,
+  title,
+  subTitle,
+}) => {
   return (
     <div
       className="overflow-hidden bg-white rounded-lg shadow-lg cursor-pointer hover:shadow-xl"
@@ -16,6 +24,7 @@ const CreateCard = ({ handleClick:any, title:any, subTitle:any }) => {
         </button>
       </div>
     </div>
-  )
-}
-export default CreateCard
+  );
+};
+
+export default CreateCard;
