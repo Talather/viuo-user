@@ -12,6 +12,7 @@ import AuthLayout from "./layouts/AuthLayout";
 import LoginPage from "../pages/login-page";
 import RegisterUser from "../pages/register-user";
 import ForgetPassword from "../pages/forget-password";
+import DashboardHome from "../pages/dashboardHome"
 import ResetPassword from "../pages/reset-pasword"
 import OpenPositions from "../pages/open-positions";
 import JobDetails from "../pages/job-details";
@@ -130,7 +131,23 @@ export const router = createBrowserRouter([
     path: "dashboard",
     element: (
       <ProtectedRoute>
-      <DashboardLayout />
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DashboardHome />,
+      },
+      
+    ],
+  },
+
+  {
+    path: "bills",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
       </ProtectedRoute>
     ),
     children: [
@@ -138,14 +155,7 @@ export const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
       },
-      {
-        path: "users",
-        element: <div>Dashboard users</div>,
-      },
-      {
-        path: "settings",
-        element: <Dashboard />,
-      },
+     
     ],
   },
 ])

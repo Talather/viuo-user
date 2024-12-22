@@ -13,9 +13,14 @@ interface User {
 // Menu items.
 const items = [
   {
-    title: "Bills",
+    title: "Home",
     url: "/dashboard",
     icon: FileText,
+  },
+  {
+    title: "Bills",
+    url: "/bills",
+    icon: Award,
   },
   {
     title: "Rewards Tracker",
@@ -37,7 +42,7 @@ const items = [
     url: "/select",
     icon: User,
   },
-];
+]
 
 export function AppSidebar() {
   const { user } = useAuth() as { user: User | null };
