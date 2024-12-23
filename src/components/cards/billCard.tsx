@@ -5,6 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 // import { format } from "date-fns";
 import EastIcon from "@mui/icons-material/East";
+// import { on } from "events";
 // import * as moment from "moment/moment";
 
 const Colors = [
@@ -41,11 +42,12 @@ interface BillCardProps {
   bill?: Bill;
   cardtype?: string;
   onEdit?: () => void;
+   onClick?: () => void;
   onDelete?: () => void;
   indexC?: number;
 }
 
-export default function FileRow({ indexC = 1 }: BillCardProps) {
+export default function FileRow({ indexC = 1 ,onClick}: BillCardProps) {
   useEffect(() => {}, []);
 
   const [isFlipped, setIsFlipped] = useState(false);
@@ -65,9 +67,10 @@ export default function FileRow({ indexC = 1 }: BillCardProps) {
   }, []);
 
   return (
-    <Grid item sx={{ margin: "1em 1em" }}>
+    <Grid item sx={{ margin: "1em 1em" }} >
       <div
         className={`Frame1 ${isFlipped ? "flipped" : ""}`}
+        onClick={onClick}
         style={{
           width: "100%",
           height: "100%",

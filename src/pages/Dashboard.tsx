@@ -65,7 +65,7 @@
 // import CreateCard from "@/components/cards/cards";
 // import DashBoardTabs from "@/components/tabs";
 import { useAuth } from "../hooks/useAuth";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import BillsTable from "@/components/table";
 
 // import DashBoardTabs from "@/components/tabs";
@@ -74,7 +74,7 @@ import { useAuth } from "../hooks/useAuth";
 
 import BillCard from "@/components/cards/billCard";
 import { Grid, Box } from "@mui/material";
-
+import Button from '@/components/button'
 // const sortedFiles = [1, 2, 3, 4, 5];
 const Dashboard = () => {
   const { user } = useAuth();
@@ -84,7 +84,7 @@ const Dashboard = () => {
   const sortedFiles = [1, 2, 3, 4, 5];
 
   // console.log("currentUser-->", user);
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   return (
     <div className="px-4">
@@ -93,12 +93,30 @@ const Dashboard = () => {
           flex flex-col items-start justify-between w-full gap-2 mt-3 md:flex-row
         "
       >
+
+
         {/* <BillsTable /> */}
-        <div className="w-[290px]">
+
+
+<div  className="flex flex-row justify-between w-full" >
+        <div className="">
           <h2 className="text-2xl font-bold">Hey, {user?.name}!</h2>
           <p className="mt-2 text-gray-500">Upcoming Bills</p>
+          </div>
+          <div><Button children={"Pay Early"} className="w-15 bg-button-gpt rounded-xl h-2/3 text-lg" onClick={() => {
+                // console.log("janwari")
+            navigate("/payEarly")
+            // console.log("janwar")
+            // window.location.reload();
+
+          }}/></div>
         </div>
+        
+
+
       </div>
+
+
 
       <div className="flex flex-col items-center gap-4 md:flex-row justify-evenly">
         {/* Uncomment and use this block when ready */}

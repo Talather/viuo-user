@@ -13,6 +13,8 @@ import LoginPage from "../pages/login-page";
 import RegisterUser from "../pages/register-user";
 import ForgetPassword from "../pages/forget-password";
 import DashboardHome from "../pages/dashboardHome"
+import PayEarly from "../pages/payEarly"
+import Transaction from "../pages/transaction"
 import ResetPassword from "../pages/reset-pasword"
 import OpenPositions from "../pages/open-positions";
 import JobDetails from "../pages/job-details";
@@ -154,6 +156,50 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Dashboard />,
+      },
+     
+    ],
+  },
+
+
+
+
+  {
+    path: "payEarly",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <PayEarly />,
+      },
+     
+    ],
+  },
+
+
+
+
+
+
+
+
+
+
+  {
+    path: "transaction",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Transaction />,
       },
      
     ],
