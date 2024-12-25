@@ -28,11 +28,12 @@ import DataProtectionPolicy from "../pages/data-protection";
 import DashboardLayout from "./layouts/DashboardLayout"
 import ProtectedRoute from "../components/ProtectedRoute"
 import Calendar from "../pages/calendar/page"
+import Profile from '../pages/profile'
 
 import Dashboard from "../pages/Dashboard"
 import RewardTracker from '../pages/reward-tracker'
 import Refer from '../pages/refer'
-
+import CreateBill from '../components/ui/billForm/form'
 
 
 // import DashboardSettings from "../pages/DashboardSettings"
@@ -136,6 +137,7 @@ export const router = createBrowserRouter([
 
   {
     path: "dashboard",
+     loader: jobLoader,
     element: (
       <ProtectedRoute>
         <DashboardLayout />
@@ -161,6 +163,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Dashboard />,
+      },
+       {
+        path: "create",
+        element: <CreateBill />,
       },
      
     ],
@@ -288,6 +294,42 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Refer />
+      },
+     
+    ],
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {
+    path: "profile",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Profile />
       },
      
     ],

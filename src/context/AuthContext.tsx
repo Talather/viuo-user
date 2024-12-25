@@ -149,6 +149,8 @@ import {
   useContext,
   ReactNode,
 } from "react"
+import { ClipLoader } from 'react-spinners' // Import ClipLoader
+
 import {
   onAuthStateChanged,
   signOut,
@@ -209,7 +211,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   if (loading) {
     // Return a loading state or a placeholder if needed
-    return <div>Loading...</div>
+    return <div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh'
+  }}
+>
+  <ClipLoader  size={150} color='#39b996'/>
+</div>
+
+    // <div>Loading...</div>
   }
 
   return (

@@ -103,13 +103,40 @@ const Dashboard = () => {
           <h2 className="text-2xl font-bold">Hey, {user?.name}!</h2>
           <p className="mt-2 text-gray-500">Upcoming Bills</p>
           </div>
-          <div><Button children={"Pay Early"} className="w-15 bg-button-gpt rounded-xl h-2/3 text-lg" onClick={() => {
+
+          <div className='flex flex-row justify-normal'>
+          <div><Button children={"Pay Early"} className="w-15 bg-button-gpt rounded-md h-2/3 text-md mr-5" onClick={() => {
                 // console.log("janwari")
             navigate("/payEarly")
             // console.log("janwar")
             // window.location.reload();
 
-          }}/></div>
+            }} /></div>
+
+
+
+
+
+
+
+
+            <div>
+  <Button
+    children={'Create New Bill'}
+    className='w-15 bg-button-gpt rounded-md h-2/3 text-md'
+    onClick={() => {
+      // console.log("janwari")
+      navigate('/bills/create')
+      // console.log("janwar")
+      // window.location.reload();
+    }}
+  />
+</div>
+
+
+
+
+            </div>
         </div>
         
 

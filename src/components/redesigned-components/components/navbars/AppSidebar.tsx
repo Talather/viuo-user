@@ -32,14 +32,14 @@ const items = [
     url: "/payment-history",
     icon: History,
   },
-  {
-    title: "Account Settings",
-    url: "/select",
-    icon: Settings,
-  },
+  // {
+  //   title: "Account Settings",
+  //   url: "/select",
+  //   icon: Settings,
+  // },
   {
     title: "Profile",
-    url: "/select",
+    url: "/profile",
     icon: User,
   },
   {
