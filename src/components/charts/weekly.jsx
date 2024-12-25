@@ -49,8 +49,8 @@ const data = {
     {
       label: 'Dataset 2',
       data: labels.map(() => faker.number.int({ min: 200, max: 500 })),
-        backgroundColor:"red",
-            // 'rgba(22, 219, 204, 1)',
+        backgroundColor:
+            'rgba(22, 219, 204, 1)',
       borderWidth: 2,
       borderRadius: 30,
       barPercentage: 0.45,

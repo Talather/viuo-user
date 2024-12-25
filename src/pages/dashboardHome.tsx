@@ -1,160 +1,135 @@
-// import CreateCard from "@/components/cards/cards"
-// <<<<<<< HEAD
-// import DashBoardTabs from "@/components/tabs"
-// import { useAuth } from "../hooks/useAuth"
-// import { useNavigate } from "react-router-dom"
-// import BillsTable from "@/components/table"
-// import BillCard from "@/components/cards/billCard";
-import  EarningCard from "@/components/cards/earningCard/code";
 
 
-import TotalOrderLineChartCard from "@/components/cards/totalOrderLineChartCard/code"
 
-// const Dashboard = () => {
-//   const { user } = useAuth()
-//   console.log("currentUser-->", user)
-//   const navigate = useNavigate()
-//   const sortedFiles = [1, 2, 3, 4, 5];
+// import { Grid } from '@mui/material'
+// import { useEffect, useState } from 'react'
+// import TotalIncomeDarkCard from '../../src/components/cards/TotalIncomeDarkCard'
+// import TotalIncomeLightCard from '../../src/components/cards/TotalIncomeLightCard'
+// import WeeklyChart from '../../src/components/charts/weekly'
+// import ExpenseChart from '../../src/components/charts/expenseChart'
+// import EarningCard from '@/components/cards/earningCard/code'
+// import TotalOrderLineChartCard from '@/components/cards/totalOrderLineChartCard/code'
+
+// const DashboardHome = () => {
+//   const [isLoading, setLoading] = useState(true)
+
+//   useEffect(() => {
+//     setLoading(false)
+//   }, [])
 
 //   return (
-//     <div className="px-4">
-//       <div className="
-//      flex flex-col items-start justify-between w-full gap-2 mt-3 md:flex-row
-//       ">
-//         <BillsTable />
-//          <div className="w-[290px]">
-//           <h2 className="text-2xl font-bold">Hey, {user?.email}!</h2>
-//           <p className="mt-2 text-gray-500">Upcoming Bills</p>
-//         </div>
-//         <div className="flex flex-col items-center gap-4 md:flex-row justify-evenly">
-//           {/* <CreateCard
-//             handleClick={() => navigate("/select")}
-//             title="Resume"
-//             subTitle="Better resume builder"
-//           /> */}
+//     <div className='container p-4 mx-auto'>
+    
 
-//           {/* <div className="flex flex-col items-center gap-4 md:flex-row justify-evenly"></div> */}
-//       </div>
+//       {/* Cards Section */}
+//       <Grid container spacing={4}>
+//         <Grid item xs={12} sm={6} lg={4}>
+//           <EarningCard isLoading={isLoading} />
+//         </Grid>
+//         <Grid item xs={12} sm={6} lg={4}>
+//           <TotalOrderLineChartCard isLoading={isLoading} />
+//         </Grid>
+//         <Grid item xs={12} sm={6} lg={4}>
+//           <TotalIncomeDarkCard isLoading={isLoading} />
+//         </Grid>
+//         <Grid item xs={12} sm={6} lg={4}>
+//           <TotalIncomeLightCard isLoading={isLoading} />
+//         </Grid>
+//       </Grid>
+
+//       {/* Charts Section */}
 //       <div
-//         style={{
-//           display: "flex",
-//           justifyContent: "center",
-//           alignItems: "center",
-//         }}
+//         className='flex flex-row justify-between '
+//         // 'grid grid-cols-1 gap-6 mt-8 sm:grid-cols-2'
 //       >
-//         <div
-//           style={{
-//             width: "80%",
-//           }}
-//         >
-//           <Box sx={{ flexGrow: 1, paddingTop: "1em" }}>
-//             <Grid container justifyContent="center">
-//               {sortedFiles.map((file, index) => (
-//                 <div key={index}>
-//                   <BillCard key={index} indexC={index} />
-//                 </div>
-//               ))}
-//             </Grid>
-//           </Box>
+//         <div className='w-2/3 p-6 bg-white rounded-lg shadow-lg'>
+//           <h2 className='mb-4 text-lg font-medium text-gray-800'>
+//             Weekly Overview
+//           </h2>
+//           <WeeklyChart />
+//         </div>
+//         <div className='p-6 bg-white rounded-lg shadow-lg'>
+//           <h2 className='mb-4 text-lg font-medium text-gray-800'>
+//             Expense Breakdown
+//           </h2>
+//           <div className='h-80'>
+//             <ExpenseChart />
+//           </div>
 //         </div>
 //       </div>
-
-//     </div>
+//      </div>
 //   )
 // }
 
-// export default Dashboard
-
-// import CreateCard from "@/components/cards/cards";
-// import DashBoardTabs from "@/components/tabs";
-import { useAuth } from "../hooks/useAuth"
-import { Grid } from "@mui/material"
-import { useEffect, useState } from "react"
-import TotalIncomeDarkCard from '../../src/components/cards/TotalIncomeDarkCard';
-
-import TotalIncomeLightCard from '../../src/components/cards/TotalIncomeLightCard';
+// export default DashboardHome
 
 
-import WeeklyChart from "../../src/components/charts/weekly"
-import ExpenseChart from "../../src/components/charts/expenseChart"
-// import { useNavigate } from "react-router-dom";
-// import BillsTable from "@/components/table";
 
-// import DashBoardTabs from "@/components/tabs";
-// import { useAuth } from "../hooks/useAuth";
-// import { useNavigate } from "react-router-dom"
 
-// import BillCard from "@/components/cards/billCard"
-// import { Grid, Box } from "@mui/material"
 
-// const sortedFiles = [1, 2, 3, 4, 5];
+
+import { Grid } from '@mui/material'
+import { useEffect, useState } from 'react'
+import TotalIncomeDarkCard from '../../src/components/cards/TotalIncomeDarkCard'
+import TotalIncomeLightCard from '../../src/components/cards/TotalIncomeLightCard'
+import WeeklyChart from '../../src/components/charts/weekly'
+import ExpenseChart from '../../src/components/charts/expenseChart'
+import EarningCard from '@/components/cards/earningCard/code'
+import TotalOrderLineChartCard from '@/components/cards/totalOrderLineChartCard/code'
+
 const DashboardHome = () => {
-    const { user } = useAuth()
-    const [isLoading, setLoading] = useState(true)
-    useEffect(() => {
-      setLoading(false)
-    }, [])
+  const [isLoading, setLoading] = useState(true)
 
-  console.log("currentUser -->", user)
-  // const navigate = useNavigate();
-//   const sortedFiles = [1, 2, 3, 4, 5]
-
-  // console.log("currentUser-->", user);
-    // const navigate = useNavigate()
-const gridSpacing = 3
+  useEffect(() => {
+    setLoading(false)
+  }, [])
 
   return (
-    <Grid container spacing={gridSpacing}>
-      <Grid item xs={12}>
-        <Grid container spacing={gridSpacing}>
-          <Grid item lg={4} md={6} sm={6} xs={12}>
-            <EarningCard isLoading={isLoading} />
-          </Grid>
-          <Grid item lg={4} md={6} sm={6} xs={12}>
-            <TotalOrderLineChartCard isLoading={isLoading} />
-          </Grid>
-          <Grid item lg={4} md={12} sm={12} xs={12}>
-            <Grid container spacing={gridSpacing}>
-              <Grid item sm={6} xs={12} md={6} lg={12}>
-                <TotalIncomeDarkCard isLoading={isLoading} />
-              </Grid>
-              <Grid item sm={6} xs={12} md={6} lg={12}>
-                <TotalIncomeLightCard isLoading={isLoading} />
-              </Grid>
-            </Grid>
-          </Grid>
+    <div className='container p-4 mx-auto'>
+      {/* Cards Section */}
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={6} md={4}>
+          <EarningCard isLoading={isLoading} />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <TotalOrderLineChartCard isLoading={isLoading} />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <TotalIncomeDarkCard isLoading={isLoading} />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <TotalIncomeLightCard isLoading={isLoading} />
         </Grid>
       </Grid>
 
-      <div className="h-4"></div>
-      <Grid item xs={12}>
-        <Grid
-          container
-          spacing={gridSpacing}
-          // style={{ backgroundColor: "white" }}
-        >
-          <Grid item xs={8} md={8}>
-            <div className="px-7 py-7 bg-white-900 rounded-lg">
-              <WeeklyChart />
-            </div>
+      
 
-            {/* <TotalGrowthBarChart isLoading={isLoading} /> */}
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            md={4}
-            // style={{ backgroundColor: "red", margin: "10px" }}
-          >
-            <div className="px-7 py-7 bg-white-900 rounded-lg">
+      <div className='mt-12'>
+      {/* Charts Section */}
+      <Grid container spacing={4} mt-8>
+        <Grid item xs={12} sm={12} md={8}>
+          <div className='p-6 bg-white rounded-lg shadow-2xl'>
+            <h2 className='mb-4 text-lg font-medium text-gray-800'>
+              Weekly Overview
+            </h2>
+            <WeeklyChart />
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4}>
+          <div className='p-6 bg-white rounded-lg shadow-lg'>
+            <h2 className='mb-4 text-lg font-medium text-gray-800'>
+              Expense Breakdown
+            </h2>
+            <div className='h-96'>
               <ExpenseChart />
             </div>
-          </Grid>
+          </div>
         </Grid>
       </Grid>
-    </Grid>
+      </div>
+      </div>
   )
 }
 
 export default DashboardHome
+

@@ -27,8 +27,13 @@ import CookiesPolicies from "../pages/cookies-policies";
 import DataProtectionPolicy from "../pages/data-protection";
 import DashboardLayout from "./layouts/DashboardLayout"
 import ProtectedRoute from "../components/ProtectedRoute"
+import Calendar from "../pages/calendar/page"
 
 import Dashboard from "../pages/Dashboard"
+import RewardTracker from '../pages/reward-tracker'
+import Refer from '../pages/refer'
+
+
 
 // import DashboardSettings from "../pages/DashboardSettings"
 
@@ -200,6 +205,89 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Transaction />,
+      },
+     
+    ],
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {
+    path: "payment-history",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Calendar />
+      },
+     
+    ],
+  },
+
+
+
+
+
+
+   {
+    path: "reward-tracker",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <RewardTracker />
+      },
+     
+    ],
+  },
+   
+   
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {
+    path: "refer",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Refer />
       },
      
     ],

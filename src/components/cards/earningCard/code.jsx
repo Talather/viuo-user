@@ -19,7 +19,7 @@ import PictureAsPdfTwoToneIcon from "@mui/icons-material/PictureAsPdfOutlined"
 import ArchiveTwoToneIcon from "@mui/icons-material/ArchiveOutlined"
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.dark,
+  backgroundColor: '#39b996',
   color: "#fff",
   overflow: "hidden",
   position: "relative",
@@ -28,7 +28,8 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
     position: "absolute",
     width: 210,
     height: 210,
-    background: theme.palette.secondary[800],
+    background:
+      theme.palette.secondary[800],
     borderRadius: "50%",
     top: -85,
     right: -95,
@@ -85,7 +86,8 @@ const EarningCard = ({ isLoading }) => {
                       sx={{
                         ...theme.typography.commonAvatar,
                         ...theme.typography.largeAvatar,
-                        backgroundColor: theme.palette.secondary[800],
+                        backgroundColor:'#39b996',
+                          // theme.palette.secondary[800],
                         mt: 1,
                       }}
                     >
@@ -98,7 +100,8 @@ const EarningCard = ({ isLoading }) => {
                       sx={{
                         ...theme.typography.commonAvatar,
                         ...theme.typography.mediumAvatar,
-                        backgroundColor: theme.palette.secondary.dark,
+                        backgroundColor:'#39b996',
+                          // theme.palette.secondary.dark,
                         color: theme.palette.secondary[200],
                         zIndex: 1,
                       }}
@@ -160,7 +163,8 @@ const EarningCard = ({ isLoading }) => {
                       sx={{
                         cursor: "pointer",
                         ...theme.typography.smallAvatar,
-                        backgroundColor: theme.palette.secondary[200],
+                          backgroundColor:'#39b996',
+                            // theme.palette.secondary[200],
                         color: theme.palette.secondary.dark,
                       }}
                     >

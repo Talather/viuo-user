@@ -1,7 +1,7 @@
 import { History } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import logo from "../../../../../public/assets/icons/logo.png";
-import { useAuth } from "@/hooks/useAuth";
+// import { useAuth } from "@/hooks/useAuth";
 import { FileText, Award, Settings, User } from "lucide-react";
 
 // Define the type for the `user` object.
@@ -24,12 +24,12 @@ const items = [
   },
   {
     title: "Rewards Tracker",
-    url: "/select",
+    url: "/reward-tracker",
     icon: Award,
   },
   {
     title: "Payments History",
-    url: "/select",
+    url: "/payment-history",
     icon: History,
   },
   {
@@ -42,13 +42,18 @@ const items = [
     url: "/select",
     icon: User,
   },
+  {
+    title: "Refer to Friend",
+    url: "/refer",
+    icon: User,
+  },
 ]
 
 export function AppSidebar() {
-  const { user } = useAuth() as { user: User | null };
+  // const { user } = useAuth() as { user: User | null };
 
   return (
-    <div className="flex flex-col w-64 p-4 text-white bg-active-color min-h-screen overflow-auto">
+    <div className="flex flex-col w-64 min-h-screen p-4 overflow-auto text-white bg-active-color">
       {/* Logo Section */}
       <div className="flex items-center justify-center mb-6">
         <NavLink to="/">
@@ -85,11 +90,12 @@ export function AppSidebar() {
           to="/dashboard/settings"
           className="flex items-center gap-4 p-3 rounded-md hover:bg-gray-700"
         >
+          {/* <Settings className="w-5 h-5" /> */}
           <Settings className="w-5 h-5" />
-          <span>Settings</span>
+          <span>Logout</span>
         </NavLink>
         {/* Assuming NavUser is a simple user profile component */}
-        {user && (
+        {/* {user && (
           <div className="flex items-center gap-4 mt-4">
             <img
               src={user.photoURL || "/default-avatar.png"}
@@ -98,7 +104,7 @@ export function AppSidebar() {
             />
             <span className="text-sm">{user.displayName}</span>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

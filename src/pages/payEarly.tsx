@@ -97,7 +97,7 @@ const PayEarly = () => {
           </div>
           <div><Button children={"Proceed"} className="w-15 bg-button-gpt rounded-xl h-2/3 text-lg" onClick={() => {
                 // console.log("janwari")
-            navigate("/payEarly")
+            navigate("/transaction")
             // console.log("janwar")
             // window.location.reload();
 
