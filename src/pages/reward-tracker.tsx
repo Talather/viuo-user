@@ -1,12 +1,4 @@
-import { Image } from '@nextui-org/react'
-import MaxWidthContainer from '../components/max-width-container'
-import Benefits from '../components/redesigned-components/components/benefits'
-import Hero from '../components/redesigned-components/components/hero'
-import ServiceCards from '../components/redesigned-components/components/service-cards'
-import JoinToday from '../components/redesigned-components/components/join-today'
-import FAQs from '../components/redesigned-components/components/faqs'
-import { reactNow } from '../data'
-import ShinyButton from '../components/redesigned-components/components/shiny-button'
+
 import ChartThree from '../components/ChartThree'
 import TableOne from '../components/TableOneForRewards'
 import ChartR from '../components/chartR'
