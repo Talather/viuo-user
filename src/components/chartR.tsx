@@ -213,7 +213,7 @@ const ChartThree: React.FC = () => {
           </div>
         </div>
         <p className='mt-4 text-lg font-bold text-gray-700'>
-          600 USD Radeemed
+          600 Points Redeemed
         </p>
       </div>
     </div>

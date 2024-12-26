@@ -5,10 +5,10 @@ import { Pie } from "react-chartjs-2"
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 const data = {
-  labels: ["Entertainment", "Bill Expense", "Investment", "Others"],
+  labels: ["Utility", "Domestic", "Investment", "Others"],
   datasets: [
     {
-      label: "% of Expenses",
+      label: "% of Payments",
       data: [30, 15, 35, 20],
       backgroundColor: ["#FA00FF", "#1814F3", "#FC7900", "#343C6A"],
       borderColor: "white",

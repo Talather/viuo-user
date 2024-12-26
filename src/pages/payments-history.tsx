@@ -65,7 +65,7 @@
 
 
 
-import TableOne from '../components/TableOne'
+import TableOne from '../components/TableOneForRewards'
 // import { useAuth } from "../hooks/useAuth";
 // import { useNavigate } from "react-router-dom";
 // import { useState } from "react";

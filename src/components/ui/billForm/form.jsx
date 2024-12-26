@@ -35,24 +35,24 @@ export default function BillFormComponent({ bill = {}, update = false }) {
               <div className={styles.formElementsWrapper}>
                 <Input
                   className={styles.formInput}
-                  defaultValue={bill.firstName}
-                  errorMessage={!!errors.firstName && 'Please provide the bill first name'}
-                  isInvalid={!!errors.firstName}
-                  label="First Name"
+                  defaultValue={bill.name}
+                  errorMessage={!!errors.name && 'Please provide the bill first name'}
+                  isInvalid={!!errors.name}
+                  label="Bill Name"
                   labelPlacement="outside"
-                  {...register('firstName', { required: true })}
+                  {...register('name', { required: true })}
                   radius="sm"
                   type="text"
                   variant="bordered"
                 />
                 <Input
                   className={styles.formInput}
-                  defaultValue={bill.lastName}
-                  errorMessage={!!errors.lastName && 'Please provide the bill last name'}
-                  isInvalid={!!errors.lastName}
-                  label="Last Name"
+                  defaultValue={bill.amount}
+                  errorMessage={!!errors.amount && 'Please provide the bill Amount'}
+                  isInvalid={!!errors.amount}
+                  label="Bill Amount"
                   labelPlacement="outside"
-                  {...register('lastName', { required: true })}
+                  {...register('amount', { required: true })}
                   radius="sm"
                   type="text"
                   variant="bordered"
@@ -61,31 +61,31 @@ export default function BillFormComponent({ bill = {}, update = false }) {
               <div className={styles.formElementsWrapper}>
                 <Input
                   className={styles.formInput}
-                  defaultValue={bill.position}
-                  errorMessage={!!errors.position && 'Please provide the bill position'}
-                  isInvalid={!!errors.position}
-                  label="Position"
+                  defaultValue={bill.paymentCurrency}
+                  errorMessage={!!errors.paymentCurrency && ''}
+                  isInvalid={!!errors.paymentCurrency}
+                  label="Currency"
                   labelPlacement="outside"
-                  {...register('position', { required: true })}
+                  {...register('paymentCurrency', { required: true })}
                   radius="sm"
                   type="text"
                   variant="bordered"
                 />
-              </div>
-              <div className={styles.formElementsWrapper}>
+              {/* </div>
+              <div className={styles.formElementsWrapper}> */}
                 <Input
                   className={styles.formInput}
-                  defaultValue={bill.region}
-                  errorMessage={!!errors.region && 'Please provide the region'}
-                  isInvalid={!!errors.region}
-                  label="Region"
+                  defaultValue={bill.dueDate}
+                  errorMessage={!!errors.dueDate && 'Please provide the dueDate'}
+                  isInvalid={!!errors.dueDate}
+                  label="Due Date"
                   labelPlacement="outside"
-                  {...register('region', { required: true })}
+                  {...register('dueDate', { required: true })}
                   radius="sm"
-                  type="text"
+                  type="date"
                   variant="bordered"
                 />
-                <Input
+                {/* <Input
                   className={styles.formInput}
                   defaultValue={bill.subsidiary}
                   errorMessage={!!errors.subsidiary && 'Please provide the name of subsidiary'}
@@ -96,10 +96,10 @@ export default function BillFormComponent({ bill = {}, update = false }) {
                   radius="sm"
                   type="text"
                   variant="bordered"
-                />
+                /> */}
               </div>
-              <div className={styles.formElementsWrapper}>
-                <Input
+              {/* <div className={styles.formElementsWrapper}> */}
+                {/* <Input
                   className={styles.formInput}
                   defaultValue={bill.segment}
                   errorMessage={!!errors.segment && 'Please provide the segment'}
@@ -123,7 +123,7 @@ export default function BillFormComponent({ bill = {}, update = false }) {
                   type="text"
                   variant="bordered"
                 />
-              </div>
+              </div> */}
             </div>
           </ModalBody>
           <ModalFooter className={styles.footer}>
