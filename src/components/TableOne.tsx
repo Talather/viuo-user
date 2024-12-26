@@ -92,7 +92,7 @@ const TableOne = () => {
           >
             <div className="flex items-center gap-3.5 px-2 py-4">
               <div className="flex-shrink-0">
-                <img src={brand.logo} alt="Brand" width={48} height={48} />
+                <img src={`assets/${brand.logo}`} alt="Brand" width={48} height={48} />
               </div>
               <p className="hidden font-medium text-dark dark:text-white sm:block">
                 {brand.name}

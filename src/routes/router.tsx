@@ -36,6 +36,8 @@ import Refer from '../pages/refer'
 import CreateBill from '../components/ui/billForm/form'
 
 
+import PaymentHistory from '../pages/payments-history'
+
 // import DashboardSettings from "../pages/DashboardSettings"
 
 
@@ -241,7 +243,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Calendar />
+        element: <PaymentHistory />
       },
      
     ],
@@ -330,6 +332,38 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Profile />
+      },
+     
+    ],
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {
+    path: "upcoming-bills",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Calendar />
       },
      
     ],

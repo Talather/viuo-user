@@ -32,11 +32,11 @@ const items = [
     url: "/payment-history",
     icon: History,
   },
-  // {
-  //   title: "Account Settings",
-  //   url: "/select",
-  //   icon: Settings,
-  // },
+  {
+    title: "Upcoming Bills",
+    url: "/upcoming-bills",
+    icon: Settings,
+  },
   {
     title: "Profile",
     url: "/profile",

@@ -132,7 +132,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                               mb: 0.75,
                             }}
                           >
-                            $108
+                            108
                           </Typography>
                         ) : (
                           <Typography
@@ -144,7 +144,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                               mb: 0.75,
                             }}
                           >
-                            $961
+                            961
                           </Typography>
                         )}
                       </Grid>
@@ -171,7 +171,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                             color: theme.palette.primary[200],
                           }}
                         >
-                          Total Order
+                          Total Points Earned
                         </Typography>
                       </Grid>
                     </Grid>
