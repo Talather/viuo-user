@@ -31,15 +31,15 @@ const Colors = [
   "#8E44AD",
 ];
 
-interface Bill {
-  billName: string;
-  amountDue: string;
-  dueDate: string;
-  priority?: boolean;
-}
+// interface Bill {
+//   billName: string;
+//   amountDue: string;
+//   dueDate: string;
+//   priority?: boolean;
+// }
 
 interface BillCardProps {
-  bill?: Bill;
+  bill?: any;
   cardtype?: string;
   onEdit?: () => void;
    onClick?: () => void;

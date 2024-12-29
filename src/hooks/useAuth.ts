@@ -252,11 +252,11 @@ export const useAuth = () => {
     isAuthenticated = true
   }
 
-  console.log('mali', context.user)
+  // console.log('mali', context.user)
   return {
     ...context,
     isAuthenticated,
-    // user:context.user,
+    user:context.user,
     registerUser,
     login,
     sendResetPasswordEmail,

@@ -3,24 +3,39 @@ import { useNavigate } from 'react-router-dom'; // Use React Router for navigati
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './form.module.css';
-
+import { useAuth } from '../../../hooks/useAuth'
+import StatusAutocompleteComponent from '@/components/autoComplete/status';
+import { createBill } from '@/lib/clientControllers/bills';
+import { useToast } from '@/hooks/use-toast';
 export default function BillFormComponent({ bill = {}, update = false }) {
   const { control, formState: { errors, isSubmitting }, handleSubmit, register } = useForm();
   const [state, setState] = useState({});
   const navigate = useNavigate(); // Use navigate from react-router-dom
+  const { user } = useAuth()
+  const { toast } = useToast();
 
   const onSubmit = async (formData) => {
+    console.log("onsubmithit",user.id)
     setState({});
-    const action = null; // Replace with your action (e.g., createBill or updateBill)
+    const action = createBill;
+    formData.user_id = user?.id
+    
+    // Replace with your action (e.g., createBill or updateBill)
 
-    const response = await action({ id: bill._id }, formData);
-    setState(response);
+    const response = await action(formData);
+
+    setState({ success: true });
+       toast({
+        title: "Bill Created Succcessfully",
+        description: "Bill with the provided information Created Succcessfully",
+      });
+    
   };
 
   useEffect(() => {
     if (state?.success) {
-      // Success handling
-      // navigate('/somewhere'); // You can navigate to another page on success
+      console.log("Success handling")
+      navigate('/bills'); // You can navigate to another page on success
     }
   }, [state]);
 
@@ -80,7 +95,7 @@ export default function BillFormComponent({ bill = {}, update = false }) {
                   isInvalid={!!errors.dueDate}
                   label="Due Date"
                   labelPlacement="outside"
-                  {...register('dueDate', { required: true })}
+                  {...register('due_date', { required: true })}
                   radius="sm"
                   type="date"
                   variant="bordered"
@@ -98,7 +113,7 @@ export default function BillFormComponent({ bill = {}, update = false }) {
                   variant="bordered"
                 /> */}
               </div>
-              {/* <div className={styles.formElementsWrapper}> */}
+              <div className={styles.formElementsWrapper}>
                 {/* <Input
                   className={styles.formInput}
                   defaultValue={bill.segment}
@@ -111,19 +126,15 @@ export default function BillFormComponent({ bill = {}, update = false }) {
                   type="text"
                   variant="bordered"
                 />
-                <Input
-                  className={styles.formInput}
-                  defaultValue={bill.email}
-                  errorMessage={!!errors.email && 'Please provide the bill email address'}
-                  isInvalid={!!errors.email}
-                  label="Email"
-                  labelPlacement="outside"
-                  {...register('email', { required: true })}
-                  radius="sm"
-                  type="text"
-                  variant="bordered"
+                 */}
+                <StatusAutocompleteComponent
+                  control={control}
+                  errors={errors}
+                  register={register}
+                  status={{ id:"",name:""} || ''}
+                  name='status'
                 />
-              </div> */}
+              </div> 
             </div>
           </ModalBody>
           <ModalFooter className={styles.footer}>
