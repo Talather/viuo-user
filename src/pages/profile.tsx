@@ -1,130 +1,4 @@
-// import React from 'react'
-
-// const ProfilePage = () => {
-//   const user = {
-//     name: 'John Doe',
-//     email: 'john.doe@example.com',
-//     role: 'Admin',
-//     joinedDate: '2023-01-15',
-//     lastLogin: '2024-12-20'
-//   }
-
-//   return (
-//     <div style={styles.container}>
-//       <div style={styles.profileBox}>
-//         <h2 style={styles.title}>User Profile</h2>
-//         <div style={styles.infoRow}>
-//           <label htmlFor='name' style={styles.label}>
-//             Name:
-//           </label>
-//           <input
-//             type='text'
-//             id='name'
-//             value={user.name}
-//             style={styles.input}
-//             readOnly
-//           />
-//         </div>
-//         <div style={styles.infoRow}>
-//           <label htmlFor='email' style={styles.label}>
-//             Email:
-//           </label>
-//           <input
-//             type='email'
-//             id='email'
-//             value={user.email}
-//             style={styles.input}
-//             readOnly
-//           />
-//         </div>
-//         <div style={styles.infoRow}>
-//           <label htmlFor='role' style={styles.label}>
-//             Role:
-//           </label>
-//           <input
-//             type='text'
-//             id='role'
-//             value={user.role}
-//             style={styles.input}
-//             readOnly
-//           />
-//         </div>
-//         <div style={styles.infoRow}>
-//           <label htmlFor='joinedDate' style={styles.label}>
-//             Joined Date:
-//           </label>
-//           <input
-//             type='text'
-//             id='joinedDate'
-//             value={user.joinedDate}
-//             style={styles.input}
-//             readOnly
-//           />
-//         </div>
-//         <div style={styles.infoRow}>
-//           <label htmlFor='lastLogin' style={styles.label}>
-//             Last Login:
-//           </label>
-//           <input
-//             type='text'
-//             id='lastLogin'
-//             value={user.lastLogin}
-//             style={styles.input}
-//             // readOnly
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// const styles = {
-//   container: {
-//     display: 'flex',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     height: '100vh',
-
-//     background: "linear-gradient(to bottom right, #39b996, white)",
-
-//     borderRadius: '10px'
-//   },
-//   profileBox: {
-//     width: '600px',
-//     padding: '30px',
-//     borderRadius: '10px',
-//     backgroundColor: '#fff',
-//     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-//     textAlign: 'left'
-//   },
-//   title: {
-//     textAlign: 'center',
-//     marginBottom: '20px',
-//     fontSize: '2rem',
-//     color: '#333'
-//   },
-//   infoRow: {
-//     display: 'flex',
-//     flexDirection: 'column',
-//     marginBottom: '15px'
-//   },
-//   label: {
-//     marginBottom: '5px',
-//     fontSize: '1rem',
-//     color: '#555'
-//   },
-//   input: {
-//     padding: '10px',
-//     fontSize: '1rem',
-//     borderRadius: '5px',
-//     border: '1px solid #ccc',
-//     backgroundColor: '#f9f9f9'
-//   }
-// }
-
-// export default ProfilePage
-
-import React from 'react'
+import React, { useState } from 'react'
 
 interface User {
   name: string
@@ -132,179 +6,164 @@ interface User {
   role: string
   joinedDate: string
   lastLogin: string
+  profilePicture?: string
+  address?: string
+  dob?: string
 }
 
 const ProfilePage: React.FC = () => {
-  const user: User = {
+  const [user] = useState<User>({
     name: 'John Doe',
     email: 'john.doe@example.com',
     role: 'Admin',
     joinedDate: '2023-01-15',
-    lastLogin: '2024-12-20'
+    lastLogin: '2024-12-20',
+    profilePicture: '',
+    address: '1234 Elm Street, Springfield, USA',
+    dob: '1990-05-15'
+  })
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0]
+      console.log('Uploaded file:', file)
+      // You can handle file upload logic here
+    }
   }
-  
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        background: 'white'
-      }}
-    >
-      <div
-        style={{
-          width: '60vw',
-          padding: '40px',
-          borderRadius: '10px',
-          background: 'linear-gradient(to bottom right, #39b996,black)',
-          boxShadow: '10px 10px 10px 10px rgba(0, 0, 0, 0)',
-          textAlign: 'left',
-          color: 'white'
-        }}
-      >
-        <h2
-          style={{
-            textAlign: 'center',
-            marginBottom: '20px',
-            fontSize: '2rem'
-          }}
-        >
-          User Profile
-        </h2>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginBottom: '15px'
-          }}
-        >
-          <label htmlFor='name' style={styles.label}>
-            Name:
+    <div className='flex items-center justify-center min-h-screen bg-white'>
+      <div className='w-3/4 p-8 text-white rounded-lg shadow-lg md:w-2/3 lg:w-1/2 bg-gradient-to-br from-button-gpt to-black'>
+        <h2 className='mb-6 text-4xl font-bold text-center'>User Profile</h2>
+
+        {/* Profile Picture */}
+        <div className='mb-6'>
+          <label className='block mb-2 text-white'>Profile Picture:</label>
+          <label
+            className='flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 transition duration-300 bg-gray-200 rounded-lg cursor-pointer hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400'
+            htmlFor='profilePicture'
+          >
+            Upload Profile Picture
           </label>
           <input
-            type='text'
-            id='name'
-            value={user.name}
-            style={styles.input}
-            readOnly
+            type='file'
+            id='profilePicture'
+            accept='image/*'
+            className='hidden'
+            onChange={handleFileUpload}
+          />
+          {user.profilePicture && (
+            <img
+              src={user.profilePicture}
+              alt='Profile'
+              className='w-32 h-32 mx-auto mt-4 rounded-full'
+            />
+          )}
+        </div>
+
+        {/* Document Upload */}
+        <div className='mb-6'>
+          <label className='block mb-2 text-white'>
+            Document Upload / Archive:
+          </label>
+          <label
+            className='flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 transition duration-300 bg-gray-200 rounded-lg cursor-pointer hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400'
+            htmlFor='documentUpload'
+          >
+            Upload Document
+          </label>
+          <input
+            type='file'
+            id='documentUpload'
+            className='hidden'
+            onChange={handleFileUpload}
           />
         </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginBottom: '15px'
-          }}
-        >
-          <label htmlFor='email' style={styles.label}>
-            Email:
-          </label>
+
+        {/* Address */}
+        <div className='mb-6'>
+          <label className='block mb-2 text-white'>Address:</label>
+          <input
+            type='text'
+            value={user.address}
+            className='w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50'
+            // readOnly
+          />
+        </div>
+
+        {/* Date of Birth */}
+        <div className='mb-6'>
+          <label className='block mb-2 text-white'>Date of Birth:</label>
+          <input
+            type='text'
+            value={user.dob}
+            className='w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50'
+            // readOnly
+          />
+        </div>
+
+        {/* Profile Link */}
+        <div className='mb-6'>
+          <label className='block mb-2 text-white '>Profile Link:</label>
+          <input
+            type='text'
+            value={`https://example.com/user/${user.name
+              .toLowerCase()
+              .replace(/ /g, '-')}`}
+            className='w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 '
+            // readOnly
+          />
+        </div>
+
+        {/* Other Info */}
+        <div className='mb-4'>
+          <label className='block mb-2 text-white'>Name:</label>
+          <input
+            type='text'
+            value={user.name}
+            className='w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 '
+            // readOnly
+          />
+        </div>
+        <div className='mb-4'>
+          <label className='block mb-2 text-white'>Email:</label>
           <input
             type='email'
-            id='email'
             value={user.email}
-            style={styles.input}
-            readOnly
+            className='w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 '
+            // readOnly
           />
         </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginBottom: '15px'
-          }}
-        >
-          <label htmlFor='role' style={styles.label}>
-            Role:
-          </label>
+        <div className='mb-4'>
+          <label className='block mb-2 text-white'>Role:</label>
           <input
             type='text'
-            id='role'
             value={user.role}
-            style={styles.input}
-            readOnly
+            className='w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 '
+            // readOnly
           />
         </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginBottom: '15px'
-          }}
-        >
-          <label htmlFor='joinedDate' style={styles.label}>
-            Joined Date:
-          </label>
+        <div className='mb-4'>
+          <label className='block mb-2 text-white'>Joined Date:</label>
           <input
             type='text'
-            id='joinedDate'
             value={user.joinedDate}
-            style={styles.input}
-            readOnly
+            className='w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 '
+            // readOnly
           />
         </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginBottom: '15px'
-          }}
-        >
-          <label htmlFor='lastLogin' style={styles.label}>
-            Last Login:
-          </label>
+        <div className='mb-4'>
+          <label className='block mb-2 text-white'>Last Login:</label>
           <input
             type='text'
-            id='lastLogin'
             value={user.lastLogin}
-            style={styles.input}
-            readOnly
+            className='w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 '
+            // readOnly
           />
         </div>
       </div>
     </div>
   )
-}
-
-const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
-    background: 'white'
-  },
-  profileBox: {
-    width: '60vw',
-    padding: '40px',
-    borderRadius: '10px',
-    background: 'linear-gradient(to bottom right, #39b996,black)',
-    boxShadow: '10px 10px 10px 10px rgba(0, 0, 0, 0)',
-    textAlign: 'left',
-    color: 'white'
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: '20px',
-    fontSize: '2rem'
-  },
-
-  label: {
-    marginBottom: '5px',
-    fontSize: '1rem',
-    color: 'white'
-  },
-  input: {
-    padding: '8px',
-    //   backgroundColor:"gray",
-    fontSize: '1rem',
-    borderRadius: '5px',
-    border: '1px solid #ccc',
-    backgroundColor: '#ccc'
-  }
 }
 
 export default ProfilePage

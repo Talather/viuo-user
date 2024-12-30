@@ -71,7 +71,9 @@ const RegisterUser = () => {
       // );
 
       setIsLoading(false);
-      registerUser(values.email, values.password);
+      const timeZone:any=Intl.DateTimeFormat().resolvedOptions().timeZone
+
+      registerUser(values.email, values.password,timeZone);
 
       toast({
         title: "Account Created Successfully.",
@@ -97,21 +99,21 @@ const RegisterUser = () => {
           className="object-contain xl:object-cover h-[90vh]"
         />
       </div>
-      <div className="w-full flex-col flex items-center justify-center ">
-        <div className="mb-5 w-full">
-          <h2 className="md:text-3xl text-4xl md:mb-2 font-semibold md:mt-5">
+      <div className="flex flex-col items-center justify-center w-full ">
+        <div className="w-full mb-5">
+          <h2 className="text-4xl font-semibold md:text-3xl md:mb-2 md:mt-5">
             Create Account
           </h2>
-          <p className="text-secondary-text mb-3 text-xs">
+          <p className="mb-3 text-xs text-secondary-text">
             Get access to exclusive features by creating an account
           </p>
         </div>
         <Form {...form}>
           <form
-            className="flex w-full flex-col gap-5 lg:gap-5"
+            className="flex flex-col w-full gap-5 lg:gap-5"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="grid md:grid-cols-2 md:gap-2 gap-5">
+            <div className="grid gap-5 md:grid-cols-2 md:gap-2">
               <FormField
                 control={control}
                 name="name"
@@ -163,7 +165,7 @@ const RegisterUser = () => {
               control={control}
               name="password"
               render={({ field }) => (
-                <FormItem className=" relative items-center lg:gap-3">
+                <FormItem className="relative items-center  lg:gap-3">
                   {/* <FormLabel>Password</FormLabel> */}
                   <div className="w-full">
                     <FormControl>
@@ -182,9 +184,9 @@ const RegisterUser = () => {
                             aria-label="toggle password visibility"
                           >
                             {isVisible ? (
-                              <EyeOpenIcon className="text-2xl text-default-400 pointer-events-none" />
+                              <EyeOpenIcon className="text-2xl pointer-events-none text-default-400" />
                             ) : (
-                              <EyeClosedIcon className="text-2xl text-default-400 pointer-events-none" />
+                              <EyeClosedIcon className="text-2xl pointer-events-none text-default-400" />
                             )}
                           </button>
                         }
@@ -248,7 +250,7 @@ const RegisterUser = () => {
 
               <Button
                 radius="sm"
-                className="text-white font-bold hover:bg-button-gpt-hover bg-button-gpt"
+                className="font-bold text-white hover:bg-button-gpt-hover bg-button-gpt"
                 isLoading={isLoading}
                 variant="faded"
                 type="submit"
@@ -259,7 +261,7 @@ const RegisterUser = () => {
           </form>
         </Form>
         {/* <Separator className="mt-10" /> */}
-        <div className="flex mt-5 items-center gap-2">
+        <div className="flex items-center gap-2 mt-5">
           <p>Already have an account?</p>
           <NavLink
             to={"/login"}

@@ -91,7 +91,7 @@ export const useAuth = () => {
 
 
 
-  const registerUser = async (email: string, password: string) => {
+  const registerUser = async (email: string, password: string,timeZone:any) => {
     setIsLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -107,6 +107,7 @@ export const useAuth = () => {
         name: email.split("@")[0],
         role: "user",
         avatar: DEFAULT_AVATAR,
+        timeZone:timeZone,
         createdAt: new Date(),
       });
 

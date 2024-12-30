@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import {useState} from "react"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/redesigned-components/components/navbars/AppSidebar";
-// import SearchModal from "@/components/SearchModal";
+import Notification from "@/components/notificationBar/component";
 // import ShinyButton from "@/components/ShinyButton"
 
 const DashboardLayout = () => {
@@ -14,9 +14,7 @@ const DashboardLayout = () => {
      setIsSidebarOpen(!isSidebarOpen)
    }
   return (
-    <div className="
-    min-h-screen
-    ">
+    <div className="min-h-screen ">
       <SidebarProvider >
         {isSidebarOpen && <AppSidebar />}
 
@@ -53,6 +51,7 @@ const DashboardLayout = () => {
                 {/* <ShinyButton className="h-10 bg-button-gpt" href="/select">
                   Create New
                 </ShinyButton> */}
+                <Notification />
                 
               </div>
             </div>

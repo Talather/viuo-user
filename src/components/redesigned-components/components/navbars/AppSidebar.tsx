@@ -1,7 +1,7 @@
-import { History } from "lucide-react";
+import { History, LogOut } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import logo from "../../../../../public/assets/icons/logo.png";
-// import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { FileText, Award, Settings, User } from "lucide-react";
 
 // Define the type for the `user` object.
@@ -50,6 +50,7 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const {logout}=useAuth()
   // const { user } = useAuth() as { user: User | null };
 
   return (
@@ -85,14 +86,14 @@ export function AppSidebar() {
       </div>
 
       {/* Footer Section */}
-      <div className="mt-auto">
+      <div className="mt-auto" onClick={()=>{logout()}}>
         <NavLink
-          to="/dashboard/settings"
-          className="flex items-center gap-4 p-3 rounded-md hover:bg-gray-700"
+          to="/"
+          className="flex items-center gap-4 p-3 rounded-md hover:bg-button-gpt-hover"
         >
           {/* <Settings className="w-5 h-5" /> */}
-          <Settings className="w-5 h-5" />
-          <span>Logout</span>
+          <LogOut className="w-5 h-5" />
+          <span >Logout</span>
         </NavLink>
         {/* Assuming NavUser is a simple user profile component */}
         {/* {user && (
