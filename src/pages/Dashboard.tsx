@@ -20,6 +20,39 @@ interface Bill {
 import { ClipLoader } from 'react-spinners' // Import ClipLoader
 
 const Dashboard = () => {
+
+
+
+
+
+
+
+
+
+
+
+
+  const filterAndMarkBills = (bills:any) => {
+  const today = new Date()
+  const fifteenDaysFromNow = new Date()
+  fifteenDaysFromNow.setDate(today.getDate() + 15)
+
+  return bills.map((bill:any) => {
+    const dueDate = new Date(bill.due_date)
+
+    // Add `topPriority` boolean based on due date proximity
+    const isTopPriority = dueDate >= today && dueDate <= fifteenDaysFromNow
+
+    return {
+      ...bill,
+      topPriority: isTopPriority
+    }
+  })
+}
+
+  
+  
+  
   const { user } = useAuth()
   const [bills, setBills] = useState<Bill[]>([]) // State to store bills
   const [loading, setLoading] = useState<boolean>(false) // Loading state
@@ -31,7 +64,13 @@ const Dashboard = () => {
 
     setLoading(true) // Set loading to true when starting to fetch data
     try {
-      const billsData:any = await fetchBillsForSpecificUser(user.id) // Call the actual API function
+      let billsData: any = await fetchBillsForSpecificUser(user.id)
+      // Call the actual API function
+
+      billsData=filterAndMarkBills(billsData)
+       
+      
+      console.log("bills data:",billsData)
       setBills(billsData) // Set the bills state with fetched data
     } catch (error) {
       console.error('Error fetching bills:', error)
@@ -99,9 +138,9 @@ const Dashboard = () => {
             ) : (
             
               <Grid container justifyContent='center' spacing={2}>
-                {bills.map(bill => (
+                {bills.map((bill) => (
                   <Grid item key={bill.id}>
-                    <BillCard bill={'bill'} />
+                    <BillCard bill={bill} />
                   </Grid>
                 ))}
               </Grid>

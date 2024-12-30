@@ -6,7 +6,7 @@ import {
   updateDoc,
   deleteDoc,
   Timestamp,
-    DocumentReference,
+    // DocumentReference,
     query, where,
     getDocs
 
@@ -15,12 +15,13 @@ import { db } from '../firebaseConfig' // Import Firebase config
 
 // Interface representing a Bill entity with DocumentReference for referenced fields
 interface Bill {
+  id?: string
   user_id: any  // Changed from string to DocumentReference
-  biller_id?: DocumentReference // Changed from string to DocumentReference
+  biller_id?: any // Changed from string to DocumentReference
   amount: number
   due_date: string
   status: string
-  payment_method_id: DocumentReference // Changed from string to DocumentReference
+  payment_method_id: any // Changed from string to DocumentReference
   early_payment_savings?: number
   is_consolidated?: boolean
   created_at: Timestamp
