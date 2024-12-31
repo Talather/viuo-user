@@ -27,7 +27,7 @@
 // //           <h2 className="text-2xl font-bold">Hey, {user?.name}!</h2>
 // //           <p className="mt-2 text-gray-500">Upcoming Bills</p>
 // //           </div>
-// //           <div><Button children={"Proceed"} className="w-15 bg-button-gpt rounded-xl h-2/3 text-lg" onClick={() => {
+// //           <div><Button children={"Proceed"} className="text-lg w-15 bg-button-gpt rounded-xl h-2/3" onClick={() => {
 // //                 // console.log("janwari")
 // //             navigate("/payEarly")
 // //             // console.log("janwar")
@@ -95,7 +95,7 @@
 //           <h2 className="text-2xl font-bold">Hey, {user?.name}!</h2>
 //           <p className="mt-2 text-gray-500">Total Bills:{sortedFiles?.length}</p>
 //           </div>
-//           <div><Button children={"Proceed"} className="w-15 bg-button-gpt rounded-xl h-2/3 text-lg" onClick={() => {
+//           <div><Button children={"Proceed"} className="text-lg w-15 bg-button-gpt rounded-xl h-2/3" onClick={() => {
 //                 // console.log("janwari")
 //             navigate("/transaction")
 //             // console.log("janwar")
@@ -144,9 +144,6 @@
 
 
 
-
-
-
 import { useState, useEffect } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
@@ -156,31 +153,20 @@ import Button from '@/components/button'
 import { fetchBillsForSpecificUser } from '@/lib/clientControllers/bills'
 import { ClipLoader } from 'react-spinners'
 import { Timestamp } from 'firebase/firestore'
-// import { AnyARecord } from 'node:dns'
+import { useBillPaymentContext } from '../context/paymentBillsContext'
+
 interface Bill {
   id?: string
-  // user_id?: string
-  // amount?: number
-  // due_date?: string
-  // status?: string
-  // payment_method_id?: string
-  // early_payment_savings?: number
-  // is_consolidated?: boolean
-  // topPriority?: boolean
-
-
-
-
-   user_id: any  // Changed from string to DocumentReference
-    biller_id?: any // Changed from string to DocumentReference
-    amount: number
-    due_date: string
-    status: string
-    payment_method_id: any // Changed from string to DocumentReference
-    early_payment_savings?: number
-    is_consolidated?: boolean
-    created_at: Timestamp
-    updated_at: Timestamp
+  user_id: any
+  biller_id?: any
+  amount: number
+  due_date: string
+  status: string
+  payment_method_id: any
+  early_payment_savings?: number
+  is_consolidated?: boolean
+  created_at: Timestamp
+  updated_at: Timestamp
 }
 
 const filterAndMarkBills = (bills: Bill[]): Bill[] => {
@@ -201,17 +187,18 @@ const filterAndMarkBills = (bills: Bill[]): Bill[] => {
 
 const PayEarly = () => {
   const { user } = useAuth()
-  const [bills, setBills] = useState<any>([])
-  const [selectedIndex, setSelectedIndex] = useState<string[]>([])
+  const [bills, setBills] = useState<Bill[]>([])
+  const [selectedBillsArray, setSelectedBillsArray] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const navigate = useNavigate()
+  const { addAllBillsOnce } = useBillPaymentContext()
 
   const fetchBills = async () => {
     if (!user?.id) return
 
     setLoading(true)
     try {
-      let billsData: any = await fetchBillsForSpecificUser(user?.id )
+      let billsData: any = await fetchBillsForSpecificUser(user?.id)
       billsData = filterAndMarkBills(billsData)
       setBills(billsData)
     } catch (error) {
@@ -225,10 +212,22 @@ const PayEarly = () => {
     fetchBills()
   }, [user?.id])
 
-  const handleCardClick = (id: string) => {
-    setSelectedIndex(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-    )
+  // Update the context with the selected bills
+  useEffect(() => {
+    addAllBillsOnce(selectedBillsArray) // Update the context with selected bills
+  }, [selectedBillsArray, addAllBillsOnce])
+
+  const handleCardClick = (bill: Bill) => {
+    setSelectedBillsArray(prevSelectedBills => {
+      // Check if the bill is already in the selectedBillsArray
+      if (prevSelectedBills.some(selectedBill => selectedBill.id === bill.id)) {
+        return prevSelectedBills.filter(
+          selectedBill => selectedBill.id !== bill.id
+        ) // Remove the bill if already selected
+      } else {
+        return [...prevSelectedBills, bill] // Add the bill if it's not selected
+      }
+    })
   }
 
   return (
@@ -240,11 +239,12 @@ const PayEarly = () => {
           <p className='mt-2 text-gray-500'>Total Bills: {bills?.length}</p>
         </div>
         <div>
-        <Button
-          children='Proceed'
-          className='w-15 bg-button-gpt rounded-xl h-2/3 text-lg'
-          onClick={() => navigate('/transaction')}
-        /></div>
+          <Button
+            children='Proceed'
+            className='text-lg w-15 bg-button-gpt rounded-xl h-2/3'
+            onClick={() => navigate('/transaction')}
+          />
+        </div>
       </div>
 
       {/* Grid Section */}
@@ -262,15 +262,15 @@ const PayEarly = () => {
           </div>
         ) : (
           <Grid container justifyContent='center' spacing={2}>
-            {bills.map((bill:any) => (
+            {bills.map(bill => (
               <Grid item key={bill.id}>
                 <div
                   className={`${
-                    selectedIndex.includes(bill.id)
+                    selectedBillsArray.some(b => b.id === bill.id)
                       ? 'animate-glow transform scale-93 shadow-xl shadow-button-gpt transition-all'
                       : 'transition-shadow transform'
                   } rounded-xl cursor-pointer p-3`}
-                  onClick={() => handleCardClick(bill.id)}
+                  onClick={() => handleCardClick(bill)}
                 >
                   <BillCard bill={bill} />
                 </div>
@@ -284,4 +284,3 @@ const PayEarly = () => {
 }
 
 export default PayEarly
-

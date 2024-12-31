@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react' // Import useState and useEffect
+import { useState, useEffect } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import BillCard from '@/components/cards/billCard'
-import { Grid, Box } from '@mui/material' // Import CircularProgress for the spinner
+import { Grid, Box } from '@mui/material'
 import Button from '@/components/button'
 import { fetchBillsForSpecificUser } from '@/lib/clientControllers/bills'
+import { ClipLoader } from 'react-spinners'
+import { motion } from 'framer-motion'
 
 // Define an interface for Bill data
 interface Bill {
@@ -17,72 +19,46 @@ interface Bill {
   early_payment_savings?: number
   is_consolidated?: boolean
 }
-import { ClipLoader } from 'react-spinners' // Import ClipLoader
 
 const Dashboard = () => {
-
-
-
-
-
-
-
-
-
-
-
-
-  const filterAndMarkBills = (bills:any) => {
-  const today = new Date()
-  const fifteenDaysFromNow = new Date()
-  fifteenDaysFromNow.setDate(today.getDate() + 15)
-
-  return bills.map((bill:any) => {
-    const dueDate = new Date(bill.due_date)
-
-    // Add `topPriority` boolean based on due date proximity
-    const isTopPriority = dueDate >= today && dueDate <= fifteenDaysFromNow
-
-    return {
-      ...bill,
-      topPriority: isTopPriority
-    }
-  })
-}
-
-  
-  
-  
   const { user } = useAuth()
   const [bills, setBills] = useState<Bill[]>([]) // State to store bills
   const [loading, setLoading] = useState<boolean>(false) // Loading state
   const navigate = useNavigate()
 
-  // Define the fetchBills function to fetch data
+  // Filter and mark bills as top priority based on due date
+  const filterAndMarkBills = (bills: Bill[]) => {
+    const today = new Date()
+    const fifteenDaysFromNow = new Date()
+    fifteenDaysFromNow.setDate(today.getDate() + 15)
+
+    return bills.map(bill => {
+      const dueDate = new Date(bill.due_date)
+      const isTopPriority = dueDate >= today && dueDate <= fifteenDaysFromNow
+      return { ...bill, topPriority: isTopPriority }
+    })
+  }
+
+  // Fetch bills for the specific user
   const fetchBills = async () => {
-    if (!user?.id) return // Ensure user exists
+    if (!user?.id) return
+    setLoading(true)
 
-    setLoading(true) // Set loading to true when starting to fetch data
     try {
-      let billsData: any = await fetchBillsForSpecificUser(user.id)
-      // Call the actual API function
-
-      billsData=filterAndMarkBills(billsData)
-       
-      
-      console.log("bills data:",billsData)
-      setBills(billsData) // Set the bills state with fetched data
+      let billsData:any = await fetchBillsForSpecificUser(user.id)
+      billsData = filterAndMarkBills(billsData)
+      setBills(billsData)
     } catch (error) {
       console.error('Error fetching bills:', error)
     } finally {
-      setLoading(false) // Set loading to false once the data is fetched or error occurs
+      setLoading(false)
     }
   }
 
-  // Fetch the bills when the component is mounted
+  // Fetch bills when the component is mounted
   useEffect(() => {
     fetchBills()
-  }, [user?.id]) // Fetch bills when the user ID changes
+  }, [user?.id])
 
   return (
     <div className='px-4'>
@@ -94,21 +70,17 @@ const Dashboard = () => {
           </div>
 
           <div className='flex flex-row justify-normal'>
-            <div>
-              <Button
-                children={'Pay Early'}
-                className='mr-5 rounded-md w-15 bg-button-gpt h-2/3 text-md'
-                onClick={() => navigate('/payEarly')}
-              />
-            </div>
+            <Button
+              children={'Pay Early'}
+              className='mr-5 rounded-md w-15 bg-button-gpt h-2/3 text-md'
+              onClick={() => navigate('/payEarly')}
+            />
 
-            <div>
-              <Button
-                children={'Create New Bill'}
-                className='rounded-md w-15 bg-button-gpt h-2/3 text-md'
-                onClick={() => navigate('/bills/create')}
-              />
-            </div>
+            <Button
+              children={'Create New Bill'}
+              className='rounded-md w-15 bg-button-gpt h-2/3 text-md'
+              onClick={() => navigate('/bills/create')}
+            />
           </div>
         </div>
       </div>
@@ -120,14 +92,13 @@ const Dashboard = () => {
           alignItems: 'center'
         }}
       >
-        <div style={{ width: '35%' }}>
+        <div style={{ width: '100%',marginTop:"3vh" }}>
           <Box sx={{ flexGrow: 1, paddingTop: '1em' }}>
-            {/* Show spinner when loading */}
             {loading ? (
               <div
                 style={{
                   display: 'flex',
-                  flexDirection:"row",
+                  flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
                   height: '30vh'
@@ -135,20 +106,53 @@ const Dashboard = () => {
               >
                 <ClipLoader size={70} color='#39b996' />
               </div>
-            ) : (
-            
+            ) : bills.length > 0 ? (
               <Grid container justifyContent='center' spacing={2}>
-                {bills.map((bill) => (
+                {bills.map(bill => (
                   <Grid item key={bill.id}>
                     <BillCard bill={bill} />
                   </Grid>
                 ))}
               </Grid>
+            ) : (
+              <NoBillsMessage />
             )}
           </Box>
         </div>
       </div>
     </div>
+  )
+}
+
+const NoBillsMessage: React.FC = () => {
+  return (
+    <div className='mt-32'>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.5 }}
+      className='flex flex-col items-center justify-center w-2/3 h-full p-6 text-center rounded-lg shadow-md bg-button-gpt'
+    >
+      <div className='relative'>
+        <motion.div
+          className='absolute top-0 bottom-0 left-0 right-0 rounded-full bg-button-gpt'
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ repeat: Infinity, duration: 2.5 }}
+        ></motion.div>
+        <span
+          role='img'
+          aria-label='sad-face'
+          className='relative z-10 text-6xl'
+        >
+          😁
+        </span>
+      </div>
+      <p className='mt-4 text-xl font-semibold text-white'>
+        No bills available
+      </p>
+      </motion.div>
+      </div>
   )
 }
 

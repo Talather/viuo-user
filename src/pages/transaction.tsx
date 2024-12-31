@@ -1,265 +1,90 @@
-
-import { useState,  useEffect } from 'react'
-// import CartItem from '@/components/cards/cartItem' // Assuming you have this CartItem component
-// import { Button as MuiButton } from '@mui/material'
-
-// Type definition for Bill
-interface Bill {
-  id: number
-  name: string
-  amount: string
-  image: string
-}
-
-// import { useState, useEffect, useCallback } from 'react'
-import {  Typography, Button as MuiButton } from '@mui/material'
-// import CartItem from '@/components/cards/cartItem' // Assuming you have this CartItem component
-
-interface Bill {
-  id: number
-  name: string
-  amount: string
-  image: string
-}
+import { useState, useEffect } from 'react'
+import { Typography, Button as MuiButton } from '@mui/material'
+import { useBillPaymentContext } from '@/context/paymentBillsContext'
 
 const Transaction = () => {
-  const subtotal = 150.99
-  const discount = 20.0
-  const total = subtotal - discount
+  
+   const { selectedBills,removeBill,clearBills,calculateTotalBills } = useBillPaymentContext()
+  const [visibleItems, setVisibleItems] = useState<any[]>([])
+let subtotal = calculateTotalBills()
+let discount = 0.0
+  let total = subtotal - discount
+  console.log("zaalim",subtotal)
 
-  const [visibleItems, setVisibleItems] = useState<Bill[]>([])
-  const [allItems] = useState<Bill[]>([
-    {
-      id: 1,
-      name: 'Bill 1',
-      amount: '25.99',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 2,
-      name: 'Bill 2',
-      amount: '18.99',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 3,
-      name: 'Bill 3',
-      amount: '40.00',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 4,
-      name: 'Bill 4',
-      amount: '12.50',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 5,
-      name: 'Bill 5',
-      amount: '30.00',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 6,
-      name: 'Bill 6',
-      amount: '15.99',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: 7,
-      name: 'Bill 7',
-      amount: '22.00',
-      image: 'https://via.placeholder.com/150'
-    }
-  ])
+  const useWarnOnRefresh = () => {
+    useEffect(() => {
+      const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+        event.returnValue =
+          'On Refreshing the page,All your bills will get Erased From Cart'
+      }
+      window.addEventListener('beforeunload', handleBeforeUnload)
 
-  // Load more items on scroll
-//   const loadMoreItems = useCallback(() => {
-//     const nextItems = allItems.slice(
-//       visibleItems.length,
-//       visibleItems.length + 5
-//     )
-//     setVisibleItems(prev => [...prev, ...nextItems])
-//   }, [allItems, visibleItems.length])
-
-  useEffect(() => {
-    // Initially show 2 items
-    setVisibleItems(allItems.slice(0, 7))
-  }, [allItems])
-
-  // Handle the scroll event to trigger more items loading
-  const handleScroll = () => {
-    // const bottom =
-    //   event.target?.scrollHeight ===
-    //   event.target?.scrollTop + event?.target?.clientHeight
-    // if (bottom) {
-    //   loadMoreItems()
-    // }
+      return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload)
+      }
+    }, [])
   }
 
-    return (
-        <div className='h-screen w-full border bg-dark-white flex flex-col lg:flex-row lg:justify-between'>
-  {/* Transaction Section */}
-  <div className='lg:w-1/2 w-full mr-5'>
-    <div className='w-full h-fit bg-white rounded-lg shadow-lg mt-8 mb-6 mx-5 py-5 px-5'>
-      {/* Header */}
-      <div className='flex justify-between items-center mb-6'>
-        <Typography variant='h4' className='text-xl sm:text-2xl'>
-          Bills
-        </Typography>
-        <MuiButton variant='outlined' color='error'>
-          Remove All
-        </MuiButton>
+  useWarnOnRefresh()
+
+  useEffect(() => {
+    setVisibleItems(selectedBills)
+  }, [selectedBills])
+
+  return (
+    <div className='flex flex-col w-full bg-gray-100 border lg:flex-row lg:justify-between'>
+      {/* Transaction Section */}
+      <div className='w-full mr-5 lg:w-1/2'>
+        <div className='w-full px-5 py-5 mx-5 mt-8 mb-6 bg-white rounded-lg shadow-lg h-fit'>
+          {/* Header */}
+          <div className='flex items-center justify-between mb-6'>
+            <Typography variant='h4' className='text-xl sm:text-2xl'>
+              Bills
+            </Typography>
+            <MuiButton variant='outlined' color='error' onClick={clearBills}>
+              Remove All
+            </MuiButton>
+          </div>
+
+          {/* Scrollable List of Bills */}
+          <div
+            className='w-full space-y-4 overflow-y-scroll h-80 scrollbar-hide'
+            // onScroll={handleScroll}
+          >
+            {visibleItems.map(bill => (
+              <CartItem
+                key={bill.id}
+                productName={bill.name}
+                productPrice={bill.amount}
+                productStatus={bill.status}
+                onRemove={() => removeBill(bill.id)}
+                selected={false}
+                onClick={() => console.log(`Item with ID ${bill.id} clicked.`)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Order Summary */}
+        <div className='w-full'>
+          <OrderSummary subtotal={subtotal} discount={discount} total={total} />
+        </div>
       </div>
 
-      {/* Scrollable List of Bills */}
-      <div
-        className='h-80 w-full overflow-y-scroll space-y-4 scrollbar-hide'
-        onScroll={handleScroll}
-      >
-        {visibleItems.map(bill => (
-          <CartItem
-            key={bill.id}
-            productName={bill.name}
-            productPrice={bill.amount}
-            productImage={bill.image}
-            onRemove={() => console.log(`Item with ID ${bill.id} removed.`)}
-            selected={false}
-            onClick={() => console.log(`Item with ID ${bill.id} clicked.`)}
-          />
-        ))}
+      {/* Payment Section */}
+      <div className='w-full px-5 lg:w-1/2'>
+        <PaymentCheckout />
       </div>
     </div>
-
-    {/* Order Summary */}
-    <div className='w-full'>
-      <OrderSummary subtotal={subtotal} discount={discount} total={total} />
-    </div>
-  </div>
-
-  {/* Payment Section */}
-  <div className='lg:w-1/2 w-full px-5'>
-    <PaymentCheckout />
-  </div>
-</div>
-
-    
-    
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     <div className='h-screen w-full border bg-dark-white flex flex-row justify-between'>
-//       {/* Container for the transaction section */}
-
-          
-
-
-
-
-
-//        <div className='w-1/2'>
-//       <div className='w-full h-fit bg-white rounded-lg shadow-lg mt-8 mb-6 ml-5 mr-5 py-5 px-5 '>
-//         {/* Header */}
-//         <div className='flex justify-between items-center mb-6'>
-//           <Typography variant='h4'>Bills</Typography>
-//           <MuiButton variant='outlined' color='error'>
-//             Remove All
-//           </MuiButton>
-//         </div>
-
-//         {/* Scrollable List of bills */}
-//         <div
-//           className='h-80 w-full overflow-y-scroll space-y-4 scrollbar-hide' // Set height and enable vertical scrolling
-//           onScroll={handleScroll} // Scroll event listener
-//         >
-//           {visibleItems.map(bill => (
-//             <CartItem
-//               key={bill.id}
-//               productName={bill.name}
-//               productPrice={bill.amount}
-//               productImage={bill.image}
-//               onRemove={() => console.log(`Item with ID ${bill.id} removed.`)}
-//               selected={false} // This logic can be added if needed
-//               onClick={() => console.log(`Item with ID ${bill.id} clicked.`)} // Handle card click
-//             />
-//           ))}
-//         </div>
-//               {/* order summary */}
-              
-
-
-
-      
-
-
-
-        
-          
-              
-              
-
-
-
-//       </div>
-//         <div className='w-full'>
-//   <OrderSummary subtotal={subtotal} discount={discount} total={total} />
-//           </div>
-//           </div>
-      
-//       <div className='mr-5'>
-//         <PaymentCheckout />
-//       </div>
-//     </div>
   )
 }
 
 export default Transaction
 
-// export default Transaction
-
-// import React, { useState } from 'react'
-
-// Type definitions for CartItem props
 interface CartItemProps {
   productName: string
   productPrice: string
-  productImage: string
+  productStatus: string
   onRemove: () => void
   selected: boolean
   onClick: () => void
@@ -268,63 +93,47 @@ interface CartItemProps {
 const CartItem: React.FC<CartItemProps> = ({
   productName,
   productPrice,
-  productImage,
+  productStatus,
   onRemove,
   selected,
   onClick
 }) => {
-  const [quantity, setQuantity] = useState<number>(1)
+  // const [
+    // quantity,
+    // setQuantity] = useState<number>(1)
 
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuantity(Number(e.target.value))
-  }
+  // const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setQuantity(Number(e.target.value))
+  // }
 
   return (
     <div
-      className={`w-full rounded-lg shadow-xl overflow-hidden bg-white ${
+      className={`w-full rounded-lg shadow-xl overflow-hidden bg-white text-lg ${
         selected ? 'border-4 border-blue-500' : ''
       }`}
       onClick={onClick}
     >
       <div className='flex p-2'>
-              {/* Image Section */}
-              
-
-              
-        <div className='w-1/3'>
-          <img
-            src={productImage}
-            alt='Product Image'
-            className='w-full h-fit object-cover rounded-lg'
-          />
-        </div>
+        {/* Image Section */}
 
         {/* Content Section */}
-        <div className='w-2/3 pl-4'>
+        <div className='w-full pl-4 '>
           <h3 className='text-xl font-semibold text-gray-900'>{productName}</h3>
-          <p className='text-gray-600 mt-2'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
+          <p className='mt-2 text-gray-600'>{productStatus}</p>
 
           {/* Price and Quantity Section */}
-          <div className='flex items-center justify-between mt-4'>
-            <span className='text-lg font-bold text-gray-800'>
+          <div className='flex justify-between mt-6'>
+            <span className='text-2xl font-bold text-button-gpt'>
               ${productPrice}
             </span>
-            <div className='flex items-center space-x-2'>
+            <div className='flex items-end space-x-2'>
               <button
                 onClick={onRemove}
-                className='bg-button-gpt text-white px-3 py-1 rounded-md hover:bg-blue-600'
+                className='px-3 py-1 text-white rounded-md bg-button-gpt hover:bg-red-600'
               >
                 Remove
               </button>
-              <input
-                type='number'
-                value={quantity}
-                onChange={handleQuantityChange}
-                className='w-16 p-2 border border-gray-300 rounded-md'
-                min='1'
-              />
+              
             </div>
           </div>
         </div>
@@ -347,35 +156,35 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   total
 }) => {
   return (
-    <div className='w-full h-fit bg-white px-4 py-2 rounded-lg shadow-md ml-5'>
-      <h2 className='text-2xl font-semibold text-gray-800 mb-4'>
+    <div className='w-full px-4 py-2 ml-5 bg-white rounded-lg shadow-md h-fit'>
+      <h2 className='mb-4 text-2xl font-semibold text-gray-800'>
         Order Summary
       </h2>
 
       {/* Subtotal */}
-      <div className='flex justify-between items-center py-2 border-b border-gray-300'>
+      <div className='flex items-center justify-between py-2 border-b border-gray-300'>
         <span className='text-lg text-gray-700'>Subtotal</span>
-        <span className='text-lg text-gray-800'>${subtotal.toFixed(2)}</span>
+        <span className='text-lg text-gray-800'>${subtotal}</span>
       </div>
 
       {/* Discount */}
-      <div className='flex justify-between items-center py-2 border-b border-gray-300'>
+      <div className='flex items-center justify-between py-2 border-b border-gray-300'>
         <span className='text-lg text-gray-700'>Discount</span>
         <span className='text-lg text-green-500'>- ${discount.toFixed(2)}</span>
       </div>
 
       {/* Total */}
-      <div className='flex justify-between items-center py-2 font-semibold text-lg'>
+      <div className='flex items-center justify-between py-2 text-lg font-semibold'>
         <span className='text-gray-800'>Total</span>
         <span className='text-xl text-blue-600'>${total.toFixed(2)}</span>
       </div>
 
       {/* Checkout Button */}
-      <div className='mt-4'>
-        <button className='w-full bg-button-gpt text-white py-2 rounded-md hover:bg-blue-600'>
+      {/* <div className='mt-4'>
+        <button className='w-full py-2 text-white rounded-md bg-button-gpt hover:bg-blue-600'>
           Checkout
         </button>
-      </div>
+      </div> */}
     </div>
   )
 }
@@ -384,197 +193,344 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
 
 // import React, { useState } from 'react'
 
+// const PaymentCheckout: React.FC = () => {
+//   const [cardHolderName, setCardHolderName] = useState('')
+//   const [cardNumber, setCardNumber] = useState('')
+//   const [expirationDate, setExpirationDate] = useState('')
+//   const [cvv, setCvv] = useState('')
+
+//   const handleSubmit = () => {
+//     // Logic to handle payment submission
+//     console.log({
+//       cardHolderName,
+//       cardNumber,
+//       expirationDate,
+//       cvv
+//     })
+//   }
+
+//   return (
+//     <div className='px-8 py-4 mt-8 bg-white rounded-lg shadow-lg h-4/5 '>
+//       {/* Top Section with 3 Horizontal Boxes */}
+
+//       <div className='flex items-center justify-around mt-5 mb-5'>
+//         <img
+//           src='https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png'
+//           alt='Visa Logo'
+//           className='h-8'
+//         />
+//         <img
+//           src='https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg'
+//           alt='PayPal Logo'
+//           className='h-8'
+//         />
+//         <img
+//           src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_2019_logo.svg'
+//           alt='MasterCard Logo'
+//           className='h-8'
+//         />
+//       </div>
+
+//       <div className='space-y-7'>
+//         {/* Card Holder Name */}
+//         <div>
+//           <label
+//             htmlFor='cardHolderName'
+//             className='block text-sm font-semibold text-gray-700'
+//           >
+//             Card Holder Name
+//           </label>
+//           <input
+//             type='text'
+//             id='cardHolderName'
+//             value={cardHolderName}
+//             onChange={e => setCardHolderName(e.target.value)}
+//             className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+//             placeholder='Enter your name'
+//           />
+//         </div>
+
+//         {/* Card Number */}
+//         <div>
+//           <label
+//             htmlFor='cardNumber'
+//             className='block text-sm font-semibold text-gray-700'
+//           >
+//             Card Number
+//           </label>
+//           <input
+//             type='text'
+//             id='cardNumber'
+//             value={cardNumber}
+//             onChange={e => setCardNumber(e.target.value)}
+//             className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+//             placeholder='Enter your card number'
+//           />
+//         </div>
+
+//         {/* Expiration Date and CVV */}
+//         <div className='flex space-x-4'>
+//           {/* Expiration Date */}
+//           <div className='w-1/2'>
+//             <label
+//               htmlFor='expirationDate'
+//               className='block text-sm font-semibold text-gray-700'
+//             >
+//               Expiration Date
+//             </label>
+//             <input
+//               type='text'
+//               id='expirationDate'
+//               value={expirationDate}
+//               onChange={e => setExpirationDate(e.target.value)}
+//               className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+//               placeholder='MM/YY'
+//             />
+//           </div>
+
+//           {/* CVV */}
+//           <div className='w-1/2'>
+//             <label
+//               htmlFor='cvv'
+//               className='block text-sm font-semibold text-gray-700'
+//             >
+//               CVV
+//             </label>
+//             <input
+//               type='text'
+//               id='cvv'
+//               value={cvv}
+//               onChange={e => setCvv(e.target.value)}
+//               className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+//               placeholder='Enter CVV'
+//             />
+//           </div>
+//         </div>
+
+//         {/* Pay Now Button */}
+//         <div>
+//           <button
+//             onClick={handleSubmit}
+//             className='w-full py-3 mt-10 text-white rounded-md bg-button-gpt hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'
+//           >
+//             Pay Now
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
+
+// // export default PaymentCheckout
+
+
+
+
+
+// import React, { useState } from 'react'
+// import { useState } from 'react'
+
 const PaymentCheckout: React.FC = () => {
+  const [selectedMethod, setSelectedMethod] = useState<string | null>(
+    'creditCard'
+  )
+
+  // Credit Card Details
   const [cardHolderName, setCardHolderName] = useState('')
   const [cardNumber, setCardNumber] = useState('')
   const [expirationDate, setExpirationDate] = useState('')
   const [cvv, setCvv] = useState('')
 
+  // Bank Transfer Details
+  const [bankAccount, setBankAccount] = useState('')
+  const [routingNumber, setRoutingNumber] = useState('')
+
+  // Payment Confirmation
+  const [paymentStatus, setPaymentStatus] = useState<string | null>(null)
+
   const handleSubmit = () => {
-    // Logic to handle payment submission
-    console.log({
-      cardHolderName,
-      cardNumber,
-      expirationDate,
-      cvv
-    })
+    if (selectedMethod === 'creditCard') {
+      console.log({ cardHolderName, cardNumber, expirationDate, cvv })
+      setPaymentStatus('Payment Successful via Credit Card')
+    } else if (selectedMethod === 'plaid') {
+      console.log({ bankAccount, routingNumber })
+      setPaymentStatus('Payment Successful via Bank Transfer')
+    } else if (selectedMethod === 'paypal') {
+      console.log('Redirecting to PayPal...')
+      setPaymentStatus('Payment Pending - Redirecting to PayPal')
+    }
   }
 
   return (
-      <div className='h-full py-4 px-8 mt-8   bg-white rounded-lg shadow-lg'>
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-          {/* Top Section with 3 Horizontal Boxes */}
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div className='flex justify-around items-center mb-5 mt-5'>
-  <img
-    src='https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png'
-    alt='Visa Logo'
-    className='h-8'
-  />
-  <img
-    src='https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg'
-    alt='PayPal Logo'
-    className='h-8'
-  />
-  <img
-    src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_2019_logo.svg'
-    alt='MasterCard Logo'
-    className='h-8'
-  />
-</div>
-
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
+    <div className='px-8 py-4 mt-8 bg-white rounded-lg shadow-lg h-4/5'>
+      {/* Payment Method Selection */}
+      <div className='flex items-center justify-around mt-5 mb-5'>
+        <img
+          src='https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png'
+          alt='Visa Logo'
+          className={`h-8 cursor-pointer ${
+            selectedMethod === 'creditCard' ? 'border-2 border-gray-200' : ''
+          }`}
+          onClick={() => setSelectedMethod('creditCard')}
+        />
+        <img
+          src='https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg'
+          alt='PayPal Logo'
+          className={`h-8 cursor-pointer ${
+            selectedMethod === 'paypal' ? 'border-2 border-gray-200' : ''
+          }`}
+          onClick={() => setSelectedMethod('paypal')}
+        />
+        <img
+          src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_2019_logo.svg'
+          alt='Plaid Logo'
+          className={`h-8 cursor-pointer ${
+            selectedMethod === 'plaid'
+              ? 'border-2 border-gray-200 rounded-lg'
+              : ''
+          }`}
+          onClick={() => setSelectedMethod('plaid')}
+        />
+      </div>
+
+      {/* Dynamic Input Fields */}
       <div className='space-y-7'>
-        {/* Card Holder Name */}
-        <div>
-          <label
-            htmlFor='cardHolderName'
-            className='block text-sm font-semibold text-gray-700'
-          >
-            Card Holder Name
-          </label>
-          <input
-            type='text'
-            id='cardHolderName'
-            value={cardHolderName}
-            onChange={e => setCardHolderName(e.target.value)}
-            className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-            placeholder='Enter your name'
-          />
-        </div>
+        {/* Credit Card Input Fields */}
+        {selectedMethod === 'creditCard' && (
+          <>
+            <div className='mt-10'>
+              <label
+                htmlFor='cardHolderName'
+                className='block text-sm font-semibold text-gray-700'
+              >
+                Card Holder Name
+              </label>
+              <input
+                type='text'
+                id='cardHolderName'
+                value={cardHolderName}
+                onChange={e => setCardHolderName(e.target.value)}
+                className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                placeholder='Enter your name'
+              />
+            </div>
+            <div>
+              <label
+                htmlFor='cardNumber'
+                className='block text-sm font-semibold text-gray-700'
+              >
+                Card Number
+              </label>
+              <input
+                type='text'
+                id='cardNumber'
+                value={cardNumber}
+                onChange={e => setCardNumber(e.target.value)}
+                className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                placeholder='Enter your card number'
+              />
+            </div>
+            <div className='flex space-x-4'>
+              <div className='w-1/2'>
+                <label
+                  htmlFor='expirationDate'
+                  className='block text-sm font-semibold text-gray-700'
+                >
+                  Expiration Date
+                </label>
+                <input
+                  type='text'
+                  id='expirationDate'
+                  value={expirationDate}
+                  onChange={e => setExpirationDate(e.target.value)}
+                  className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  placeholder='MM/YY'
+                />
+              </div>
+              <div className='w-1/2'>
+                <label
+                  htmlFor='cvv'
+                  className='block text-sm font-semibold text-gray-700'
+                >
+                  CVV
+                </label>
+                <input
+                  type='text'
+                  id='cvv'
+                  value={cvv}
+                  onChange={e => setCvv(e.target.value)}
+                  className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                  placeholder='Enter CVV'
+                />
+              </div>
+            </div>
+          </>
+        )}
 
-        {/* Card Number */}
-        <div>
-          <label
-            htmlFor='cardNumber'
-            className='block text-sm font-semibold text-gray-700'
-          >
-            Card Number
-          </label>
-          <input
-            type='text'
-            id='cardNumber'
-            value={cardNumber}
-            onChange={e => setCardNumber(e.target.value)}
-            className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-            placeholder='Enter your card number'
-          />
-        </div>
-
-        {/* Expiration Date and CVV */}
-        <div className='flex space-x-4'>
-          {/* Expiration Date */}
-          <div className='w-1/2'>
-            <label
-              htmlFor='expirationDate'
-              className='block text-sm font-semibold text-gray-700'
-            >
-              Expiration Date
-            </label>
-            <input
-              type='text'
-              id='expirationDate'
-              value={expirationDate}
-              onChange={e => setExpirationDate(e.target.value)}
-              className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-              placeholder='MM/YY'
-            />
+        {/* PayPal Input (No additional inputs for PayPal) */}
+        {selectedMethod === 'paypal' && (
+          <div className='text-gray-700'>
+            PayPal selected. You will be redirected to PayPal for secure
+            payment.
           </div>
+        )}
 
-          {/* CVV */}
-          <div className='w-1/2'>
-            <label
-              htmlFor='cvv'
-              className='block text-sm font-semibold text-gray-700'
-            >
-              CVV
-            </label>
-            <input
-              type='text'
-              id='cvv'
-              value={cvv}
-              onChange={e => setCvv(e.target.value)}
-              className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-              placeholder='Enter CVV'
-            />
+        {/* Bank Transfer Input Fields */}
+        {selectedMethod === 'plaid' && (
+          <>
+            <div>
+              <label
+                htmlFor='bankAccount'
+                className='block text-sm font-semibold text-gray-700'
+              >
+                Bank Account Number
+              </label>
+              <input
+                type='text'
+                id='bankAccount'
+                value={bankAccount}
+                onChange={e => setBankAccount(e.target.value)}
+                className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                placeholder='Enter your bank account number'
+              />
+            </div>
+            <div>
+              <label
+                htmlFor='routingNumber'
+                className='block text-sm font-semibold text-gray-700'
+              >
+                Routing Number
+              </label>
+              <input
+                type='text'
+                id='routingNumber'
+                value={routingNumber}
+                onChange={e => setRoutingNumber(e.target.value)}
+                className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                placeholder='Enter your routing number'
+              />
+            </div>
+          </>
+        )}
+
+        {/* Payment Confirmation */}
+        {paymentStatus && (
+          <div className='mt-5 text-sm font-semibold text-center text-gray-700'>
+            {paymentStatus}
           </div>
-        </div>
+        )}
 
-        {/* Pay Now Button */}
-        <div>
-          <button
-            onClick={handleSubmit}
-            className='w-full  mt-10 py-3 bg-button-gpt text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'
-          >
-            Pay Now
-          </button>
-        </div>
+        {/* Payment Button */}
+        {selectedMethod && (
+          <div>
+            <button
+              onClick={handleSubmit}
+              className='w-full py-3 mt-10 text-white rounded-md bg-button-gpt hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            >
+              Pay Now
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

@@ -19,6 +19,10 @@ export default {
 			colors: {
 				'dark-white':"#f8f5fe",
 				'button-gpt': '#10a37f',
+				'button-gpt-dark':
+					// '#1074a3',
+					// '#34bfa3',
+					"#0b7a59",
 				'button-gpt-hover': '#095c46',
 				'main-background': '#ffffff',
 				'bg-card': '#f7f7f8',

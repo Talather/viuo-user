@@ -72,7 +72,7 @@ export function AppSidebar() {
                 className={({ isActive }) =>
                   `flex items-center gap-4 p-3 rounded-md ${
                     isActive
-                      ? "bg-button-gpt-hover text-white font-semibold"
+                      ? "bg-button-gpt-dark text-white font-semibold"
                       : null
                   }`
                 }

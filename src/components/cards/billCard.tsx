@@ -117,7 +117,7 @@ export default function FileRow ({ indexC = 1, onClick, bill }: BillCardProps) {
             >
               <Chip
                 label='Top Priority'
-                color='secondary'
+                color='primary'
                 sx={{
                   '& .MuiChip-label': {
                     color: 'white',
