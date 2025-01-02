@@ -468,17 +468,51 @@ const PaymentCheckout: React.FC = () => {
         )}
 
         {/* PayPal Input (No additional inputs for PayPal) */}
-        {selectedMethod === 'paypal' && (
-          <div className='text-gray-700'>
-            PayPal selected. You will be redirected to PayPal for secure
-            payment.
-          </div>
-        )}
+        {
+  selectedMethod === 'paypal' && (
+    <>
+      <div className='mt-10'>
+        <label
+          htmlFor='paypalEmail'
+          className='block text-sm font-semibold text-gray-700'
+        >
+          PayPal Email Address
+        </label>
+        <input
+          type='email'
+          id='paypalEmail'
+          value={''}
+          // onChange={e => setPaypalEmail(e.target.value)}
+          className='w-full p-3 mt-1 border border-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+          placeholder='Enter your PayPal email'
+        />
+      </div>
+      <div>
+        <label
+          htmlFor='paypalAccountId'
+          className='block text-sm font-semibold text-gray-700'
+        >
+          PayPal Account ID (Optional)
+        </label>
+        <input
+          type='text'
+          id='paypalAccountId'
+          value={"paypalAccountId"}
+          // onChange={e => setPaypalAccountId(e.target.value)}
+          className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+          placeholder='Enter your PayPal account ID'
+        />
+      </div>
+    </>
+  )
+}
+
 
         {/* Bank Transfer Input Fields */}
         {selectedMethod === 'plaid' && (
           <>
-            <div>
+            <div className = 'mt-10'
+>
               <label
                 htmlFor='bankAccount'
                 className='block text-sm font-semibold text-gray-700'

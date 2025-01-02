@@ -9,7 +9,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  // FormLabel,
+  FormLabel,
   FormMessage,
 } from "../components/ui/form";
 import { Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
@@ -54,7 +54,8 @@ const JobApplication = () => {
 
   const onSubmit = async (values: JobApplicationData) =>
     // values: JobApplicationData
-    {
+
+    {console.log("values: ", values)
       setIsLoading(true);
       const selectedDate = format(values.date, "PPP");
 
@@ -71,14 +72,14 @@ const JobApplication = () => {
       };
 
       try {
-        await emailjs.send(
-          import.meta.env.VITE_EMAIL_JS_SERVICE_KEY,
-          import.meta.env.VITE_EMAIL_JS_JOB_TEMPLATE_ID,
-          formData,
-          {
-            publicKey: import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY,
-          }
-        );
+        // await emailjs.send(
+        //   import.meta.env.VITE_EMAIL_JS_SERVICE_KEY,
+        //   import.meta.env.VITE_EMAIL_JS_JOB_TEMPLATE_ID,
+        //   formData,
+        //   {
+        //     publicKey: import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY,
+        //   }
+        // );
         toast({
           title: "Success",
           description: "Application Submitted",
@@ -197,21 +198,25 @@ const JobApplication = () => {
             )}
           />
 
-          {/* <FormField
-            control={form.control}
-            name="file"
-            render={() => {
-              return (
-                <FormItem>
-                  <FormLabel>Upload Resume</FormLabel>
-                  <FormControl>
-                    <Input type="file" placeholder="shadcn" {...fileRef} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          /> */}
+<FormField
+  control={form.control}
+  name='file'
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Upload Resume</FormLabel>
+      <FormControl>
+        <Input
+          type='file'
+          accept='.pdf,.doc,.docx'
+          onChange={e => field.onChange(e.target.files)} // Capture FileList
+          isInvalid={!!errors.file?.message}
+        />
+      </FormControl>
+      <FormMessage>{errors.file?.message}</FormMessage>
+    </FormItem>
+  )}
+/>
+
           <Select
             {...register("timeSlot")}
             variant="bordered"
