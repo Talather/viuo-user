@@ -6,8 +6,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "proxy": "http://localhost:5000/"
   },
+  "proxy": "http://localhost:5000/",
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@emotion/react": "^11.14.0",
@@ -31,6 +33,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.2",
     "apexcharts": "^4.3.0",
+    "axios": "^1.7.9",
     "chart.js": "^4.4.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -55,6 +58,7 @@
     "tailwind-merge": "^2.5.5",
     "tailwind-scrollbar-hide": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
+    "tesseract.js": "^4.1.1",
     "uuid": "^11.0.3",
     "zod": "^3.23.8"
   },

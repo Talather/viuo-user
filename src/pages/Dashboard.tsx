@@ -77,10 +77,17 @@ const Dashboard = () => {
             />
 
             <Button
-              children={'Create New Bill'}
-              className='rounded-md w-15 bg-button-gpt h-2/3 text-md'
-              onClick={() => navigate('/bills/create')}
+              children={'Create Bill'}
+              className=' mr-5 rounded-md w-15 bg-button-gpt h-2/3 text-md'
+              onClick={() => navigate('/bills/create/false')}
             />
+
+            <Button
+  children={'Upload Bill'}
+  className='rounded-md w-15 bg-button-gpt h-2/3 text-md'
+  onClick={() => navigate('/bills/create/true')}
+/>
+
           </div>
         </div>
       </div>

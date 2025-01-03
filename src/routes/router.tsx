@@ -167,7 +167,7 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
       },
        {
-        path: "create",
+        path: "create/:upload",
         element: <CreateBill />,
       },
      
