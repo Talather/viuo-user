@@ -82,7 +82,6 @@ const Dashboard = () => {
               className=" mr-5 rounded-md w-15 bg-button-gpt h-2/3 text-md"
               onClick={() => navigate("/bills/create/false")}
             />
-
           </div>
         </div>
       </div>
@@ -128,7 +127,7 @@ const Dashboard = () => {
 
 const NoBillsMessage: React.FC = () => {
   return (
-    <div className="mt-32">
+    <div className="mt-32 flex justify-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -142,13 +141,13 @@ const NoBillsMessage: React.FC = () => {
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ repeat: Infinity, duration: 2.5 }}
           ></motion.div>
-          <span
+          {/* <span
             role="img"
             aria-label="sad-face"
             className="relative z-10 text-6xl"
           >
             😁
-          </span>
+          </span> */}
         </div>
         <p className="mt-4 text-xl font-semibold text-white">
           No bills available
