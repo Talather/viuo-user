@@ -25,7 +25,11 @@ interface Bill {
   early_payment_savings?: number
   is_consolidated?: boolean
   created_at: Timestamp
-  updated_at: Timestamp
+  updated_at: Timestamp,
+  remainingAmount?: any
+  pastDue?: any
+  accountNumber:any,
+
 }
 
 // Create a new bill in Firestore

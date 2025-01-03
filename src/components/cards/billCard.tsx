@@ -283,7 +283,7 @@ export default function FileRow ({ indexC = 1, onClick, bill }: BillCardProps) {
               thousandSeparator={true}
               prefix={"$"}
             /> */}
-            {bill?.status || ''}
+            {bill?.remainingBalance || ''}
           </div>
           <div
             className='minLabel'
@@ -301,7 +301,7 @@ export default function FileRow ({ indexC = 1, onClick, bill }: BillCardProps) {
               wordWrap: 'break-word'
             }}
           >
-            Status
+            Rem Balance
           </div>
 
           <div
