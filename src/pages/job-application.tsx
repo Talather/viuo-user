@@ -26,13 +26,15 @@ import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { Calendar } from '../components/ui/calendar'
 import axios from 'axios'
+import { storage } from '../lib/firebaseConfig'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 type JobApplicationData = z.infer<typeof JobApplicationSchema>
 
 const JobApplication = () => {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState<boolean>(false)
-
+  const [uDoc, setUDoc] = useState<any>(null)
   const form = useForm<JobApplicationData>({
     resolver: zodResolver(JobApplicationSchema),
     defaultValues: {
@@ -53,10 +55,36 @@ const JobApplication = () => {
     formState: { errors }
   } = form
 
+  const handleFileUpload = (event: any) => {
+    // const file = event.target.files[0]
+    console.log('bhrwa', event.target.files)
+    setUDoc(event.target.files[0])
+    // if (file) {
+    //   const fileUrl = URL.createObjectURL(file)
+    //   setVideoSource(fileUrl)
+    // }
+  }
+
   const onSubmit = async (values: JobApplicationData) =>
     // values: JobApplicationData
 
     {
+      let docRef
+
+      docRef = ref(storage, `docs/${uDoc.name}`)
+
+      const snapshot = await uploadBytes(docRef, uDoc)
+
+      console.log('Uploaded a doc!')
+
+      // Get the download URL
+      const docUrl = await getDownloadURL(snapshot.ref)
+
+      console.log('doc URL:', docUrl)
+
+      // Update formData or perform other operations
+      // formData.fUrl = url.toString();
+
       console.log('values: ', values)
       setIsLoading(true)
       const selectedDate = format(values.date, 'PPP')
@@ -74,11 +102,88 @@ const JobApplication = () => {
       }
 
       try {
-         await axios.post(
-          'http://localhost:5000/send-message',
-          { email: 'atherjawad11@gmail.com',subject:"limanza", message: formData }
-        )
-        
+        //  await axios.post(
+        //   'http://localhost:5000/send-message',
+        //   { email: 'atherjawad11@gmail.com',subject:"limanza", message: formData }
+        // )
+        // const axios = require("axios");
+
+        const accessKey = 'C63SwSugFYkrclqIedXCPkaGoyEh8MIEkNRO'
+        const channelId = '367dbe7b-7e2b-5be1-a4c7-6327128b7b6b'
+        const workspaceId = 'f8f5bb9b-7243-48d8-9bcc-29b3792a27aa'
+        const email = 'info@vuior.com'
+
+        const url = `https://api.bird.com/workspaces/${workspaceId}/channels/${channelId}/messages`
+        console.log('formData.file:', values.file)
+
+        const data = {
+          receiver: {
+            contacts: [
+              {
+                identifierValue: email
+              }
+            ]
+          },
+          body: {
+            type: 'html',
+            html: {
+              metadata: {
+                subject: 'Resume For Job Application'
+              },
+
+              html: `
+  <p>New job application received!</p>
+  <ul>
+    <li><strong>Name:</strong> ${formData.name}</li>
+    <li><strong>Email:</strong> ${formData.email}</li>
+    <li><strong>Phone:</strong> ${formData.phone}</li>
+    <li><strong>Date:</strong> ${formData.selectedDate}</li>
+    <li><strong>Time Slot:</strong> ${formData.timeSlot}</li>
+    <li><strong>Promotional Messages:</strong> ${formData.agreeToPromotionalMessages}</li>
+  </ul>
+  <div style="width:500px; background-color:#10a37f; text-align:center; justify-content:center; color:white; border-radius:05px;">
+    <a href="${docUrl}" style="color:white;">Click Here to Download Resume</a>
+  </div>
+`,
+              text: `
+  New job application received!
+  Name: ${formData.name}
+  Email: ${formData.email}
+  Phone: ${formData.phone}
+  Date: ${formData.selectedDate}
+  Time Slot: ${formData.timeSlot}
+  Promotional Messages: ${formData.agreeToPromotionalMessages}
+  Resume: ${docUrl}
+`
+
+              // attachments: [
+              //         {
+              //           mediaUrl: docUrl,
+              //           filename: uDoc.name,
+              //         },
+              //       ],
+            }
+          }
+        }
+
+        const headers = {
+          Authorization: `AccessKey ${accessKey}`,
+          'Content-Type': 'application/json'
+        }
+
+        axios
+          .post(url, data, { headers })
+          .then(response => {
+            console.log('Email sent successfully:', response.data)
+          })
+          .catch(error => {
+            console.log('madar', error)
+            console.error(
+              'Error sending email:',
+              error.response?.data || error.message
+            )
+          })
+
         // await emailjs.send(
         //   import.meta.env.VITE_EMAIL_JS_SERVICE_KEY,
         //   import.meta.env.VITE_EMAIL_JS_JOB_TEMPLATE_ID,
@@ -93,7 +198,7 @@ const JobApplication = () => {
         })
         form.reset()
       } catch (error) {
-        console.log("maachi",error)
+        console.log('maachi', error)
         toast({
           title: 'Error',
           description: 'Unable to submit application',
@@ -106,15 +211,15 @@ const JobApplication = () => {
     }
 
   return (
-    <div className='w-full flex-col flex items-center justify-center '>
-      <div className='mb-5 w-full'>
-        <h2 className='md:text-3xl text-4xl md:mb-2 font-semibold mb-5'>
+    <div className='flex flex-col items-center justify-center w-full '>
+      <div className='w-full mb-5'>
+        <h2 className='mb-5 text-4xl font-semibold md:text-3xl md:mb-2'>
           Details about you
         </h2>
       </div>
       <Form {...form}>
         <form
-          className='flex w-full flex-col gap-8 lg:gap-5'
+          className='flex flex-col w-full gap-8 lg:gap-5'
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className='grid gap-4 md:grid-cols-2'>
@@ -216,7 +321,11 @@ const JobApplication = () => {
                   <Input
                     type='file'
                     accept='.pdf,.doc,.docx'
-                    onChange={e => field.onChange(e.target.files)} // Capture FileList
+                    // onChange={handleFileUpload}
+                    onChange={e => {
+                      field.onChange(e.target.files)
+                      handleFileUpload(e)
+                    }} // Capture FileList
                     isInvalid={!!errors.file?.message}
                   />
                 </FormControl>
@@ -260,7 +369,7 @@ const JobApplication = () => {
                         ) : (
                           <span>Pick a date</span>
                         )}
-                        <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                        <CalendarIcon className='w-4 h-4 ml-auto opacity-50' />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -306,7 +415,7 @@ const JobApplication = () => {
 
             <Button
               radius='sm'
-              className='text-white font-bold hover:bg-button-gpt-hover bg-button-gpt'
+              className='font-bold text-white hover:bg-button-gpt-hover bg-button-gpt'
               isLoading={isLoading}
               variant='faded'
               type='submit'
