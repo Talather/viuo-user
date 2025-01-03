@@ -65,7 +65,7 @@ export default function FileRow ({ indexC = 1, onClick, bill }: BillCardProps) {
     window.location.reload()
 
   }
-  console.log('chytr', bill)
+  // console.log('chytr', bill)
   useEffect(() => {
     // if (props.cardtype === "milestonecard") {
     //   setIsFlipped(true);

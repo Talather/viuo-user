@@ -507,15 +507,15 @@ export default function BillFormComponent ({ bill = {}, update = false }) {
   const { upload } = useParams()
 
 
-  useEffect(() => {
-  if (extractedText) {
-    for (const [key, value] of Object.entries(extractedText)) {
-      if (value) {
-        setValue(key, value)
-      }
-    }
-  }
-}, [extractedText])
+//   useEffect(() => {
+//   if (extractedText) {
+//     for (const [key, value] of Object.entries(extractedText)) {
+//       if (value) {
+//         setValue(key, value)
+//       }
+//     }
+//   }
+// }, [extractedText])
 
 
   const isUploadMode = upload === 'true'
@@ -615,9 +615,9 @@ export default function BillFormComponent ({ bill = {}, update = false }) {
 )
     // Set form values automatically
     for (const [key, value] of Object.entries(cleanedValues)) {
-      if (value) {
+      // if (value) {
         setValue(key, value)
-      }
+      // }
     }
   } catch (error) {
     console.error('Failed to extract text from PDF', error)
@@ -648,6 +648,23 @@ export default function BillFormComponent ({ bill = {}, update = false }) {
     }
   }, [state, navigate])
 
+
+  let formLabels = extractedText ? {
+    name: "",
+    amount: "",
+    dueDate: "",
+    remainingBalance: "",
+    pastDue: "",
+    accountNumber:""
+  } : {
+    name: "Bill Name",
+    amount: "Bill Amount",
+    dueDate: "Bill Due Date",
+    remainingBalance: "Remaining Balance",
+    pastDue: "Bill Past Due",
+    accountNumber:"Bill Account Number"
+  }
+
   return (
     <Modal
       backdrop='blur'
@@ -658,111 +675,128 @@ export default function BillFormComponent ({ bill = {}, update = false }) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <ModalContent>
           <ModalHeader>{isUploadMode ? 'Upload ' : 'Create '}Bill</ModalHeader>
-          <ModalBody>
-            {state?.error && <div className='error'>{state.error}</div>}
-            <div className={styles.formWrapper}>
-              <div className={styles.formElementsWrapper}>
-                <Input
-                  className={styles.formInput}
-                  // defaultValue={extractedText
-                  // ?.name}
-                  value={extractedText?.name || ''}
-                  onChange={(e) =>{setValue("name",'')}}
-                  errorMessage={!!errors.name && 'Please provide the bill name'}
-                  isInvalid={!!errors.name}
-                  label={ 'Bill Name'}
-                  labelPlacement='outside'
-                  {...register('name', { required: true })}
-                  radius='sm'
-                  type='text'
-                  variant='bordered'
-                />
-                <Input
-                  className={styles.formInput}
-//                   defaultValue={extractedText
-// ?.amount}
-                  errorMessage={
-                    !!errors.amount && 'Please provide the bill amount'
-                  }
-                  value={extractedText?.amount || ''}
-                  isInvalid={!!errors.amount}
-                  label='Bill Amount'
-                  labelPlacement='outside'
-                  {...register('amount', { required: true })}
-                  radius='sm'
-                  type='text'
-                  variant='bordered'
-                />
-              </div>
-              <div className={styles.formElementsWrapper}>
-                <Input
-                  className={styles.formInput}
-//                   defaultValue={extractedText
-                  // ?.accountNumber}
-                  value={extractedText?.accountNumber || ''}
-                  errorMessage={
-                    !!errors.accountNumber &&
-                    'Please provide the account number'
-                  }
-                  isInvalid={!!errors.accountNumber}
-                  label='Account Number'
-                  labelPlacement='outside'
-                  {...register('accountNumber', { required: true })}
-                  radius='sm'
-                  type='text'
-                  variant='bordered'
-                />
-                <Input
-                  className={styles.formInput}
-                  // defaultValue={extractedText?.dueDate}
-                  value={extractedText?.dueDate || ''}
-                  errorMessage={
-                    !!errors.dueDate && 'Please provide the due date'
-                  }
-                  isInvalid={!!errors.dueDate}
-                  label='Due Date'
-                  labelPlacement='outside'
-                  {...register('dueDate', { required: true })}
-                  radius='sm'
-                  type='date'
-                  variant='bordered'
-                />
-              </div>
-              <div className={styles.formElementsWrapper}>
-                <Input
-                  className={styles.formInput}
-//                   defaultValue={extractedText
-                  // ?.remainingBalance}
-                  value={extractedText?.remainingBalance || ''}
-                  errorMessage={
-                    !!errors.remainingBalance &&
-                    'Please provide the remaining balance'
-                  }
-                  isInvalid={!!errors.remainingBalance}
-                  label='Remaining Balance'
-                  labelPlacement='outside'
-                  {...register('remainingBalance', { required: true })}
-                  radius='sm'
-                  type='number'
-                  variant='bordered'
-                />
-                <Input
-                  className={styles.formInput}
-//                   defaultValue={extractedText
-// ?.pastDue}
-                  errorMessage={
-                    !!errors.pastDue && 'Please provide the past due balance'
-                  }
-                  value={extractedText?.pastDue || ''}
-                  isInvalid={!!errors.pastDue}
-                  label='Past Due Balance'
-                  labelPlacement='outside'
-                  {...register('pastDue', { required: true })}
-                  radius='sm'
-                  type='number'
-                  variant='bordered'
-                />
-              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          {!extractedText && (
+            <ModalBody>
+              {state?.error && <div className='error'>{state.error}</div>}
+              <div className={styles.formWrapper}>
+                <div className={styles.formElementsWrapper}>
+                  <Input
+                    className={styles.formInput}
+                    // defaultValue={extractedText
+                    //   ?.name || ''}
+                    // value={extractedText?.name || ''}
+                    // onChange={(e) =>{setValue("name",'')}}
+                    errorMessage={!!errors.name && 'Please provide the bill name'}
+                    isInvalid={!!errors.name}
+                    label={formLabels.name}
+                    labelPlacement='outside'
+                    {...register('name', { required: true })}
+                    radius='sm'
+                    type='text'
+                    variant='bordered'
+                  />
+                  <Input
+                    className={styles.formInput}
+                    // defaultValue={extractedText
+                    //   ?.amount}
+                    errorMessage={
+                      !!errors.amount && 'Please provide the bill amount'
+                    }
+                    // value={extractedText?.amount || ''}
+                    isInvalid={!!errors.amount}
+                    label={formLabels.amount}
+                    labelPlacement='outside'
+                    {...register('amount', { required: true })}
+                    radius='sm'
+                    type='text'
+                    variant='bordered'
+                  />
+                </div>
+                <div className={styles.formElementsWrapper}>
+                  <Input
+                    className={styles.formInput}
+                    // defaultValue={extractedText
+                    //   ?.accountNumber || ''}
+                    // value={extractedText?.accountNumber || ''}
+                    errorMessage={
+                      !!errors.accountNumber &&
+                      'Please provide the account number'
+                    }
+                    isInvalid={!!errors.accountNumber}
+                    label={formLabels.accountNumber}
+                    labelPlacement='outside'
+                    {...register('accountNumber', { required: true })}
+                    radius='sm'
+                    type='text'
+                    variant='bordered'
+                  />
+                  <Input
+                    className={styles.formInput}
+                    // defaultValue={extractedText?.dueDate || ''}
+                    // value={extractedText?.dueDate || ''}
+                    errorMessage={
+                      !!errors.dueDate && 'Please provide the due date'
+                    }
+                    isInvalid={!!errors.dueDate}
+                    label={formLabels.dueDate}
+                    labelPlacement='outside'
+                    {...register('dueDate', { required: true })}
+                    radius='sm'
+                    type='date'
+                    variant='bordered'
+                  />
+                </div>
+                <div className={styles.formElementsWrapper}>
+                  <Input
+                    className={styles.formInput}
+                    // defaultValue={extractedText
+                    //   ?.remainingBalance || ''}
+                    // value={extractedText?.remainingBalance || ''}
+                    errorMessage={
+                      !!errors.remainingBalance &&
+                      'Please provide the remaining balance'
+                    }
+                    isInvalid={!!errors.remainingBalance}
+                    label={formLabels.remainingBalance}
+                    labelPlacement='outside'
+                    {...register('remainingBalance', { required: true })}
+                    radius='sm'
+                    type='number'
+                    variant='bordered'
+                  />
+                  <Input
+                    className={styles.formInput}
+                    // defaultValue={extractedText
+                    //   ?.pastDue || ''}
+                    errorMessage={
+                      !!errors.pastDue && 'Please provide the past due balance'
+                    }
+                    // value={extractedText?.pastDue || ''}
+                    isInvalid={!!errors.pastDue}
+                    label={formLabels.pastDue}
+                    labelPlacement='outside'
+                    {...register('pastDue', { required: true })}
+                    radius='sm'
+                    type='number'
+                    variant='bordered'
+                  />
+                </div>
               
                 <div className={styles.formElementsWrapper}>
                   <Input
@@ -775,8 +809,117 @@ export default function BillFormComponent ({ bill = {}, update = false }) {
                   />
                 </div>
               
-            </div>
-          </ModalBody>
+              </div>
+            </ModalBody>)}
+          
+
+
+          {extractedText && (<ModalBody>
+  {state?.error && <div className='error'>{state.error}</div>}
+  <div className={styles.formWrapper}>
+    <div className={styles.formElementsWrapper}>
+      <Input
+        className={styles.formInput}
+        defaultValue={extractedText?.name || ''}
+        // value={extractedText?.name || ''}
+        // onChange={(e) =>{setValue("name",'')}}
+        errorMessage={!!errors.name && 'Please provide the bill name'}
+        isInvalid={!!errors.name}
+        label={formLabels.name}
+        labelPlacement='outside'
+        {...register('name', { required: true })}
+        radius='sm'
+        type='text'
+        variant='bordered'
+      />
+      <Input
+        className={styles.formInput}
+        defaultValue={extractedText?.amount}
+        errorMessage={!!errors.amount && 'Please provide the bill amount'}
+        // value={extractedText?.amount || ''}
+        isInvalid={!!errors.amount}
+        label={formLabels.amount}
+        labelPlacement='outside'
+        {...register('amount', { required: true })}
+        radius='sm'
+        type='text'
+        variant='bordered'
+      />
+    </div>
+    <div className={styles.formElementsWrapper}>
+      <Input
+        className={styles.formInput}
+        defaultValue={extractedText?.accountNumber || ''}
+        // value={extractedText?.accountNumber || ''}
+        errorMessage={
+          !!errors.accountNumber && 'Please provide the account number'
+        }
+        isInvalid={!!errors.accountNumber}
+        label={formLabels.accountNumber}
+        labelPlacement='outside'
+        {...register('accountNumber', { required: true })}
+        radius='sm'
+        type='text'
+        variant='bordered'
+      />
+      <Input
+        className={styles.formInput}
+        defaultValue={extractedText?.dueDate || ''}
+        // value={extractedText?.dueDate || ''}
+        errorMessage={!!errors.dueDate && 'Please provide the due date'}
+        isInvalid={!!errors.dueDate}
+        label={formLabels.dueDate}
+        labelPlacement='outside'
+        {...register('dueDate', { required: true })}
+        radius='sm'
+        type='date'
+        variant='bordered'
+      />
+    </div>
+    <div className={styles.formElementsWrapper}>
+      <Input
+        className={styles.formInput}
+        defaultValue={extractedText?.remainingBalance || ''}
+        // value={extractedText?.remainingBalance || ''}
+        errorMessage={
+          !!errors.remainingBalance && 'Please provide the remaining balance'
+        }
+        isInvalid={!!errors.remainingBalance}
+        label={formLabels.remainingBalance}
+        labelPlacement='outside'
+        {...register('remainingBalance', { required: true })}
+        radius='sm'
+        type='number'
+        variant='bordered'
+      />
+      <Input
+        className={styles.formInput}
+        defaultValue={extractedText?.pastDue || ''}
+        errorMessage={!!errors.pastDue && 'Please provide the past due balance'}
+        // value={extractedText?.pastDue || ''}
+        isInvalid={!!errors.pastDue}
+        label={formLabels.pastDue}
+        labelPlacement='inside'
+        {...register('pastDue', { required: true })}
+        radius='sm'
+        type='number'
+        variant='bordered'
+      />
+    </div>
+
+    <div className={styles.formElementsWrapper}>
+      <Input
+        type='file'
+        label='Upload Bill'
+        onChange={extractText}
+        accept='.pdf,.jpg,.png'
+        radius='sm'
+        variant='bordered'
+      />
+    </div>
+  </div>
+</ModalBody>
+)}
           <ModalFooter className={styles.footer}>
             <Button
               className={styles.footerButton}

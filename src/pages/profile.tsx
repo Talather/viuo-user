@@ -19,7 +19,7 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     if (user) {
       setProfileLink(
-        `https://example.com/user/${user.name
+        `https://vuior.com/user/${user.name
           ?.toLowerCase()
           .replace(/ /g, "-")}`
       );

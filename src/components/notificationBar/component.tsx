@@ -1,9 +1,63 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { FaBell } from 'react-icons/fa' // Import bell icon from react-icons
+import Avatar from '../avatar'
+import { useAuth } from '@/hooks/useAuth'
+import { db } from '../../lib/firebaseConfig' // import the Firebase configuration
+import { doc,getDoc } from 'firebase/firestore' // Import Firestore methods
 
 const DashboardHeader: React.FC = () => {
   const [notifications, setNotifications] = useState<string[]>([])
   const [showNotifications, setShowNotifications] = useState<boolean>(false)
+  const [fuser, setFUser] = useState<any>(null)
+
+
+
+  const { user }:any = useAuth()
+
+
+
+ console.log("mitra",user)
+
+
+//   const [loading, setLoading] = useState(false)
+// const [error, setError] = useState(null)
+
+useEffect(() => {
+  const fetchUserDocs = async () => {
+    // setLoading(true) // Set loading to true when starting to fetch
+    // setError(null) // Reset error state before each fetch attempt
+    try {
+
+
+    
+      const docRef = doc(db, 'users', user?.id)
+      // const docSnap = 
+
+
+      // const q = query(collection(db, 'users'), where('id', '==', user.id))
+      const docSnap =await getDoc(docRef)
+ 
+
+
+     if (docSnap.exists()) {
+       console.log("Document data:", docSnap.data());
+       const userDoc = docSnap.data()
+       setFUser(userDoc)
+    } else {
+      console.log("No such document!");
+    }
+  } catch (error) {
+    console.error("Error getting document:", error);
+  }
+  }
+
+  if (user) {
+    fetchUserDocs()
+  }
+}, [user])
+
+
+  useEffect(()=>{console.log("vhu",fuser)},[fuser])
 
   // Mock notifications data
   const sampleNotifications = [
@@ -30,9 +84,11 @@ const DashboardHeader: React.FC = () => {
   }
 
   return (
+    <div className='flex flex-row justify-around '>
+      <div><Avatar imageUrl={fuser?.avatar || '' } /></div>
     <div
       onClick={handleBellClick}
-      className='flex items-center justify-between p-2 mr-2 text-white bg-red-600 rounded-full'
+      className='flex items-center justify-between px-4 ml-3 mr-2 text-white bg-red-600 rounded-full'
     >
       {/* <h1 className='text-xl font-bold'></h1> */}
 
@@ -61,7 +117,8 @@ const DashboardHeader: React.FC = () => {
 </div>
 )}
       </div>
-    </div>
+      </div>
+      </div>
   )
 }
 
