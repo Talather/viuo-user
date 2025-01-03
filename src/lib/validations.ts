@@ -43,15 +43,16 @@ export const ConsultationSchema = z.object({
 // import { z } from 'zod'
 
 export const JobApplicationSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  jobTitle: z.string().min(1, "Job Title is required"),
   email: z.string().email(),
-  phoneNumber: z.string().min(1, 'Phone number is required'),
+  phoneNumber: z.string().min(1, "Phone number is required"),
   agreeToPromotionalMessages: z.boolean().optional(),
   date: z.date({
-    required_error: 'Date is required.'
+    required_error: "Date is required.",
   }),
-  timeSlot: z.string().min(1, 'Time slot is required'),
+  timeSlot: z.string().min(1, "Time slot is required"),
   file: z
     .instanceof(FileList)
     .refine((files) => files.length > 0, "File is required")
@@ -62,6 +63,4 @@ export const JobApplicationSchema = z.object({
         ),
       "Only PDF or Word documents are allowed"
     ),
-
-})
-
+});

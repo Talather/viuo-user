@@ -90,17 +90,10 @@ const JobApplication = () => {
     };
 
     try {
-      //  await axios.post(
-      //   'http://localhost:5000/send-message',
-      //   { email: 'atherjawad11@gmail.com',subject:"limanza", message: formData }
-      // )
-      // const axios = require("axios");
-
       const accessKey = "C63SwSugFYkrclqIedXCPkaGoyEh8MIEkNRO";
       const channelId = "367dbe7b-7e2b-5be1-a4c7-6327128b7b6b";
       const workspaceId = "f8f5bb9b-7243-48d8-9bcc-29b3792a27aa";
       const email = "info@vuior.com";
-
       const url = `https://api.bird.com/workspaces/${workspaceId}/channels/${channelId}/messages`;
       console.log("formData.file:", values.file);
 
@@ -116,9 +109,8 @@ const JobApplication = () => {
           type: "html",
           html: {
             metadata: {
-              subject: "Resume For Job Application",
+              subject: `Resume For Job Application ${formData.email}`,
             },
-
             html: `
             <p>New job application received!</p>
             <ul>
