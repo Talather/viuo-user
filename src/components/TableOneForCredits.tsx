@@ -1,27 +1,27 @@
 const rewardData = [
   {
-    user: "John Doe",
+    user: "Electricity",
     paymentDate: "2024-12-20",
     earlyByDays: 5,
     reward: "$20",
     rewardStatus: "Redeemed",
   },
   {
-    user: "Jane Smith",
+    user: "Netflix",
     paymentDate: "2024-12-22",
     earlyByDays: 3,
     reward: "$15",
     rewardStatus: "Pending",
   },
   {
-    user: "Alice Brown",
+    user: "Amazon Prime",
     paymentDate: "2024-12-21",
     earlyByDays: 7,
     reward: "$25",
     rewardStatus: "Redeemed",
   },
   {
-    user: "Robert Johnson",
+    user: "Message bird",
     paymentDate: "2024-12-23",
     earlyByDays: 2,
     reward: "$10",
@@ -36,11 +36,11 @@ const rewardData = [
   },
 ];
 
-const TableRewards = () => {
+const TableCredits = () => {
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h4 className="mb-10 font-bold text-body-2xlg text-dark dark:text-white">
-        Rewards for Early Payments
+        Credits Earned For
       </h4>
 
       <div className="flex flex-col">
@@ -48,7 +48,7 @@ const TableRewards = () => {
         <div className="grid grid-cols-5 text-button-gpt">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              User
+              Bill Name
             </h5>
           </div>
           <div className="px-2 pb-3.5 text-center">
@@ -128,4 +128,4 @@ const TableRewards = () => {
   );
 };
 
-export default TableRewards;
+export default TableCredits;

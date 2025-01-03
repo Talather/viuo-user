@@ -118,19 +118,6 @@ const ForgetPassword = () => {
           </div>
         </form>
       </Form>
-      {/* <div className="flex mt-10 items-center gap-2">
-        <p>
-          Login{" "}
-          <NavLink
-            className={
-              "text-button-gpt font-bold hover:underline transition-all"
-            }
-            to={"/create-account"}
-          >
-            Here
-          </NavLink>
-        </p>
-      </div> */}
     </div>
   );
 };
