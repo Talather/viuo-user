@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import { useContext } from "react";
 // import { AuthContext } from "../context/AuthContext";
 
@@ -46,52 +47,15 @@ export const useAuth = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-
-  //    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-  //     setUser(currentUser);
-  //     // setLoading(false); // Set loading to false once the user state is determined
-  //   });
-
-  //   // Cleanup the subscription on unmount
-  //   return () => unsubscribe();
-
-  // }, []);
-
-  // const context = useContext(AuthContext);
-  // const { toast } = useToast();
-  // const [user, setUser] = useState<any>(null);
-  // const navigate = useNavigate();
-
   if (context === undefined) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
 
-
-
-
-
-
-  // useEffect(() => {
-  
-  //   const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-  //     if (firebaseUser) {
-  //       setUser(firebaseUser);
-  //       // setLoading(false);
-  //     }
-  //     else {
-        
-  //       setUser(null)
-
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
-
-
-
-  const registerUser = async (email: string, password: string,timeZone:any) => {
+  const registerUser = async (
+    email: string,
+    password: string,
+    timeZone: any
+  ) => {
     setIsLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -107,7 +71,7 @@ export const useAuth = () => {
         name: email.split("@")[0],
         role: "user",
         avatar: DEFAULT_AVATAR,
-        timeZone:timeZone,
+        timeZone: timeZone,
         createdAt: new Date(),
       });
 
@@ -115,15 +79,6 @@ export const useAuth = () => {
         title: "Account Created Successfully.",
         description: "Use your email and password to login again anytime.",
       });
-
-      // Log the user in
-      // context.login({
-      //   id: user.uid,
-      //   email: user.email!,
-      //   name: email.split("@")[0],
-      //   role: "user",
-      //   avatar: DEFAULT_AVATAR,
-      // });
 
       setIsLoading(false);
       return { success: true, user };
@@ -154,14 +109,6 @@ export const useAuth = () => {
       if (userDoc.exists()) {
         const userData = userDoc.data();
         // console.log("cheel", userData);
-
-        // context.login({
-        //   id: user.uid,
-        //   email: user.email!,
-        //   name: userData.name,
-        //   role: userData.role,
-        //   avatar: userData.avatar,
-        // });
 
         toast({
           title: "Login Successful",
@@ -245,19 +192,18 @@ export const useAuth = () => {
 
   // console.log(...context)
 
-  let isAuthenticated:boolean;
+  let isAuthenticated: boolean;
   if (!context.user) {
-    isAuthenticated = false
-  }
-  else {
-    isAuthenticated = true
+    isAuthenticated = false;
+  } else {
+    isAuthenticated = true;
   }
 
   // console.log('mali', context.user)
   return {
     ...context,
     isAuthenticated,
-    user:context.user,
+    user: context.user,
     registerUser,
     login,
     sendResetPasswordEmail,
