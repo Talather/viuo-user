@@ -82,11 +82,11 @@ const Dashboard = () => {
               onClick={() => navigate('/bills/create/false')}
             />
 
-            <Button
+            {/* <Button
   children={'Upload Bill'}
   className='rounded-md w-15 bg-button-gpt h-2/3 text-md'
   onClick={() => navigate('/bills/create/true')}
-/>
+/> */}
 
           </div>
         </div>
