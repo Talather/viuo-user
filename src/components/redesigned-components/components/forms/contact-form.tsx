@@ -105,7 +105,7 @@ const ContactForm = () => {
               <li><strong>Promotional Messages:</strong> ${formData.agreeToPromotionalMessages}</li>
             </ul>
                  <div style="width:500px; background-color:#10a37f; text-align:center; justify-content:center; color:white; border-radius:05px;">
-              <a href="${docUrl}" style="color:white;">Click Here to Download Resume</a>
+              <a href="${docUrl}" style="color:white;">Click Here to Download</a>
             </div>
             `,
             text: `
