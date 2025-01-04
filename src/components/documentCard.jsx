@@ -27,173 +27,150 @@
 
 // export default DocumentCard
 
+import React from "react";
+import { Delete } from "lucide-react";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { db } from "@/lib/firebaseConfig";
+import { doc, deleteDoc } from "firebase/firestore";
 
-
-
-
-import React from 'react'
-import { Delete } from 'lucide-react'
-import IconButton from '@mui/material/IconButton'
-import DeleteIcon from '@mui/icons-material/Delete'
-import {db} from '@/lib/firebaseConfig'
-import { doc, deleteDoc } from 'firebase/firestore'
-
-const handleDelete = async id => {
+const handleDelete = async (id) => {
   try {
-    await deleteDoc(doc(db, 'documents', id)) // Replace 'documents' with your collection name
-    console.log(`Document with ID ${id} deleted successfully`)
-    window.location.reload()
+    await deleteDoc(doc(db, "documents", id)); // Replace 'documents' with your collection name
+    console.log(`Document with ID ${id} deleted successfully`);
+    window.location.reload();
     // Optionally, update the local state to remove the deleted document
     // setDocs(prevDocs => prevDocs.filter(doc => doc.id !== id))
   } catch (error) {
-    console.error('Error deleting document:', error)
+    console.error("Error deleting document:", error);
   }
-}
+};
 
 const DocumentCard = ({ document }) => {
   return (
-    <div className='max-w-md mx-auto bg-gray-50  border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 animate-fade-in'>
-          {/* Thumbnail Section */}
-            
-      <div className='bg-gray-100
-h-60 '>
-        <PDFThumbnail
-                  pdfUrl={document.documentUrl}
-                  document={document}
-/>
+    <div className="max-w-md mx-auto bg-gray-50  border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 animate-fade-in">
+      {/* Thumbnail Section */}
 
-
-          </div>
-          
-
-
-
-
-
+      <div className="bg-gray-100 h-60 ">
+        <PDFThumbnail pdfUrl={document.documentUrl} document={document} />
+      </div>
 
       {/* Document Details */}
-      <div className='p-6 mt-12'>
-        <h3 className='text-lg font-semibold text-gray-800 truncate'>
-          {document.documentName
- || 'Untitled Document'}
+      <div className="p-6 mt-12">
+        <h3 className="text-lg font-semibold text-gray-800 truncate">
+          {document.documentName || "Untitled Document"}
         </h3>
-      
-      <div className='mt-3'>
-        <p className='text-sm text-gray-500 mb-1'>
-          <strong>Format:</strong> {document.documentType || 'Unknown'}
-        </p>
-        {/* <p className='text-sm text-gray-500 mb-1'>
-          <strong>Uploaded By:</strong> {document.userId}
-        </p> */}
-        <p className='text-sm text-gray-500'>
-          <strong>Uploaded At:</strong>{' '}
-          {/* {new Date(document.uploadedAt).toString()} */}
-          { new Date(document.uploadedAt.seconds * 1000).toString()}
 
+        <div className="mt-3">
+          <p className="text-sm text-gray-500 mb-1">
+            <strong>Format:</strong> {document.documentType || "Unknown"}
           </p>
-          <div className='flex flex-row justify-between'>
-        <a
-          href={document.documentUrl}
-          target='_blank'
-          rel='noopener noreferrer'
-          className='mt-4 inline-block px-4 py-2 text-white bg-button-gpt
- rounded hover:bg-button-gpt transition-colors'
-        >
-          View Document
+
+          <p className="text-sm text-gray-500">
+            <strong>Uploaded At:</strong>{" "}
+            {new Date(document.uploadedAt.seconds * 1000).toString()}
+          </p>
+          <div className="flex flex-row justify-between">
+            <a
+              href={document.documentUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block px-4 py-2 text-white bg-button-gpt rounded hover:bg-button-gpt transition-colors"
+            >
+              View Document
             </a>
 
-            
-
-            
             <IconButton
-  aria-label='delete'
-  onClick={() => handleDelete(document.id)}
-  style={{ color: 'red',marginTop:"10px"}}
->
-  <DeleteIcon  fontSize='large'/>
-</IconButton>
-
-            </div>
+              aria-label="delete"
+              onClick={() => handleDelete(document.id)}
+              style={{ color: "red", marginTop: "10px" }}
+            >
+              <DeleteIcon fontSize="large" />
+            </IconButton>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default DocumentCard
+export default DocumentCard;
 
-
-import { useEffect, useRef, useState } from 'react'
-import * as pdfjsLib from 'pdfjs-dist'
-import { id_ID } from '@faker-js/faker'
+import { useEffect, useRef, useState } from "react";
+import * as pdfjsLib from "pdfjs-dist";
+import { id_ID } from "@faker-js/faker";
 // import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs'
 
 // Configure the worker
-pdfjsLib.GlobalWorkerOptions.workerSrc ='/pdfjs-dist/build/pdf.worker.min.mjs'
+pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdfjs-dist/build/pdf.worker.min.mjs";
 
-    // "/assets/pdfjs/pdf.worker.min.js"
-    // pdfjsWorker
+// "/assets/pdfjs/pdf.worker.min.js"
+// pdfjsWorker
 
-const PDFThumbnail = ({ pdfUrl,document }) => {
-    const canvasRef = useRef(null)
-    const [thumbnailUrl, setThumbnailUrl] = useState('https://cdn.dribbble.com/users/108183/screenshots/5331825/loading_xxi.gif')
+const PDFThumbnail = ({ pdfUrl, document }) => {
+  const canvasRef = useRef(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState(
+    "https://cdn.dribbble.com/users/108183/screenshots/5331825/loading_xxi.gif"
+  );
 
-   
-    useEffect(() => {
-        const renderPDF = async () => {
-            try {
-                document?.documentType!=="application/pdf" ? setThumbnailUrl('https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Google_Docs.width-500.format-webp.webp'):null
+  useEffect(() => {
+    const renderPDF = async () => {
+      try {
+        document?.documentType !== "application/pdf"
+          ? setThumbnailUrl(
+              "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Google_Docs.width-500.format-webp.webp"
+            )
+          : null;
 
-                const loadingTask = pdfjsLib.getDocument(pdfUrl)
-                console.log("najwa", loadingTask)
+        const loadingTask = pdfjsLib.getDocument(pdfUrl);
+        console.log("najwa", loadingTask);
 
-                const pdf = await loadingTask.promise
-                console.log("stag1", pdf)
-                const page = await pdf.getPage(1)
+        const pdf = await loadingTask.promise;
+        console.log("stag1", pdf);
+        const page = await pdf.getPage(1);
 
-                const canvas = canvasRef.current
-                console.log("najwa", pdfjsLib.getDocument(pdfUrl)
-                )
-                const context = canvas.getContext('2d')
-                const viewport = page?.getViewport({ scale: 1 })
+        const canvas = canvasRef.current;
+        console.log("najwa", pdfjsLib.getDocument(pdfUrl));
+        const context = canvas.getContext("2d");
+        const viewport = page?.getViewport({ scale: 1 });
 
-                canvas.width = viewport.width
-                canvas.height = viewport.height * 0.50
+        canvas.width = viewport.width;
+        canvas.height = viewport.height * 0.5;
 
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                }
+        const renderContext = {
+          canvasContext: context,
+          viewport: viewport,
+        };
 
-                await page.render(renderContext).promise
-                setThumbnailUrl(canvas.toDataURL('image/png'))
-            } catch (error) {
-                console.log("error", error)
-                console.error('Error rendering PDF:', error)
-                // alert('There was an issue loading the PDF. Please check the file.')
-            }
-        }
+        await page.render(renderContext).promise;
+        setThumbnailUrl(canvas.toDataURL("image/png"));
+      } catch (error) {
+        console.log("error", error);
+        console.error("Error rendering PDF:", error);
+        // alert('There was an issue loading the PDF. Please check the file.')
+      }
+    };
 
+    renderPDF();
+  }, [pdfUrl]);
 
-        renderPDF()
-    }, [pdfUrl])
+  // if (!thumbnailUrl) return <div>Loading preview...</div>
 
-    // if (!thumbnailUrl) return <div>Loading preview...</div>
-
- return  (
-     <div className='h-full  '>
-         {/* {!thumbnailUrl
+  return (
+    <div className="h-full  ">
+      {/* {!thumbnailUrl
  &&  <div>Loading preview...</div>
  } */}
-          <div>
- <img src={thumbnailUrl} alt='PDF Thumbnail' className='h-full rounded-lg' />
-    <canvas ref={canvasRef} style={{ display: 'none' }} /> </div>
-  </div>
-
-)
-
-
-
-}
+      <div>
+        <img
+          src={thumbnailUrl}
+          alt="PDF Thumbnail"
+          className="h-full rounded-lg"
+        />
+        <canvas ref={canvasRef} style={{ display: "none" }} />{" "}
+      </div>
+    </div>
+  );
+};
 
 // export default PDFThumbnail

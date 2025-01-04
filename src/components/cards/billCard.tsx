@@ -240,7 +240,7 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               wordWrap: "break-word",
             }}
           >
-            {bill?.amount || ""}
+            ${bill?.amount || ""}
           </div>
           <div
             className="AprLabel"
@@ -259,44 +259,6 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
             }}
           >
             Amount
-          </div>
-
-          <div
-            className="minpay"
-            style={{
-              width: 86,
-              height: 13,
-              left: 90,
-              top: 146,
-              position: "absolute",
-              opacity: 0.9,
-              color: "white",
-              fontSize: 14,
-              fontFamily: "Rubik",
-              fontWeight: "500",
-              letterSpacing: 0.5,
-              wordWrap: "break-word",
-            }}
-          >
-            {bill?.remainingBalance || ""}
-          </div>
-          <div
-            className="minLabel"
-            style={{
-              width: 115,
-              height: 13,
-              left: 90,
-              top: 124,
-              position: "absolute",
-              opacity: 0.75,
-              color: "white",
-              fontSize: 14,
-              fontFamily: "Rubik",
-              fontWeight: "500",
-              wordWrap: "break-word",
-            }}
-          >
-            Rem Balance
           </div>
 
           <div
