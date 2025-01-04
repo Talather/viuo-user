@@ -32,13 +32,31 @@
 
 
 import React from 'react'
+import { Delete } from 'lucide-react'
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
+import {db} from '@/lib/firebaseConfig'
+import { doc, deleteDoc } from 'firebase/firestore'
+
+const handleDelete = async id => {
+  try {
+    await deleteDoc(doc(db, 'documents', id)) // Replace 'documents' with your collection name
+    console.log(`Document with ID ${id} deleted successfully`)
+    window.location.reload()
+    // Optionally, update the local state to remove the deleted document
+    // setDocs(prevDocs => prevDocs.filter(doc => doc.id !== id))
+  } catch (error) {
+    console.error('Error deleting document:', error)
+  }
+}
 
 const DocumentCard = ({ document }) => {
   return (
-    <div className='max-w-md mx-auto  border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 animate-fade-in'>
+    <div className='max-w-md mx-auto bg-gray-50  border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 animate-fade-in'>
           {/* Thumbnail Section */}
             
-      <div className=' h-60 flex items-center justify-center'>
+      <div className='bg-gray-100
+h-60 '>
         <PDFThumbnail
                   pdfUrl={document.documentUrl}
                   document={document}
@@ -54,20 +72,26 @@ const DocumentCard = ({ document }) => {
 
 
       {/* Document Details */}
-      <div className='p-4 '>
+      <div className='p-6 mt-12'>
         <h3 className='text-lg font-semibold text-gray-800 truncate'>
-          {document.title || 'Untitled Document'}
+          {document.documentName
+ || 'Untitled Document'}
         </h3>
+      
+      <div className='mt-3'>
         <p className='text-sm text-gray-500 mb-1'>
-          <strong>Format:</strong> {document.format || 'Unknown'}
+          <strong>Format:</strong> {document.documentType || 'Unknown'}
         </p>
-        <p className='text-sm text-gray-500 mb-1'>
+        {/* <p className='text-sm text-gray-500 mb-1'>
           <strong>Uploaded By:</strong> {document.userId}
-        </p>
+        </p> */}
         <p className='text-sm text-gray-500'>
           <strong>Uploaded At:</strong>{' '}
-          {new Date(document.uploadedAt).toLocaleString()}
-        </p>
+          {/* {new Date(document.uploadedAt).toString()} */}
+          { new Date(document.uploadedAt.seconds * 1000).toString()}
+
+          </p>
+          <div className='flex flex-row justify-between'>
         <a
           href={document.documentUrl}
           target='_blank'
@@ -76,8 +100,22 @@ const DocumentCard = ({ document }) => {
  rounded hover:bg-button-gpt transition-colors'
         >
           View Document
-        </a>
-      </div>
+            </a>
+
+            
+
+            
+            <IconButton
+  aria-label='delete'
+  onClick={() => handleDelete(document.id)}
+  style={{ color: 'red',marginTop:"10px"}}
+>
+  <DeleteIcon  fontSize='large'/>
+</IconButton>
+
+            </div>
+        </div>
+        </div>
     </div>
   )
 }
@@ -120,7 +158,7 @@ const PDFThumbnail = ({ pdfUrl,document }) => {
                 const viewport = page?.getViewport({ scale: 1 })
 
                 canvas.width = viewport.width
-                canvas.height = viewport.height/3
+                canvas.height = viewport.height * 0.50
 
                 const renderContext = {
                     canvasContext: context,
@@ -143,12 +181,12 @@ const PDFThumbnail = ({ pdfUrl,document }) => {
     // if (!thumbnailUrl) return <div>Loading preview...</div>
 
  return  (
-     <div className=''>
+     <div className='h-full  '>
          {/* {!thumbnailUrl
  &&  <div>Loading preview...</div>
  } */}
           <div>
- <img src={thumbnailUrl} alt='PDF Thumbnail' className='h-full' />
+ <img src={thumbnailUrl} alt='PDF Thumbnail' className='h-full rounded-lg' />
     <canvas ref={canvasRef} style={{ display: 'none' }} /> </div>
   </div>
 
