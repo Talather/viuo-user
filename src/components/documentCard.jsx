@@ -35,12 +35,13 @@ import React from 'react'
 
 const DocumentCard = ({ document }) => {
   return (
-    <div className='max-w-md mx-auto bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 animate-fade-in'>
+    <div className='max-w-md mx-auto  border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 animate-fade-in'>
           {/* Thumbnail Section */}
             
-      <div className='bg-gray-100 h-60 flex items-center justify-center'>
+      <div className=' h-60 flex items-center justify-center'>
         <PDFThumbnail
-  pdfUrl={document.documentUrl}
+                  pdfUrl={document.documentUrl}
+                  document={document}
 />
 
 
@@ -50,10 +51,10 @@ const DocumentCard = ({ document }) => {
 
 
 
-          
+
 
       {/* Document Details */}
-      <div className='p-4'>
+      <div className='p-4 '>
         <h3 className='text-lg font-semibold text-gray-800 truncate'>
           {document.title || 'Untitled Document'}
         </h3>
@@ -71,7 +72,8 @@ const DocumentCard = ({ document }) => {
           href={document.documentUrl}
           target='_blank'
           rel='noopener noreferrer'
-          className='mt-4 inline-block px-4 py-2 text-white bg-blue-600 rounded hover:bg-button-gpt transition-colors'
+          className='mt-4 inline-block px-4 py-2 text-white bg-button-gpt
+ rounded hover:bg-button-gpt transition-colors'
         >
           View Document
         </a>
@@ -85,6 +87,7 @@ export default DocumentCard
 
 import { useEffect, useRef, useState } from 'react'
 import * as pdfjsLib from 'pdfjs-dist'
+import { id_ID } from '@faker-js/faker'
 // import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs'
 
 // Configure the worker
@@ -93,14 +96,16 @@ pdfjsLib.GlobalWorkerOptions.workerSrc ='/pdfjs-dist/build/pdf.worker.min.mjs'
     // "/assets/pdfjs/pdf.worker.min.js"
     // pdfjsWorker
 
-const PDFThumbnail = ({ pdfUrl }) => {
+const PDFThumbnail = ({ pdfUrl,document }) => {
     const canvasRef = useRef(null)
     const [thumbnailUrl, setThumbnailUrl] = useState('https://cdn.dribbble.com/users/108183/screenshots/5331825/loading_xxi.gif')
 
-
+   
     useEffect(() => {
         const renderPDF = async () => {
             try {
+                document?.documentType!=="application/pdf" ? setThumbnailUrl('https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Google_Docs.width-500.format-webp.webp'):null
+
                 const loadingTask = pdfjsLib.getDocument(pdfUrl)
                 console.log("najwa", loadingTask)
 
@@ -115,7 +120,7 @@ const PDFThumbnail = ({ pdfUrl }) => {
                 const viewport = page?.getViewport({ scale: 1 })
 
                 canvas.width = viewport.width
-                canvas.height = viewport.height/4 
+                canvas.height = viewport.height/3
 
                 const renderContext = {
                     canvasContext: context,
@@ -138,12 +143,12 @@ const PDFThumbnail = ({ pdfUrl }) => {
     // if (!thumbnailUrl) return <div>Loading preview...</div>
 
  return  (
-     <div className='bg-red-600'>
+     <div className=''>
          {/* {!thumbnailUrl
  &&  <div>Loading preview...</div>
  } */}
           <div>
- <img src={thumbnailUrl} alt='PDF Thumbnail' className='w-full h-auto' />
+ <img src={thumbnailUrl} alt='PDF Thumbnail' className='h-full' />
     <canvas ref={canvasRef} style={{ display: 'none' }} /> </div>
   </div>
 
