@@ -1,23 +1,23 @@
-import PropTypes from "prop-types"
-import { useState } from "react"
+import PropTypes from "prop-types";
+import { useState } from "react";
 
 // material-ui
-import { useTheme, styled } from "@mui/material/styles"
-import { Avatar, Box, Button, Grid, Typography } from "@mui/material"
+import { useTheme, styled } from "@mui/material/styles";
+import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
 
 // third-party
-import Chart from "react-apexcharts"
+import Chart from "react-apexcharts";
 
 // project imports
-import MainCard from "../mainCard"
-import SkeletonTotalOrderCard from "../earningCard/skeletonEarningCard"
+import MainCard from "../mainCard";
+import SkeletonTotalOrderCard from "../earningCard/skeletonEarningCard";
 
-import ChartDataMonth from "../chart-data/total-order-month-line-chart"
-import ChartDataYear from "../chart-data/total-order-year-line-chart"
+import ChartDataMonth from "../chart-data/total-order-month-line-chart";
+import ChartDataYear from "../chart-data/total-order-year-line-chart";
 
 // assets
-import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined"
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward"
+import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   backgroundColor: theme.palette.primary.dark,
@@ -59,17 +59,17 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
       right: -70,
     },
   },
-}))
+}));
 
 // ==============================|| DASHBOARD - TOTAL ORDER LINE CHART CARD ||============================== //
 
 const TotalOrderLineChartCard = ({ isLoading }) => {
-  const theme = useTheme()
+  const theme = useTheme();
 
-  const [timeValue, setTimeValue] = useState(false)
+  const [timeValue, setTimeValue] = useState(false);
   const handleChangeTime = (event, newValue) => {
-    setTimeValue(newValue)
-  }
+    setTimeValue(newValue);
+  };
 
   return (
     <>
@@ -132,7 +132,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                               mb: 0.75,
                             }}
                           >
-                            108
+                            $108
                           </Typography>
                         ) : (
                           <Typography
@@ -144,7 +144,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                               mb: 0.75,
                             }}
                           >
-                            961
+                            $250
                           </Typography>
                         )}
                       </Grid>
@@ -171,7 +171,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                             color: theme.palette.primary[200],
                           }}
                         >
-                          Total Points Earned
+                          Total Credits Earned
                         </Typography>
                       </Grid>
                     </Grid>
@@ -190,11 +190,11 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
         </CardWrapper>
       )}
     </>
-  )
-}
+  );
+};
 
 TotalOrderLineChartCard.propTypes = {
   isLoading: PropTypes.bool,
-}
+};
 
-export default TotalOrderLineChartCard
+export default TotalOrderLineChartCard;

@@ -2,7 +2,7 @@ import { History, LogOut } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import logo from "../../../../../public/assets/icons/logo.png";
 import { useAuth } from "@/hooks/useAuth";
-import { FileText, Award, Settings, User,File } from "lucide-react";
+import { FileText, Award, Settings, User, File } from "lucide-react";
 
 // Define the type for the `user` object.
 interface User {
@@ -52,10 +52,15 @@ const items = [
     url: "/refer",
     icon: User,
   },
-]
+  {
+    title: "Support",
+    url: "/contact-us",
+    icon: User,
+  },
+];
 
 export function AppSidebar() {
-  const {logout}=useAuth()
+  const { logout } = useAuth();
   // const { user } = useAuth() as { user: User | null };
 
   return (
@@ -91,14 +96,19 @@ export function AppSidebar() {
       </div>
 
       {/* Footer Section */}
-      <div className="mt-auto" onClick={()=>{logout()}}>
+      <div
+        className="mt-auto"
+        onClick={() => {
+          logout();
+        }}
+      >
         <NavLink
           to="/"
           className="flex items-center gap-4 p-3 rounded-md hover:bg-button-gpt-hover"
         >
           {/* <Settings className="w-5 h-5" /> */}
           <LogOut className="w-5 h-5" />
-          <span >Logout</span>
+          <span>Logout</span>
         </NavLink>
         {/* Assuming NavUser is a simple user profile component */}
         {/* {user && (
