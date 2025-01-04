@@ -1,7 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem } from "../../../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../../ui/form";
 import { useState } from "react";
 import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
@@ -9,15 +17,18 @@ import { Card, CardBody, Checkbox, Divider } from "@nextui-org/react";
 import { useAuth } from "../../../../hooks/useAuth";
 import { ContactUsSchema } from "../../../../lib/validations";
 import { useToast } from "../../../../hooks/use-toast";
-import emailjs from "@emailjs/browser";
+// import emailjs from "@emailjs/browser";
 import { NavLink } from "react-router-dom";
-
+import axios from "axios";
+import { storage } from "@/lib/firebaseConfig";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 type ContactUsFormData = z.infer<typeof ContactUsSchema>;
 
 const ContactForm = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { user } = useAuth();
+  const [uDoc, setUDoc] = useState<any>(null);
 
   const form = useForm<ContactUsFormData>({
     resolver: zodResolver(ContactUsSchema),
@@ -39,51 +50,98 @@ const ContactForm = () => {
     register,
     formState: { errors },
   } = form;
+  const handleFileUpload = (event: any) => {
+    setUDoc(event.target.files[0]);
+  };
 
   const onSubmit = async (values: ContactUsFormData) => {
     setIsLoading(true);
-    const formData = {
-      name: values.name,
-      email: values.email,
-      phone: values.phoneNumber,
-      subject: values.subject,
-      message: values.message,
-      agreeToPromotionalMessages: `${
-        values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
-      }`,
-      // subject: values.subject,
-      // email: values.email,
-      // name: values.name,
-      // message: `
-      // Name: ${values.name}
-      // Email: ${values.email}
-      // Message: ${values.message}
-      // Promotional Messages: ${
-      //   values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
-      // }`,
-    };
-
+    const docRef = ref(storage, `docs/${uDoc.name}`);
+    const snapshot = await uploadBytes(docRef, uDoc);
+    console.log("Uploaded a doc!");
+    // Get the download URL
+    const docUrl = await getDownloadURL(snapshot.ref);
     try {
-      await emailjs.send(
-        import.meta.env.VITE_EMAIL_JS_SERVICE_KEY,
-        import.meta.env.VITE_EMAIL_JS_CONTACT_US_TEMPLATE_ID,
-        formData,
-        {
-          publicKey: import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY,
-        }
-      );
+      const formData = {
+        subject: `New Contact Us Message Received from ${values.email}`,
+        name: values.name,
+        email: values.email,
+        phone: values.phoneNumber,
+        subjectLine: values.subject,
+        message: values.message,
+        agreeToPromotionalMessages: `${
+          values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
+        }`,
+      };
+
+      const accessKey = "C63SwSugFYkrclqIedXCPkaGoyEh8MIEkNRO";
+      const channelId = "367dbe7b-7e2b-5be1-a4c7-6327128b7b6b";
+      const workspaceId = "f8f5bb9b-7243-48d8-9bcc-29b3792a27aa";
+      const email = "info@vuior.com";
+      const url = `https://api.bird.com/workspaces/${workspaceId}/channels/${channelId}/messages`;
+
+      const data = {
+        receiver: {
+          contacts: [
+            {
+              identifierValue: email,
+            },
+          ],
+        },
+        body: {
+          type: "html",
+          html: {
+            metadata: {
+              subject: `Contact Us Message from ${formData.name}`,
+            },
+            html: `
+            <p>New contact form message received!</p>
+            <ul>
+              <li><strong>Name:</strong> ${formData.name}</li>
+              <li><strong>Email:</strong> ${formData.email}</li>
+              <li><strong>Phone:</strong> ${formData.phone}</li>
+              <li><strong>Subject:</strong> ${formData.subjectLine}</li>
+              <li><strong>Message:</strong> ${formData.message}</li>
+              <li><strong>Promotional Messages:</strong> ${formData.agreeToPromotionalMessages}</li>
+            </ul>
+                 <div style="width:500px; background-color:#10a37f; text-align:center; justify-content:center; color:white; border-radius:05px;">
+              <a href="${docUrl}" style="color:white;">Click Here to Download Resume</a>
+            </div>
+            `,
+            text: `
+              New contact form message received!
+              Name: ${formData.name}
+              Email: ${formData.email}
+              Phone: ${formData.phone}
+              Subject: ${formData.subjectLine}
+              Message: ${formData.message}
+              Promotional Messages: ${formData.agreeToPromotionalMessages}
+              Document: ${docUrl}
+            `,
+          },
+        },
+      };
+
+      const headers = {
+        Authorization: `AccessKey ${accessKey}`,
+        "Content-Type": "application/json",
+      };
+
+      await axios.post(url, data, { headers });
 
       toast({
         title: "Success",
-        description: "Message sent. We will get back to you soon.",
+        description: "Message sent successfully. We will get back to you soon.",
       });
 
       reset({});
     } catch (error) {
-      setIsLoading(false);
+      console.log(error);
+      // console.error("Error sending message:", error.response?.data || error.message);
+
       toast({
         title: "Error",
-        description: "Unable to send message right now",
+        description: "Unable to send your message right now.",
         variant: "destructive",
       });
     } finally {
@@ -96,13 +154,13 @@ const ContactForm = () => {
       <CardBody>
         <h3 className="text-button-gpt font-semibold">Get in Touch</h3>
         <h2 className="md:text-3xl text-5xl lg:text-5xl font-semibold mt-4 mb-4 ">
-          We’re Here to Help
+          We're Here to Help
         </h2>
         <p className=" text-secondary-text">
           Have questions or need assistance? Our team is here to make sure you
           have the best experience possible with Vuior. For general inquiries,
           partnership opportunities, or customer support, feel free to reach out
-          to us anytime. We’re always ready to help!
+          to us anytime. We're always ready to help!
         </p>
         <Divider className="my-10" />
         <Form {...form}>
@@ -212,6 +270,27 @@ const ContactForm = () => {
                     />
                   </FormControl>
                   {/* <FormMessage /> */}
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="file"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Upload File</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      onChange={(e) => {
+                        field.onChange(e.target.files);
+                        handleFileUpload(e);
+                      }}
+                      isInvalid={!!errors.file?.message}
+                    />
+                  </FormControl>
+                  <FormMessage>{errors.file?.message}</FormMessage>
                 </FormItem>
               )}
             />
