@@ -37,6 +37,7 @@ import CreateBill from '../components/ui/billForm/form'
 
 
 import PaymentHistory from '../pages/payments-history'
+import DocumentPage from "@/pages/documents";
 
 // import DashboardSettings from "../pages/DashboardSettings"
 
@@ -214,7 +215,24 @@ export const router = createBrowserRouter([
         index: true,
         element: <Transaction />,
       },
-     
+    ],
+  },
+
+
+
+
+  {
+    path: "documents",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DocumentPage />,
+      },
     ],
   },
 

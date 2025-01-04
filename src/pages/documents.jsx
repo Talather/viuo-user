@@ -1,0 +1,41 @@
+import React, { useState, useEffect } from 'react'
+import DocumentCard from '@/components/documentCard'
+import { db } from '@/lib/firebaseConfig'
+import { getFirestore, collection, getDocs } from 'firebase/firestore'
+
+const DocumentPage = () => {
+  const [docs, setDocs] = useState([])
+
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      try {
+        // Get a reference to the documents collection
+        const documentsCollectionRef = collection(db, 'documents') // Replace 'documents' with your collection name
+        const querySnapshot = await getDocs(documentsCollectionRef)
+
+        // Map the documents into an array with the necessary structure
+        const documents = querySnapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id // Optional: if you want to include the document ID
+        }))
+
+        // Update the state with the fetched documents
+        setDocs(documents)
+      } catch (error) {
+        console.error('Error fetching documents:', error)
+      }
+    }
+
+    fetchDocuments() // Call the async function to fetch documents
+  }, []) // Empty dependency array means this effect runs only once when the component mounts
+
+  return (
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6'>
+      {docs.map((doc, index) => (
+        <DocumentCard key={index} document={doc} />
+      ))}
+    </div>
+  )
+}
+
+export default DocumentPage

@@ -2,7 +2,7 @@ import { History, LogOut } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import logo from "../../../../../public/assets/icons/logo.png";
 import { useAuth } from "@/hooks/useAuth";
-import { FileText, Award, Settings, User } from "lucide-react";
+import { FileText, Award, Settings, User,File } from "lucide-react";
 
 // Define the type for the `user` object.
 interface User {
@@ -36,6 +36,11 @@ const items = [
     title: "Upcoming Bills",
     url: "/upcoming-bills",
     icon: Settings,
+  },
+  {
+    title: "Documents",
+    url: "/documents",
+    icon: File,
   },
   {
     title: "Profile",
