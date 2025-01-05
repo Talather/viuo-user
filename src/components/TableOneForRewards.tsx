@@ -40,7 +40,7 @@ const TableRewards = () => {
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h4 className="mb-10 font-bold text-body-2xlg text-dark dark:text-white">
-        Rewards for Early Payments
+        Credits for Early Payments
       </h4>
 
       <div className="flex flex-col">

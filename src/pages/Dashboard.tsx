@@ -149,7 +149,7 @@ const Dashboard = () => {
 
 
 useEffect(() => {
-  if (user) {
+  // if (user) {
     const billsCollectionRef = collection(db, 'bills') // Replace with your collection name
     const unsubscribe = onSnapshot(
       billsCollectionRef,
@@ -167,8 +167,8 @@ useEffect(() => {
     )
 
     return () => unsubscribe() // Cleanup listener on unmount
-  }
-}, [user])
+  // }
+}, [])
 
 
   return (

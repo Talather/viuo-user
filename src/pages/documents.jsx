@@ -10,67 +10,49 @@ import { onSnapshot } from 'firebase/firestore'
 const DocumentPage = () => {
 
   const { userDocuments } = useUserAssets()
-  console.log("shaaafij",userDocuments)
-//   const [docs, setDocs] = useState([])
+  console.log("shaaafij", userDocuments)
+  //   const [docs, setDocs] = useState([])
 
-//   useEffect(() => {
-//     const fetchDocuments = async () => {
-//   try {
-//     // Get a reference to the documents collection
-//     const documentsCollectionRef = collection(db, 'documents')
+  //   useEffect(() => {
+  //     const fetchDocuments = async () => {
+  //   try {
+  //     // Get a reference to the documents collection
+  //     const documentsCollectionRef = collection(db, 'documents')
 
-//     // Create a query to order by 'uploadedAt' field in ascending order (you can change to 'desc' for descending)
-//     const documentsQuery = query(
-//       documentsCollectionRef,
-//       orderBy('uploadedAt', 'asc')
-//     )
+  //     // Create a query to order by 'uploadedAt' field in ascending order (you can change to 'desc' for descending)
+  //     const documentsQuery = query(
+  //       documentsCollectionRef,
+  //       orderBy('uploadedAt', 'asc')
+  //     )
 
-//     const querySnapshot = await getDocs(documentsQuery)
+  //     const querySnapshot = await getDocs(documentsQuery)
 
-//     // Map the documents into an array with the necessary structure
-//     const documents = querySnapshot.docs.map(doc => ({
-//       ...doc.data(),
-//       id: doc.id // Optional: if you want to include the document ID
-//     }))
+  //     // Map the documents into an array with the necessary structure
+  //     const documents = querySnapshot.docs.map(doc => ({
+  //       ...doc.data(),
+  //       id: doc.id // Optional: if you want to include the document ID
+  //     }))
 
-//     // Update the state with the fetched documents
-//     setDocs(documents)
-//   } catch (error) {
-//     console.error('Error fetching documents:', error)
-//   }
-// }
+  //     // Update the state with the fetched documents
+  //     setDocs(documents)
+  //   } catch (error) {
+  //     console.error('Error fetching documents:', error)
+  //   }
+  // }
 
 
-//     fetchDocuments() // Call the async function to fetch documents
-//   }, []) // Empty dependency array means this effect runs only once when the component mounts
+  //     fetchDocuments() // Call the async function to fetch documents
+  //   }, []) // Empty dependency array means this effect runs only once when the component mounts
 
-  
-  
-
-  
   
   
 
   
   
-
-
-
-
-
-
-
-
+  
 
   
   
-
-
-
-  
-
-
-
 
 
 
@@ -83,10 +65,28 @@ const DocumentPage = () => {
   
   
 
+
+
   
-  const dispatch=useUserAssetsDispatch()
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  const dispatch = useUserAssetsDispatch()
   useEffect(() => {
-  // if (user) {
+    // if (user) {
     const docsCollectionRef = collection(db, 'documents') // Replace with your collection name
     const unsubscribe = onSnapshot(
       docsCollectionRef,
@@ -103,17 +103,23 @@ const DocumentPage = () => {
       }
     )
 
-    return () => unsubscribe() // Cleanup listener on unmount
-  // }
-}, [])
+    return () =>
+      unsubscribe() // Cleanup listener on unmount
+    // }
+  }, [])
 
-  return (
+  return userDocuments.length ? (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6'>
-      {userDocuments.length && userDocuments.map((doc, index) => (
+      {userDocuments.map((doc, index) => (
         <DocumentCard key={index} document={doc} />
       ))}
     </div>
+  ) : (
+      <div className='flex items-center justify-center h-96'>
+    <div className='flex flex-col items-center justify-center bg-button-gpt text-white text-center w-1/3 h-40 rounded-2xl shadow-2xl'>
+      <h1 className='text-lg font-bold'>No Documents Available</h1>
+        </div>
+        </div>
   )
 }
-
 export default DocumentPage

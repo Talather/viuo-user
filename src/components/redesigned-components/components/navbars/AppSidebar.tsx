@@ -23,7 +23,7 @@ const items = [
     icon: Award,
   },
   {
-    title: "Rewards Tracker",
+    title: "Credits Tracker",
     url: "/reward-tracker",
     icon: Award,
   },
@@ -80,7 +80,7 @@ export function AppSidebar() {
               <NavLink
                 to={item.url}
                 className={({ isActive }) =>
-                  `flex items-center gap-4 p-3 rounded-md ${
+                  `flex items-center gap-4 p-3 rounded-xl ${
                     isActive
                       ? "bg-button-gpt-dark text-white font-semibold"
                       : null

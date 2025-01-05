@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // import { format } from "date-fns";
 import EastIcon from "@mui/icons-material/East";
 import { deleteBill } from "@/lib/clientControllers/bills";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 // import { Button } from "@nextui-org/button";
 // import { on } from "events";
 // import * as moment from "moment/moment";
@@ -55,7 +55,7 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
   useEffect(() => {}, []);
 
   const [isFlipped, setIsFlipped] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -63,8 +63,8 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
 
   async function deleteCard() {
     await deleteBill(bill?.id);
-    navigate("/bills");
-    window.location.reload();
+    // navigate("/bills");
+    // window.location.reload();
   }
   // console.log('chytr', bill)
   useEffect(() => {

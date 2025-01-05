@@ -89,12 +89,14 @@ const dispatch=useUserAssetsDispatch()
 
 
 
-          if (!userBills.length && !userDocuments.length) {
+          if (!userBills.length) {
             const bills = await fetchBillsForSpecificUser(firebaseUser.uid)
             console.log("zaaaaaaalim", bills)
-            
+            dispatch({ type: 'SET_ALL_BILLS', payload: bills })
+          }
+
+           if (!userDocuments.length) {
             const documents = await fetchDocumentsForSpecificUser(firebaseUser.uid)
-            console.log('zaaaaaaalimDocuments', documents)
             dispatch({ type: 'SET_ALL_DOCUMENTS', payload: documents })
           }
 

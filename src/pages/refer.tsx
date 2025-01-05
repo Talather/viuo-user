@@ -33,7 +33,7 @@ const ReferAFriend = () => {
     <div className='flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-b from-gray-100 to-button-gpt'>
       {/* Header */}
       <h1 className='mb-6 text-4xl font-bold text-center text-gray-800'>
-        Refer to a Friend for More Savings!
+        Refer a Friend for More Savings!
       </h1>
       <p className='max-w-md mb-10 text-lg text-center text-gray-600'>
         Invite your friends to join and enjoy exclusive savings together. Share

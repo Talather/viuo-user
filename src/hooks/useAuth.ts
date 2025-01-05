@@ -6,7 +6,7 @@
 
 import { useState } from "react";
 // import { useToast } from './use-toast'
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 // import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 // import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -45,7 +45,7 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   if (context === undefined) {
     throw new Error("useAuth must be used within an AuthProvider");
@@ -158,8 +158,8 @@ export const useAuth = () => {
         title: "Logout Successful",
         description: "",
       });
-      navigate("/");
-      window.location.reload();
+      // navigate("/");
+      // window.location.reload();
 
       console.log("User successfully logged out.");
       // Optionally redirect the user or update your UI
