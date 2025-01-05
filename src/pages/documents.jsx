@@ -3,7 +3,9 @@ import DocumentCard from '@/components/documentCard'
 import { db } from '@/lib/firebaseConfig'
 import { getFirestore, collection, getDocs, orderBy, query
 } from 'firebase/firestore'
-import { useUserAssets } from '@/context/userSpecificAssetsContext'
+import { useUserAssets, useUserAssetsDispatch } from '@/context/userSpecificAssetsContext'
+import { onSnapshot } from 'firebase/firestore'
+// import { db } from '@/lib/firebaseConfig' // Your Firebase setup file
 
 const DocumentPage = () => {
 
@@ -41,6 +43,69 @@ const DocumentPage = () => {
 
 //     fetchDocuments() // Call the async function to fetch documents
 //   }, []) // Empty dependency array means this effect runs only once when the component mounts
+
+  
+  
+
+  
+  
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  const dispatch=useUserAssetsDispatch()
+  useEffect(() => {
+  // if (user) {
+    const docsCollectionRef = collection(db, 'documents') // Replace with your collection name
+    const unsubscribe = onSnapshot(
+      docsCollectionRef,
+      snapshot => {
+        const docs = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        dispatch({ type: 'SET_ALL_DOCUMENTS', payload: docs })
+        // Update the context with the latest data
+      },
+      error => {
+        console.error('Error listening to bills updates:', error)
+      }
+    )
+
+    return () => unsubscribe() // Cleanup listener on unmount
+  // }
+}, [])
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6'>

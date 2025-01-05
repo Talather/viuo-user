@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   useState,
-  // useEffect
+  useEffect
 } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,10 @@ import Button from "@/components/button";
 // import { fetchBillsForSpecificUser } from "@/lib/clientControllers/bills";
 import { ClipLoader } from "react-spinners";
 import { motion } from "framer-motion";
-import { useUserAssets } from "@/context/userSpecificAssetsContext";
+import { useUserAssets, useUserAssetsDispatch } from "@/context/userSpecificAssetsContext";
+import { onSnapshot, collection } from 'firebase/firestore'
+import { db } from '@/lib/firebaseConfig' // Your Firebase setup file
+
 
 // Define an interface for Bill data
 // interface Bill {
@@ -28,6 +31,7 @@ import { useUserAssets } from "@/context/userSpecificAssetsContext";
 const Dashboard = () => {
   const { user } = useAuth();
   const { userBills } = useUserAssets()
+  const dispatch=useUserAssetsDispatch()
   console.log("userBillshijra",userBills)
   // const [bills, setBills] = useState<Bill[]>([]); // State to store bills
   const [loading,
@@ -69,6 +73,103 @@ const Dashboard = () => {
   // useEffect(() => {
   //   fetchBills();
   // }, [user?.id]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+useEffect(() => {
+  if (user) {
+    const billsCollectionRef = collection(db, 'bills') // Replace with your collection name
+    const unsubscribe = onSnapshot(
+      billsCollectionRef,
+      snapshot => {
+        const bills = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        dispatch({type:"SET_ALL_BILLS",payload:bills})
+        // Update the context with the latest data
+      },
+      error => {
+        console.error('Error listening to bills updates:', error)
+      }
+    )
+
+    return () => unsubscribe() // Cleanup listener on unmount
+  }
+}, [user])
+
 
   return (
     <div className="px-4">
