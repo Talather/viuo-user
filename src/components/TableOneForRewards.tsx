@@ -63,7 +63,7 @@ const TableRewards = () => {
           </div>
           <div className="px-2 pb-3.5 text-center">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Reward
+              Credit
             </h5>
           </div>
           <div className="px-2 pb-3.5 text-center">

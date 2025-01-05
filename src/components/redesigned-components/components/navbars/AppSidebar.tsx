@@ -48,7 +48,7 @@ const items = [
     icon: User,
   },
   {
-    title: "Refer to Friend",
+    title: "Refer a Friend",
     url: "/refer",
     icon: User,
   },

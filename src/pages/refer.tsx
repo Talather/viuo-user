@@ -1,3 +1,4 @@
+import { useToast } from "@/hooks/use-toast"
 
 
 const Refer = () => {
@@ -27,6 +28,8 @@ export default Refer
 // import React from 'react'
 
 const ReferAFriend = () => {
+  const { toast } = useToast()
+
   const referralCode = 'SAVE123'
 
   return (
@@ -41,7 +44,10 @@ const ReferAFriend = () => {
       </p>
 
       {/* Referral Box */}
-      <div className='w-full max-w-sm p-8 text-center bg-white shadow-lg rounded-xl'>
+
+
+      <div>
+      <div className='w-full max-w-sm py-4 px-20 text-center bg-white shadow-lg rounded-xl'>
         <h2 className='mb-4 text-2xl font-semibold text-button-gpt'>
           Your Referral Code
         </h2>
@@ -49,12 +55,43 @@ const ReferAFriend = () => {
           {referralCode}
         </div>
         <button
-          className='px-6 py-2 mt-6 font-medium text-white transition duration-200 rounded-lg shadow-md bg-button-gpt hover:bg-blue-700'
-          onClick={() => navigator.clipboard.writeText(referralCode)}
+            className='px-6 py-2 mt-6 font-medium text-white transition duration-200 rounded-lg shadow-md bg-button-gpt hover:bg-button-gpt'
+            onClick={() => {
+              navigator.clipboard.writeText(referralCode)
+              toast({
+  title: 'Copied To Clipboard',
+  description: 'Copied successfully to the ClipBoard'
+})
+
+             }}
         >
           Copy Code
         </button>
-      </div>
+        </div>
+        </div>
+
+      <div className="mt-5 ">
+      <div className='w-full max-w-sm py-3 px-20 text-center bg-white shadow-lg rounded-xl'>
+  <h2 className='mb-4 text-2xl font-semibold text-button-gpt'>
+    Redeem Code
+  </h2>
+  <div className='px-6 py-2 font-mono text-lg font-bold tracking-wide text-gray-800 bg-gray-100 rounded-lg shadow-md'>
+  <input
+    type='text'
+    placeholder='Enter Code here'
+    className='w-full px-8 py-2 text-gray-800 bg-gray-100  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:to-button-gpt focus:border-transparent'
+  />
+</div>
+
+  <button
+    className='px-6 py-2 mt-6 font-medium text-white transition duration-200 rounded-lg shadow-md bg-button-gpt hover:bg-button-gpt'
+    onClick={() => navigator.clipboard.writeText(referralCode)}
+  >
+     Redeem Code
+  </button>
+        </div>
+        </div>
+
 
       {/* Call to Action */}
       <div className='mt-10 text-center'>
