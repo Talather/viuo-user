@@ -1,65 +1,74 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
+import {
+  useState,
+  // useEffect
+} from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import BillCard from "@/components/cards/billCard";
 import { Grid, Box } from "@mui/material";
 import Button from "@/components/button";
-import { fetchBillsForSpecificUser } from "@/lib/clientControllers/bills";
+// import { fetchBillsForSpecificUser } from "@/lib/clientControllers/bills";
 import { ClipLoader } from "react-spinners";
 import { motion } from "framer-motion";
+import { useUserAssets } from "@/context/userSpecificAssetsContext";
 
 // Define an interface for Bill data
-interface Bill {
-  id: string;
-  user_id: string;
-  amount: number;
-  due_date: string;
-  status: string;
-  payment_method_id: string;
-  early_payment_savings?: number;
-  is_consolidated?: boolean;
-}
+// interface Bill {
+//   id: string;
+//   user_id: string;
+//   amount: number;
+//   due_date: string;
+//   status: string;
+//   payment_method_id: string;
+//   early_payment_savings?: number;
+//   is_consolidated?: boolean;
+// }
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const [bills, setBills] = useState<Bill[]>([]); // State to store bills
-  const [loading, setLoading] = useState<boolean>(false); // Loading state
+  const { userBills } = useUserAssets()
+  console.log("userBillshijra",userBills)
+  // const [bills, setBills] = useState<Bill[]>([]); // State to store bills
+  const [loading,
+    // setLoading
+  ] = useState<boolean>(false); // Loading state
   const navigate = useNavigate();
 
   // Filter and mark bills as top priority based on due date
-  const filterAndMarkBills = (bills: Bill[]) => {
-    const today = new Date();
-    const fifteenDaysFromNow = new Date();
-    fifteenDaysFromNow.setDate(today.getDate() + 15);
 
-    return bills.map((bill) => {
-      const dueDate = new Date(bill.due_date);
-      const isTopPriority = dueDate >= today && dueDate <= fifteenDaysFromNow;
-      return { ...bill, topPriority: isTopPriority };
-    });
-  };
+  // const filterAndMarkBills = (bills: Bill[]) => {
+  //   const today = new Date();
+  //   const fifteenDaysFromNow = new Date();
+  //   fifteenDaysFromNow.setDate(today.getDate() + 15);
+
+  //   return bills.map((bill) => {
+  //     const dueDate = new Date(bill.due_date);
+  //     const isTopPriority = dueDate >= today && dueDate <= fifteenDaysFromNow;
+  //     return { ...bill, topPriority: isTopPriority };
+  //   });
+  // };
 
   // Fetch bills for the specific user
-  const fetchBills = async () => {
-    if (!user?.id) return;
-    setLoading(true);
+  // const fetchBills = async () => {
+  //   if (!user?.id) return;
+  //   setLoading(true);
 
-    try {
-      let billsData: any = await fetchBillsForSpecificUser(user.id);
-      billsData = filterAndMarkBills(billsData);
-      setBills(billsData);
-    } catch (error) {
-      console.error("Error fetching bills:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   try {
+  //     let billsData: any = await fetchBillsForSpecificUser(user.id);
+  //     billsData = filterAndMarkBills(billsData);
+  //     setBills(billsData);
+  //   } catch (error) {
+  //     console.error("Error fetching bills:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // Fetch bills when the component is mounted
-  useEffect(() => {
-    fetchBills();
-  }, [user?.id]);
+  // useEffect(() => {
+  //   fetchBills();
+  // }, [user?.id]);
 
   return (
     <div className="px-4">
@@ -107,9 +116,9 @@ const Dashboard = () => {
               >
                 <ClipLoader size={70} color="#39b996" />
               </div>
-            ) : bills.length > 0 ? (
+            ) : userBills.length > 0 ? (
               <Grid container justifyContent="center" spacing={2}>
-                {bills.map((bill) => (
+                {userBills?.length && userBills.map((bill:any) => (
                   <Grid item key={bill.id}>
                     <BillCard bill={bill} />
                   </Grid>

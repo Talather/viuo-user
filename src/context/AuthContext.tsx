@@ -15,6 +15,10 @@ import {
 import { auth, db } from "@/lib/firebaseConfig";
 import { User } from "../types"; // Your custom user type
 import { doc, getDoc } from "firebase/firestore";
+import { useUserAssets } from "./userSpecificAssetsContext";
+import { useUserAssetsDispatch } from './userSpecificAssetsContext'
+import { fetchBillsForSpecificUser } from "@/lib/clientControllers/bills";
+import { fetchDocumentsForSpecificUser } from '@/lib/clientControllers/userSpecificAssets'
 
 // Define types for the user and context
 interface AuthContextType {
@@ -35,8 +39,23 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const {userBills,userDocuments}=useUserAssets()
+
+const dispatch=useUserAssetsDispatch()
+
+
+
+
+
+
+
+
+
 
   useEffect(() => {
+
+
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         // Fetch user data from Firestore
@@ -65,6 +84,28 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             console.warn("No user document found for the authenticated user.");
             setUser(null);
           }
+
+
+
+
+
+          if (!userBills.length && !userDocuments.length) {
+            const bills = await fetchBillsForSpecificUser(firebaseUser.uid)
+            console.log("zaaaaaaalim", bills)
+            
+            const documents = await fetchDocumentsForSpecificUser(firebaseUser.uid)
+            console.log('zaaaaaaalimDocuments', documents)
+            dispatch({ type: 'SET_ALL_DOCUMENTS', payload: documents })
+          }
+
+
+          
+
+
+
+
+
+
         } catch (error) {
           console.error("Error fetching user data from Firestore:", error);
         }
