@@ -89,20 +89,23 @@ const DocumentPage = () => {
     const filteredDocs = documents.filter((doc) => doc?.purpose === purpose);
 
     if (filteredDocs.length === 0) {
-      return (
-        <div className="flex flex-row items-center justify-center h-44 w-full">
-          <div className="flex flex-col items-center justify-center bg-button-gpt text-white text-center w-2/3 h-24 rounded-2xl shadow-md ">
-            <h1 className="text-md font-bold">No Documents Available</h1>
-          </div>
-        </div>
-      );
+      return <></>;
     }
 
-    return filteredDocs.map((doc, index) => (
-      <div className="ml-4 mr-3">
-        <DocumentCard key={index} document={doc} />
-      </div>
-    ));
+    return (
+      <>
+        <h2 className="text-3xl font-bold mb-14 ml-4 text-button-gpt">
+          {purpose === "Bill" ? "Bills Documents:" : "User Uploaded Documents:"}
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredDocs.map((doc, index) => (
+            <div className="ml-4 mr-3">
+              <DocumentCard key={index} document={doc} />
+            </div>
+          ))}
+        </div>
+      </>
+    );
   };
 
   return (
@@ -125,21 +128,18 @@ const DocumentPage = () => {
       </Tooltip>
 
       <section className="mt-28">
-        <h2 className="text-3xl font-bold mb-14 ml-4 text-button-gpt">
-          Bills Documents:
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {renderDocuments(userDocuments, "Bill")}
-        </div>
+        {renderDocuments(userDocuments, "Bill")}
       </section>
 
       <section className="mt-28">
-        <h2 className="text-3xl font-bold mb-14 ml-3 text-button-gpt">
-          User Uploaded Documents:
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {renderDocuments(userDocuments, "Resume")}
-        </div>
+        {renderDocuments(userDocuments, "Resume")}
+        {userDocuments.length === 0 && (
+          <div className="flex flex-row items-center justify-center h-44 w-full">
+            <div className="flex flex-col items-center justify-center bg-button-gpt text-white text-center w-2/3 h-24 rounded-2xl shadow-md ">
+              <h1 className="text-md font-bold">No Documents Available</h1>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
