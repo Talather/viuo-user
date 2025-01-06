@@ -1,93 +1,62 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import DocumentCard from '@/components/documentCard'
-import { db } from '@/lib/firebaseConfig'
-import { getFirestore, collection, getDocs, orderBy, query
-} from 'firebase/firestore'
-import { useUserAssets, useUserAssetsDispatch } from '@/context/userSpecificAssetsContext'
-import { onSnapshot } from 'firebase/firestore'
-// import { db } from '@/lib/firebaseConfig' // Your Firebase setup file
+import { db, storage } from '@/lib/firebaseConfig'
+import { collection, onSnapshot, addDoc, doc } from 'firebase/firestore'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import {
+  useUserAssets,
+  useUserAssetsDispatch
+} from '@/context/userSpecificAssetsContext'
+import { useAuth } from '@/context/AuthContext'
+import { useToast } from '@/hooks/use-toast'
+import { Tooltip } from '@nextui-org/react'
 
 const DocumentPage = () => {
-
   const { userDocuments } = useUserAssets()
-  console.log("shaaafij", userDocuments)
-  //   const [docs, setDocs] = useState([])
-
-  //   useEffect(() => {
-  //     const fetchDocuments = async () => {
-  //   try {
-  //     // Get a reference to the documents collection
-  //     const documentsCollectionRef = collection(db, 'documents')
-
-  //     // Create a query to order by 'uploadedAt' field in ascending order (you can change to 'desc' for descending)
-  //     const documentsQuery = query(
-  //       documentsCollectionRef,
-  //       orderBy('uploadedAt', 'asc')
-  //     )
-
-  //     const querySnapshot = await getDocs(documentsQuery)
-
-  //     // Map the documents into an array with the necessary structure
-  //     const documents = querySnapshot.docs.map(doc => ({
-  //       ...doc.data(),
-  //       id: doc.id // Optional: if you want to include the document ID
-  //     }))
-
-  //     // Update the state with the fetched documents
-  //     setDocs(documents)
-  //   } catch (error) {
-  //     console.error('Error fetching documents:', error)
-  //   }
-  // }
-
-
-  //     fetchDocuments() // Call the async function to fetch documents
-  //   }, []) // Empty dependency array means this effect runs only once when the component mounts
-
-  
-  
-
-  
-  
-  
-
-  
-  
-
-
-
-
-
-
-
-
-
-  
-  
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-
-  
   const dispatch = useUserAssetsDispatch()
+  const toast = useToast()
+  const { user } = useAuth()
+
+  const handleDocumentUpload = async event => {
+    if (!user || !user.id) {
+      console.error('User is not authenticated or user ID is missing.')
+      return
+    }
+
+    if (event.target.files?.[0]) {
+      const file = event.target.files[0]
+      const storageRef = ref(storage, `documents/${user.id}/${file.name}`)
+
+      try {
+        const snapshot = await uploadBytes(storageRef, file)
+        const fileUrl = await getDownloadURL(snapshot.ref)
+
+        await addDoc(collection(db, 'documents'), {
+          userId: user.id,
+          documentUrl: fileUrl,
+          documentName: file.name,
+          documentType: file.type,
+          uploadedAt: new Date(),
+          purpose: 'Resume'
+        })
+
+        toast({
+          title: 'Success',
+          description: 'Document Uploaded Successfully'
+        })
+      } catch (error) {
+        console.error('Error uploading document:', error)
+        toast({
+          title: 'Error',
+          description: 'Failed to upload document'
+        })
+      }
+    }
+  }
+
   useEffect(() => {
-    // if (user) {
-    const docsCollectionRef = collection(db, 'documents') // Replace with your collection name
+    const docsCollectionRef = collection(db, 'documents')
+
     const unsubscribe = onSnapshot(
       docsCollectionRef,
       snapshot => {
@@ -96,30 +65,70 @@ const DocumentPage = () => {
           ...doc.data()
         }))
         dispatch({ type: 'SET_ALL_DOCUMENTS', payload: docs })
-        // Update the context with the latest data
       },
       error => {
-        console.error('Error listening to bills updates:', error)
+        console.error('Error listening to document updates:', error)
       }
     )
 
-    return () =>
-      unsubscribe() // Cleanup listener on unmount
-    // }
-  }, [])
+    return () => unsubscribe()
+  }, [dispatch])
 
-  return userDocuments.length ? (
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6'>
-      {userDocuments.map((doc, index) => (
+  const renderDocuments = (documents, purpose) => {
+    const filteredDocs = documents.filter(doc => doc?.purpose === purpose)
+
+    if (filteredDocs.length === 0) {
+      return (
+        <div className='flex flex-row items-center justify-center h-44 w-full'>
+          <div className='flex flex-col items-center justify-center bg-button-gpt text-white text-center w-2/3 h-24 rounded-2xl shadow-md '>
+            <h1 className='text-md font-bold'>No Documents Available</h1>
+          </div>
+        </div>
+      )
+    }
+
+    return filteredDocs.map((doc, index) => (
+      <div className='ml-4 mr-3'>
         <DocumentCard key={index} document={doc} />
-      ))}
+        </div>
+    ))
+  }
+
+  return (
+    <div className='w-full'>
+      <Tooltip content='Upload the Document'>
+      <div className='flex justify-center my-4'>
+        <label
+          htmlFor='documentUpload'
+          className='flex items-center text-xl justify-center w-1/3 px-4 py-3 text-white bg-button-gpt rounded-lg cursor-pointer hover:bg-button-gpt'
+        >
+          Upload Document
+        </label>
+        <input
+          type='file'
+          id='documentUpload'
+          className='hidden'
+          onChange={handleDocumentUpload}
+        />
+        </div>
+        
+        </Tooltip>
+
+      <section className='mt-28'>
+        <h2 className='text-6xl font-bold mb-14 ml-4 text-button-gpt'>Bills Documents:</h2>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+          {renderDocuments(userDocuments, 'Bill')}
+        </div>
+      </section>
+
+      <section className='mt-28'>
+        <h2 className='text-6xl font-bold mb-14 ml-3 text-button-gpt'>User Uploaded Documents:</h2>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+          {renderDocuments(userDocuments, 'Resume')}
+        </div>
+      </section>
     </div>
-  ) : (
-      <div className='flex items-center justify-center h-96'>
-    <div className='flex flex-col items-center justify-center bg-button-gpt text-white text-center w-1/3 h-40 rounded-2xl shadow-2xl'>
-      <h1 className='text-lg font-bold'>No Documents Available</h1>
-        </div>
-        </div>
   )
 }
+
 export default DocumentPage

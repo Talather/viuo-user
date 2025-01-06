@@ -397,6 +397,19 @@ import { createBill } from "@/lib/clientControllers/bills";
 import { useToast } from "@/hooks/use-toast";
 import pdfToText from "react-pdftotext";
 import { useParams } from "react-router-dom";
+import { db,storage } from '@/lib/firebaseConfig'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  doc,
+  updateDoc,
+  addDoc
+} from 'firebase/firestore'
+
 
 export default function BillFormComponent({ bill = {}, update = false }) {
   const {
@@ -425,8 +438,78 @@ export default function BillFormComponent({ bill = {}, update = false }) {
 
   const isUploadMode = upload === "true";
 
+
+
+
+
+
+
+
+
+
+
   const extractText = async (event) => {
+
     const file = event.target.files[0];
+
+
+
+    if (event.target.files && event.target.files[0]) {
+        const file = event.target.files[0]
+        const storageRef = ref(storage, `documents/${user?.id}/${file.name}`)
+        const snapshot = await uploadBytes(storageRef, file)
+        const fileUrl = await getDownloadURL(snapshot.ref)
+        // Add document link to Firestore
+        const documentsCollection = collection(db, 'documents')
+        await addDoc(documentsCollection, {
+          userId: user.id,
+          documentUrl: fileUrl,
+          documentName: file.name,
+          documentType: file.type,
+          uploadedAt: new Date(),
+          purpose:'Bill'
+        })
+        const userDoc = doc(db, 'users', user.id)
+        // await updateDoc(userDoc, { totalDocuments: totalDocuments + 1 })
+      // setTotalDocuments(totalDocuments + 1)
+      console.log("bawaji")
+        toast({
+          title: 'Success',
+          description: 'Document Updated'
+        })
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     try {
       const cleanValues = (values) => {
         return Object.fromEntries(
