@@ -59,6 +59,14 @@ const Footer = () => {
                 className={({ isActive }) =>
                   `${isActive && "border-b-2 border-emerald-700 w-fit"}`
                 }
+                to="/how-it-works"
+              >
+                How it works
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `${isActive && "border-b-2 border-emerald-700 w-fit"}`
+                }
                 to="/contact-us"
               >
                 Contact Us

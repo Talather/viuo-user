@@ -12,10 +12,10 @@ import AuthLayout from "./layouts/AuthLayout";
 import LoginPage from "../pages/login-page";
 import RegisterUser from "../pages/register-user";
 import ForgetPassword from "../pages/forget-password";
-import DashboardHome from "../pages/dashboardHome"
-import PayEarly from "../pages/payEarly"
-import Transaction from "../pages/transaction"
-import ResetPassword from "../pages/reset-pasword"
+import DashboardHome from "../pages/dashboardHome";
+import PayEarly from "../pages/payEarly";
+import Transaction from "../pages/transaction";
+import ResetPassword from "../pages/reset-pasword";
 import OpenPositions from "../pages/open-positions";
 import JobDetails from "../pages/job-details";
 import JobApplication from "../pages/job-application";
@@ -25,22 +25,20 @@ import PrivacyPolicy from "../pages/privacy-policy";
 import TermsOfService from "../pages/terms-of-service";
 import CookiesPolicies from "../pages/cookies-policies";
 import DataProtectionPolicy from "../pages/data-protection";
-import DashboardLayout from "./layouts/DashboardLayout"
-import ProtectedRoute from "../components/ProtectedRoute"
-import Calendar from "../pages/calendar/page"
-import Profile from '../pages/profile'
+import DashboardLayout from "./layouts/DashboardLayout";
+import ProtectedRoute from "../components/ProtectedRoute";
+import Calendar from "../pages/calendar/page";
+import Profile from "../pages/profile";
 
-import Dashboard from "../pages/Dashboard"
-import RewardTracker from '../pages/reward-tracker'
-import Refer from '../pages/refer'
-import CreateBill from '../components/ui/billForm/form'
+import Dashboard from "../pages/Dashboard";
+import RewardTracker from "../pages/reward-tracker";
+import Refer from "../pages/refer";
+import CreateBill from "../components/ui/billForm/form";
 
-
-import PaymentHistory from '../pages/payments-history'
+import PaymentHistory from "../pages/payments-history";
 import DocumentPage from "@/pages/documents";
 
 // import DashboardSettings from "../pages/DashboardSettings"
-
 
 export const router = createBrowserRouter([
   {
@@ -140,7 +138,7 @@ export const router = createBrowserRouter([
 
   {
     path: "dashboard",
-     loader: jobLoader,
+    loader: jobLoader,
     element: (
       <ProtectedRoute>
         <DashboardLayout />
@@ -151,7 +149,6 @@ export const router = createBrowserRouter([
         index: true,
         element: <DashboardHome />,
       },
-      
     ],
   },
 
@@ -167,16 +164,12 @@ export const router = createBrowserRouter([
         index: true,
         element: <Dashboard />,
       },
-       {
+      {
         path: "create/:upload",
         element: <CreateBill />,
       },
-     
     ],
   },
-
-
-
 
   {
     path: "payEarly",
@@ -190,18 +183,8 @@ export const router = createBrowserRouter([
         index: true,
         element: <PayEarly />,
       },
-     
     ],
   },
-
-
-
-
-
-
-
-
-
 
   {
     path: "transaction",
@@ -218,9 +201,6 @@ export const router = createBrowserRouter([
     ],
   },
 
-
-
-
   {
     path: "documents",
     element: (
@@ -236,21 +216,6 @@ export const router = createBrowserRouter([
     ],
   },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   {
     path: "payment-history",
     element: (
@@ -261,19 +226,13 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <PaymentHistory />
+        element: <PaymentHistory />,
       },
-     
     ],
   },
 
-
-
-
-
-
-   {
-    path: "reward-tracker",
+  {
+    path: "credit-tracker",
     element: (
       <ProtectedRoute>
         <DashboardLayout />
@@ -282,26 +241,10 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <RewardTracker />
+        element: <RewardTracker />,
       },
-     
     ],
   },
-   
-   
-   
-
-
-
-
-
-
-
-
-
-
-
-
 
   {
     path: "refer",
@@ -313,31 +256,10 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Refer />
+        element: <Refer />,
       },
-     
     ],
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   {
     path: "profile",
@@ -349,27 +271,10 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Profile />
+        element: <Profile />,
       },
-     
     ],
   },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   {
     path: "upcoming-bills",
@@ -381,9 +286,8 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Calendar />
+        element: <Calendar />,
       },
-     
     ],
   },
-])
+]);

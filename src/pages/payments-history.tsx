@@ -61,49 +61,22 @@
 
 // export default PaymentsHistory;
 
+import TableOne from "../components/TableOneForRewards";
 
-
-
-
-import TableOne from '../components/TableOneForRewards'
-// import { useAuth } from "../hooks/useAuth";
-// import { useNavigate } from "react-router-dom";
-// import { useState } from "react";
-// import BillCard from "@/components/cards/billCard";
-// import { Grid, Box } from "@mui/material";
-// import Button from '@/components/button'
 const PaymentsHistory = () => {
-//   const { user } = useAuth();
-//   const [selectedIndex, setSelectedIndex] = useState<number[]>([]);
-//   const navigate = useNavigate();
-//   const sortedFiles = [1, 2, 3, 4, 5];
-
-//   const handleCardClick = (index: number) => {
-//     // Toggle the index in the selectedIndex array
-//     setSelectedIndex((prev) =>
-//       prev.includes(index)
-//         ? prev.filter((i) => i !== index) // Remove if already selected
-//         : [...prev, index] // Add if not selected
-//     );
-//   };
-
   return (
-    
-      
-      <div className='mt-6 bg-white'>
-        <div className='text-center'>
-          <h3 className='text-2xl font-semibold text-gray-800 md:text-4xl'>
-            Record Of Previous Transactions:
-          </h3>
-        </div>
-        <div className='flex items-center justify-center mt-8'>
-          <div className='w-full max-w-4xl p-4 border border-gray-200 rounded-lg shadow-lg'>
-            <TableOne />
-          </div>
+    <div className="mt-6 bg-white">
+      <div className="text-center">
+        <h3 className="text-2xl font-semibold text-gray-800 md:text-4xl">
+          Record Of Previous Transactions:
+        </h3>
+      </div>
+      <div className="flex items-center justify-center mt-8">
+        <div className="w-full max-w-4xl p-4 border border-gray-200 rounded-lg shadow-lg">
+          <TableOne />
         </div>
       </div>
-     
-    
+    </div>
   );
 };
 

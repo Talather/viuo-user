@@ -78,7 +78,7 @@ const TotalIncomeLightCard = ({ isLoading }) => {
                     mt: 0.45,
                     mb: 0.45,
                   }}
-                  primary={<Typography variant="h4">$203</Typography>}
+                  primary={<Typography variant="h4">$203.00</Typography>}
                   secondary={
                     <Typography
                       variant="subtitle2"

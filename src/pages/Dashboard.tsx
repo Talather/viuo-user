@@ -1,8 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  useState,
-  useEffect
-} from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import BillCard from "@/components/cards/billCard";
@@ -11,10 +9,12 @@ import Button from "@/components/button";
 // import { fetchBillsForSpecificUser } from "@/lib/clientControllers/bills";
 import { ClipLoader } from "react-spinners";
 import { motion } from "framer-motion";
-import { useUserAssets, useUserAssetsDispatch } from "@/context/userSpecificAssetsContext";
-import { onSnapshot, collection } from 'firebase/firestore'
-import { db } from '@/lib/firebaseConfig' // Your Firebase setup file
-
+import {
+  useUserAssets,
+  useUserAssetsDispatch,
+} from "@/context/userSpecificAssetsContext";
+import { onSnapshot, collection } from "firebase/firestore";
+import { db } from "@/lib/firebaseConfig"; // Your Firebase setup file
 
 // Define an interface for Bill data
 // interface Bill {
@@ -30,146 +30,35 @@ import { db } from '@/lib/firebaseConfig' // Your Firebase setup file
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const { userBills } = useUserAssets()
-  const dispatch=useUserAssetsDispatch()
-  console.log("userBillshijra",userBills)
+  const { userBills } = useUserAssets();
+  const dispatch = useUserAssetsDispatch();
   // const [bills, setBills] = useState<Bill[]>([]); // State to store bills
-  const [loading,
+  const [
+    loading,
     // setLoading
   ] = useState<boolean>(false); // Loading state
   const navigate = useNavigate();
 
-  // Filter and mark bills as top priority based on due date
-
-  // const filterAndMarkBills = (bills: Bill[]) => {
-  //   const today = new Date();
-  //   const fifteenDaysFromNow = new Date();
-  //   fifteenDaysFromNow.setDate(today.getDate() + 15);
-
-  //   return bills.map((bill) => {
-  //     const dueDate = new Date(bill.due_date);
-  //     const isTopPriority = dueDate >= today && dueDate <= fifteenDaysFromNow;
-  //     return { ...bill, topPriority: isTopPriority };
-  //   });
-  // };
-
-  // Fetch bills for the specific user
-  // const fetchBills = async () => {
-  //   if (!user?.id) return;
-  //   setLoading(true);
-
-  //   try {
-  //     let billsData: any = await fetchBillsForSpecificUser(user.id);
-  //     billsData = filterAndMarkBills(billsData);
-  //     setBills(billsData);
-  //   } catch (error) {
-  //     console.error("Error fetching bills:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // Fetch bills when the component is mounted
-  // useEffect(() => {
-  //   fetchBills();
-  // }, [user?.id]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-useEffect(() => {
-  // if (user) {
-    const billsCollectionRef = collection(db, 'bills') // Replace with your collection name
+  useEffect(() => {
+    // if (user) {
+    const billsCollectionRef = collection(db, "bills"); // Replace with your collection name
     const unsubscribe = onSnapshot(
       billsCollectionRef,
-      snapshot => {
-        const bills = snapshot.docs.map(doc => ({
+      (snapshot) => {
+        const bills = snapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
-        }))
-        dispatch({type:"SET_ALL_BILLS",payload:bills})
-        // Update the context with the latest data
+          ...doc.data(),
+        }));
+        dispatch({ type: "SET_ALL_BILLS", payload: bills });
       },
-      error => {
-        console.error('Error listening to bills updates:', error)
+      (error) => {
+        console.error("Error listening to bills updates:", error);
       }
-    )
+    );
 
-    return () => unsubscribe() // Cleanup listener on unmount
-  // }
-}, [])
-
+    return () => unsubscribe(); // Cleanup listener on unmount
+    // }
+  }, []);
 
   return (
     <div className="px-4">
@@ -219,11 +108,12 @@ useEffect(() => {
               </div>
             ) : userBills.length > 0 ? (
               <Grid container justifyContent="center" spacing={2}>
-                {userBills?.length && userBills.map((bill:any) => (
-                  <Grid item key={bill.id}>
-                    <BillCard bill={bill} />
-                  </Grid>
-                ))}
+                {userBills?.length &&
+                  userBills.map((bill: any) => (
+                    <Grid item key={bill.id}>
+                      <BillCard bill={bill} />
+                    </Grid>
+                  ))}
               </Grid>
             ) : (
               <NoBillsMessage />

@@ -28,7 +28,7 @@ const rewardData = [
     rewardStatus: "Pending",
   },
   {
-    user: "Emily White",
+    user: "Gas",
     paymentDate: "2024-12-19",
     earlyByDays: 6,
     reward: "$18",

@@ -1,46 +1,46 @@
-const rewardData = [
+const paymentData = [
   {
-    user: "John Doe",
+    billName: "Electricity",
     paymentDate: "2024-12-20",
     earlyByDays: 5,
-    reward: "$20",
-    rewardStatus: "Redeemed",
+    amount: "$120",
+    paymentStatus: "Pending",
   },
   {
-    user: "Jane Smith",
+    billName: "Amazon",
     paymentDate: "2024-12-22",
     earlyByDays: 3,
-    reward: "$15",
-    rewardStatus: "Pending",
+    amount: "$50",
+    paymentStatus: "Completed",
   },
   {
-    user: "Alice Brown",
+    billName: "Internet",
     paymentDate: "2024-12-21",
     earlyByDays: 7,
-    reward: "$25",
-    rewardStatus: "Redeemed",
+    amount: "$80",
+    paymentStatus: "Completed",
   },
   {
-    user: "Robert Johnson",
+    billName: "Water",
     paymentDate: "2024-12-23",
     earlyByDays: 2,
-    reward: "$10",
-    rewardStatus: "Pending",
+    amount: "$30",
+    paymentStatus: "Completed",
   },
   {
-    user: "Emily White",
+    billName: "Gas",
     paymentDate: "2024-12-19",
     earlyByDays: 6,
-    reward: "$18",
-    rewardStatus: "Redeemed",
+    amount: "$45",
+    paymentStatus: "Completed",
   },
 ];
 
-const TableRewards = () => {
+const TablePayments = () => {
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h4 className="mb-10 font-bold text-body-2xlg text-dark dark:text-white">
-        Credits for Early Payments
+        Payments Overview
       </h4>
 
       <div className="flex flex-col">
@@ -48,7 +48,7 @@ const TableRewards = () => {
         <div className="grid grid-cols-5 text-button-gpt">
           <div className="px-2 pb-3.5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              User
+              Bill Name
             </h5>
           </div>
           <div className="px-2 pb-3.5 text-center">
@@ -63,7 +63,7 @@ const TableRewards = () => {
           </div>
           <div className="px-2 pb-3.5 text-center">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Credit
+              Amount
             </h5>
           </div>
           <div className="px-2 pb-3.5 text-center">
@@ -74,51 +74,51 @@ const TableRewards = () => {
         </div>
 
         {/* Table Rows */}
-        {rewardData.map((reward, key) => (
+        {paymentData.map((payment, key) => (
           <div
             className={`grid grid-cols-5 ${
-              key === rewardData.length - 1
+              key === paymentData.length - 1
                 ? ""
                 : "border-b border-stroke dark:border-dark-3"
             }`}
             key={key}
           >
-            {/* User */}
+            {/* Bill Name */}
             <div className="flex items-center gap-3.5 px-2 py-4">
               <p className="font-medium text-dark dark:text-white">
-                {reward.user}
+                {payment.billName}
               </p>
             </div>
 
             {/* Payment Date */}
             <div className="flex items-center justify-center px-2 py-4">
               <p className="font-medium text-dark dark:text-white">
-                {reward.paymentDate}
+                {payment.paymentDate}
               </p>
             </div>
 
             {/* Early By (Days) */}
             <div className="flex items-center justify-center px-2 py-4">
               <p className="font-medium text-dark dark:text-white">
-                {reward.earlyByDays}
+                {payment.earlyByDays}
               </p>
             </div>
 
-            {/* Reward Amount */}
+            {/* Amount */}
             <div className="flex items-center justify-center px-2 py-4">
-              <p className="font-medium text-green-light-1">{reward.reward}</p>
+              <p className="font-medium text-green-light-1">{payment.amount}</p>
             </div>
 
-            {/* Reward Status */}
+            {/* Payment Status */}
             <div className="flex items-center justify-center px-2 py-4">
               <p
                 className={`font-medium ${
-                  reward.rewardStatus === "Redeemed"
+                  payment.paymentStatus === "Completed"
                     ? "text-green-600"
                     : "text-yellow-500"
                 }`}
               >
-                {reward.rewardStatus}
+                {payment.paymentStatus}
               </p>
             </div>
           </div>
@@ -128,4 +128,6 @@ const TableRewards = () => {
   );
 };
 
-export default TableRewards;
+export default TablePayments;
+
+// export default TableRewards;

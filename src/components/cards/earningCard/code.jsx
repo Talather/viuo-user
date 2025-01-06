@@ -201,28 +201,6 @@
 
 // export default EarningCard
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import PropTypes from "prop-types";
 import { useState } from "react";
 
@@ -245,8 +223,8 @@ import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
-  backgroundColor:'#39b996',
-    // theme.palette.primary.dark,
+  backgroundColor: "#39b996",
+  // theme.palette.primary.dark,
   color: "#fff",
   overflow: "hidden",
   position: "relative",
@@ -326,8 +304,10 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                       disableElevation
                       variant={timeValue ? "contained" : "text"}
                       size="small"
-                      sx={{ color: "inherit",backgroundColor: timeValue ? '#095c46' : null
- }}
+                      sx={{
+                        color: "inherit",
+                        backgroundColor: timeValue ? "#095c46" : null,
+                      }}
                       onClick={(e) => handleChangeTime(e, true)}
                     >
                       Month
@@ -335,13 +315,11 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                     <Button
                       disableElevation
                       variant={!timeValue ? "contained" : "text"}
-                        size="small"
-                        
-                        
-                        sx={{
-                          color: "inherit",
-                          backgroundColor: !timeValue ? "#095c46" :null
-                        }}
+                      size="small"
+                      sx={{
+                        color: "inherit",
+                        backgroundColor: !timeValue ? "#095c46" : null,
+                      }}
                       onClick={(e) => handleChangeTime(e, false)}
                     >
                       Year
@@ -364,7 +342,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                               mb: 0.75,
                             }}
                           >
-                            $108.00
+                            $110.00
                           </Typography>
                         ) : (
                           <Typography
@@ -376,7 +354,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                               mb: 0.75,
                             }}
                           >
-                            $250.00
+                            $400.00
                           </Typography>
                         )}
                       </Grid>
@@ -430,4 +408,3 @@ TotalOrderLineChartCard.propTypes = {
 };
 
 export default TotalOrderLineChartCard;
-

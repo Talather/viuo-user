@@ -23,13 +23,13 @@ const items = [
     icon: Award,
   },
   {
-    title: "Organizer Bills",
+    title: "Organizer",
     url: "/upcoming-bills",
     icon: Settings,
   },
   {
     title: "Credits Tracker",
-    url: "/reward-tracker",
+    url: "/credit-tracker",
     icon: Award,
   },
   {
@@ -37,7 +37,7 @@ const items = [
     url: "/payment-history",
     icon: History,
   },
-  
+
   {
     title: "Documents",
     url: "/documents",
@@ -49,7 +49,7 @@ const items = [
     icon: User,
   },
   {
-    title: "Refer a Friend",
+    title: "Referral Program",
     url: "/refer",
     icon: User,
   },
