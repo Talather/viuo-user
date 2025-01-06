@@ -396,12 +396,32 @@
 // // </tr>
 
 import { useState } from 'react'
-
+import { useUserAssets } from '@/context/userSpecificAssetsContext'
 const CalendarBox = () => {
   const [currentDate, setCurrentDate] = useState(new Date())
 
   // Example of marked dates for demonstration (you can modify this dynamically)
-  const markedDates = [5, 15, 25]
+  // const markedDates = [5, 15, 25]
+  const { userBills } = useUserAssets()
+  const currentMonth = currentDate
+    .toLocaleString('default', { month: 'long' })
+    .toLowerCase()
+  const currentYear = currentDate.getFullYear()
+  console.log(currentYear)
+
+  //  .toLowerCase()
+
+  //   userBills.forEach((e) => {
+  //     var myDate = new Date(e.dueDate * 1000)
+  // var formatedTime = myDate.toJSON()
+
+  //   })
+
+  const upcomingBills = getUpcomingBillsByMonth(userBills)
+  console.log('laliga', upcomingBills)
+  //   const result = {
+  //   [.toString()]: upcomingBills
+  // }
 
   // Function to handle month navigation
   const navigateMonth = (direction: any) => {
@@ -483,7 +503,7 @@ const CalendarBox = () => {
           <div className='flex gap-2'>
             <button
               className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
-              onClick={() => navigateYear(1)}
+              onClick={() => navigateMonth(1)}
             >
               Month »
             </button>
@@ -536,7 +556,18 @@ const CalendarBox = () => {
                   {[...Array(7)].map((_, colIndex) => {
                     const day = rowIndex * 7 + colIndex - firstDayOfWeek + 1
                     if (day > 0 && day <= totalDaysInMonth) {
-                      const isMarked = markedDates.includes(day)
+                      // console.log("koila",result)
+                      const isMarked =
+                        upcomingBills[currentYear] &&
+                        upcomingBills[currentYear][currentMonth.toLowerCase()]
+                          ? upcomingBills[currentYear][
+                              currentMonth.toLowerCase()
+                            ]?.includes(day)
+                          : false
+
+                      // const isMarked = result[currentYear.toString()][upcomingBills[currentMonth]]?.includes(day)
+                      // isMarked===true ? console.log("sadeem bhrwa"): null
+                      // markedDates.includes(day)
                       return (
                         <td
                           key={colIndex}
@@ -554,7 +585,8 @@ const CalendarBox = () => {
                             //   // className='absolute top-0 left-0 w-full h-full bg-button-gpt opacity-40'
                             // >
 
-                            <div className=' event invisible 
+                            <div
+                              className=' event invisible 
                             absolute left-2
                             z-99
                             
@@ -576,7 +608,7 @@ const CalendarBox = () => {
                                   md:opacity-100'
                             >
                               <span className='event-name font-medium text-dark dark:text-white'>
-                               Upcoming Bill
+                                Upcoming Bill
                               </span>
                               <span className='time text-sm'>
                                 {`Day:${day}`}
@@ -604,3 +636,173 @@ const CalendarBox = () => {
 }
 
 export default CalendarBox
+
+// interface Bill {
+//   id: string
+//   updated_at: any
+//   name?: string
+//   dueDate: string // "YYYY-MM-DD"
+//   user_id: any
+//   accountNumber?: string
+//   amount?: string
+//   day?: number // Added to store the day
+//   month?: string // Added to store the month
+// }
+
+// // Function to filter and group bills by upcoming due dates and include day and month
+// function getUpcomingBillsByMonth (
+//   bills: Bill[]
+// ): Record<string, (Bill & { day: number; month: string })[]> {
+//   const currentDate = new Date()
+
+//   // Filter bills that have a due date greater than the current date
+//   const upcomingBills = bills.filter(bill => {
+//     const billDueDate = new Date(bill.dueDate)
+//     return billDueDate > currentDate
+//   })
+
+//   // Group the filtered bills by month
+//   const groupedBills: Record<
+//     string,
+//     (Bill & { day: number; month: string })[]
+//   > = {}
+
+//   upcomingBills.forEach(bill => {
+//     const billDueDate = new Date(bill.dueDate)
+//     const month = billDueDate
+//       .toLocaleString('default', { month: 'long' })
+//       .toLowerCase() // Get the month in lowercase
+//     const day = billDueDate.getDate() // Get the day of the month
+
+//     // Add the day and month to the bill object
+//     const updatedBill = {
+//       ...bill,
+//       day,
+//       month
+//     }
+
+//     if (!groupedBills[month]) {
+//       groupedBills[month] = []
+//     }
+
+//     // Add the updated bill to the respective month group
+//     groupedBills[month].push(updatedBill)
+//   })
+
+//   return groupedBills
+// }
+
+interface Bill {
+  id: string
+  updated_at: any
+  name?: string
+  dueDate: string // "YYYY-MM-DD"
+  user_id: any
+  accountNumber?: string
+  amount?: string
+}
+
+// function getUpcomingBillsByMonth (bills: Bill[]): Record<string, number[]> {
+//   const currentDate = new Date()
+
+//   // Get today's date
+//   const todayDay = currentDate.getDate()
+//   const todayMonth = currentDate
+//     .toLocaleString('default', { month: 'long' })
+//     .toLowerCase()
+//   const todayYear = currentDate.getFullYear()
+
+//   // Filter bills that have a due date greater than or equal to the current date
+//   const upcomingBills = bills.filter(bill => {
+//     const billDueDate = new Date(bill.dueDate)
+//     return billDueDate >= currentDate
+//   })
+
+//   // Group the filtered bills by month
+//   const groupedBills: Record<string, number[]> = {}
+
+//   upcomingBills.forEach(bill => {
+//     const billDueDate = new Date(bill.dueDate)
+//     const month = billDueDate
+//       .toLocaleString('default', { month: 'long' })
+//       .toLowerCase() // Get the month in lowercase
+//     const day = billDueDate.getDate() // Get the day of the month
+//     const billYear = billDueDate.getFullYear().toString()
+
+//     if (!groupedBills[billYear]) {
+//   groupedBills[billYear] = {} // Initialize the year if it doesn't exist
+// }
+
+//     // if (!groupedBills[month]) {
+//     //   groupedBills[month] = []
+//     // }
+
+//     // Add the day to the respective month group
+//     groupedBills[billYear][month].push(day)
+//   })
+
+//   // Check if today's bill is present and add it to the result
+//   // if (!groupedBills[todayMonth]) {
+//   //   groupedBills[todayMonth] = []
+//   // }
+
+//   // groupedBills[todayMonth].push(todayDay)
+
+//   return groupedBills
+// }
+
+function getUpcomingBillsByMonth (
+  bills: Bill[]
+): Record<string, Record<string, number[]>> {
+  const currentDate = new Date()
+
+  // Get today's date
+  const todayDay = currentDate.getDate()
+  const todayMonth = currentDate
+    .toLocaleString('default', { month: 'long' })
+    .toLowerCase()
+  const todayYear = currentDate.getFullYear()
+
+  // Filter bills that have a due date greater than or equal to the current date
+  const upcomingBills = bills.filter(bill => {
+    const billDueDate = new Date(bill.dueDate)
+    return billDueDate >= currentDate
+  })
+
+  // Group the filtered bills by year and month
+  const groupedBills: Record<string, Record<string, number[]>> = {}
+
+  upcomingBills.forEach(bill => {
+    const billDueDate = new Date(bill.dueDate)
+    const billYear = billDueDate.getFullYear()
+    const month = billDueDate
+      .toLocaleString('default', { month: 'long' })
+      .toLowerCase() // Get the month in lowercase
+    const day = billDueDate.getDate() // Get the day of the month
+
+    if (!groupedBills[billYear]) {
+      groupedBills[billYear] = {} // Initialize the year
+    }
+
+    if (!groupedBills[billYear][month]) {
+      groupedBills[billYear][month] = [] // Initialize the month if it doesn't exist
+    }
+
+    // Add the day to the respective year and month group
+    groupedBills[billYear][month].push(day)
+  })
+
+  // Check if today's bill is present and add it to the result
+  if (!groupedBills[todayYear]) {
+    groupedBills[todayYear] = {} // Initialize the year if it doesn't exist
+  }
+
+  if (!groupedBills[todayYear][todayMonth]) {
+    groupedBills[todayYear][todayMonth] = [] // Initialize the month if it doesn't exist
+  }
+
+  // Add today's day to the respective year and month group
+  groupedBills[todayYear][todayMonth].push(todayDay)
+
+  return groupedBills
+}
