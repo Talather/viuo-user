@@ -5,10 +5,6 @@ const Refer = () => {
   return (
       <div className='w-full'>
           <ReferAFriend />
-
-
-
-        
     </div>
   )
 }

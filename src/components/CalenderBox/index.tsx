@@ -241,150 +241,366 @@
 
 // export default CalendarBox
 
+// import { useState } from 'react'
 
+// const CalendarBox = () => {
+//   const [currentDate, setCurrentDate] = useState(new Date())
 
+//   const handlePrevMonth = () => {
+//     setCurrentDate(
+//       new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
+//     )
+//   }
 
+//   const handleNextMonth = () => {
+//     setCurrentDate(
+//       new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
+//     )
+//   }
 
+//   const handlePrevYear = () => {
+//     setCurrentDate(
+//       new Date(currentDate.getFullYear() - 1, currentDate.getMonth())
+//     )
+//   }
 
+//   const handleNextYear = () => {
+//     setCurrentDate(
+//       new Date(currentDate.getFullYear() + 1, currentDate.getMonth())
+//     )
+//   }
 
+//   const renderDays = () => {
+//     const daysInMonth = new Date(
+//       currentDate.getFullYear(),
+//       currentDate.getMonth() + 1,
+//       0
+//     ).getDate()
+//     const firstDay = new Date(
+//       currentDate.getFullYear(),
+//       currentDate.getMonth(),
+//       1
+//     ).getDay()
 
+//     const days = []
+//     for (let i = 0; i < firstDay; i++) {
+//       days.push(
+//         <td
+//           key={`empty-${i}`}
+//           className='border-stroke dark:border-dark-3'
+//         ></td>
+//       )
+//     }
 
+//     for (let i = 1; i <= daysInMonth; i++) {
+//       days.push(
+//         <td
+//           key={i}
+//           className='relative h-20 p-2 transition duration-500 border cursor-pointer ease border-stroke hover:bg-gray-2 dark:border-dark-3 dark:hover:bg-dark-2 md:h-25 md:p-6 xl:h-31'
+//         >
+//           <span className='font-medium text-dark dark:text-white'>{i}</span>
+//         </td>
+//       )
+//     }
 
+//     return days
+//   }
+
+//   return (
+//     <div className='w-full max-w-full rounded-[10px]  shadow-1 '>
+
+//       <div className='flex justify-between items-center
+//  p-4  text-white  bg-button-gpt-hover
+// '>
+//         <div className='flex gap-2'>
+//           <button
+//             className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+//             onClick={handlePrevYear}
+//           >
+//             « Year
+//           </button>
+//           <button
+//             className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+//             onClick={handlePrevMonth}
+//           >
+//             « Month
+//           </button>
+//         </div>
+//         <span className='text-lg font-medium'>
+//           {currentDate.toLocaleString('default', { month: 'long' })}{' '}
+//           {currentDate.getFullYear()}
+//         </span>
+//         <div className='flex gap-2'>
+//           <button
+//             className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+//             onClick={handleNextMonth}
+//           >
+//             Month »
+//           </button>
+//           <button
+//             className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+//             onClick={handleNextYear}
+//           >
+//             Year »
+//           </button>
+//         </div>
+//       </div>
+//       <table className='w-full rounded-lg'>
+//         <thead className="rounded-lg"
+// >
+//           <tr className='grid grid-cols-7 rounded-lg bg-primary text-white'>
+//             {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(
+//               (day, index) => (
+//                 <th
+//                   key={index}
+//                   className='bg-button-gpt flex h-15 items-center justify-center p-1 text-body-xs font-medium sm:text-base xl:p-5'
+//                 >
+//                   {day}
+//                 </th>
+//               )
+//             )}
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {[...Array(Math.ceil(renderDays().length / 7))].map(
+//             (_, weekIndex) => (
+//               <tr key={weekIndex} className='grid grid-cols-7'>
+
+//                 {renderDays().slice(weekIndex * 7, weekIndex * 7 + 7)}
+//               </tr>
+//             )
+//           )}
+//         </tbody>
+//       </table>
+//     </div>
+//   )
+// }
+
+// export default CalendarBox
+// //
+
+// //<tr className='grid grid-cols-7'>
+// //   {[...Array(7)].map((_, index) => {
+// //     const date = index + 15 // Example: Starting from 15 for this row
+// //     return (
+// //       <td
+// //         key={date}
+// //         className={`relative h-20 p-2 transition duration-500 border cursor-pointer ease border-stroke hover:bg-gray-2 dark:border-dark-3 dark:hover:bg-dark-2 md:h-25 md:p-6 xl:h-31 ${
+// //           date === 15 ? 'bg-primary text-white' : 'text-dark dark:text-white'
+// //         }`}
+// //       >
+// //         <span className='font-medium'>{date}</span>
+// //       </td>
+// //     )
+// //   })}
+// // </tr>
 
 import { useState } from 'react'
 
 const CalendarBox = () => {
   const [currentDate, setCurrentDate] = useState(new Date())
 
-  const handlePrevMonth = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
-    )
+  // Example of marked dates for demonstration (you can modify this dynamically)
+  const markedDates = [5, 15, 25]
+
+  // Function to handle month navigation
+  const navigateMonth = (direction: any) => {
+    const newDate = new Date(currentDate)
+    newDate.setMonth(currentDate.getMonth() + direction)
+    setCurrentDate(newDate)
   }
 
-  const handleNextMonth = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
-    )
+  // Function to handle year navigation
+  const navigateYear = (direction: any) => {
+    const newDate = new Date(currentDate)
+    newDate.setFullYear(currentDate.getFullYear() + direction)
+    setCurrentDate(newDate)
   }
 
-  const handlePrevYear = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear() - 1, currentDate.getMonth())
-    )
+  const getDaysInMonth = (date: any) => {
+    const year = date.getFullYear()
+    const month = date.getMonth()
+    return new Date(year, month + 1, 0).getDate() // Get number of days in the month
   }
 
-  const handleNextYear = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear() + 1, currentDate.getMonth())
-    )
-  }
+  const startOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    1
+  ) // First day of the month
+  // const endOfMonth = new Date(
+  //   currentDate.getFullYear(),
+  //   currentDate.getMonth(),
+  //   getDaysInMonth(currentDate)
+  // ) // Last day of the month
+  const firstDayOfWeek = startOfMonth.getDay() // Day of the week the month starts on
 
-  const renderDays = () => {
-    const daysInMonth = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() + 1,
-      0
-    ).getDate()
-    const firstDay = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      1
-    ).getDay()
-
-    const days = []
-    for (let i = 0; i < firstDay; i++) {
-      days.push(
-        <td
-          key={`empty-${i}`}
-          className='border-stroke dark:border-dark-3'
-        ></td>
-      )
-    }
-
-    for (let i = 1; i <= daysInMonth; i++) {
-      days.push(
-        <td
-          key={i}
-          className='relative h-20 p-2 transition duration-500 border cursor-pointer ease border-stroke hover:bg-gray-2 dark:border-dark-3 dark:hover:bg-dark-2 md:h-25 md:p-6 xl:h-31'
-        >
-          <span className='font-medium text-dark dark:text-white'>{i}</span>
-        </td>
-      )
-    }
-
-    return days
-  }
+  const totalDaysInMonth = getDaysInMonth(currentDate)
 
   return (
-    <div className='w-full max-w-full rounded-[10px]  shadow-1 '>
-      
-      
-      <div className='flex justify-between items-center
- p-4  text-white  bg-button-gpt-hover
-'>
-        <div className='flex gap-2'>
-          <button
-            className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
-            onClick={handlePrevYear}
-          >
-            « Year
+    <>
+      <div className='w-full max-w-full  bg-white shadow-1 dark:bg-gray-dark dark:shadow-card '>
+        {/* <div className=' bg-button-gpt-hover  text-white flex justify-between items-center p-4 rounded-tl-[10px]'>
+          <button onClick={() => navigateYear(-1)} className='text-lg'>
+            &lt;&lt; Prev Year
           </button>
-          <button
-            className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
-            onClick={handlePrevMonth}
-          >
-            « Month
+          <button onClick={() => navigateMonth(-1)} className='text-lg'>
+            &lt; Prev Month
           </button>
+          <span className='text-xl font-semibold'>
+            {currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}
+          </span>
+          <button onClick={() => navigateMonth(1)} className='text-lg'>
+            Next Month &gt;
+          </button>
+          <button onClick={() => navigateYear(1)} className='text-lg'>
+            Next Year &gt;&gt;
+          </button>
+        </div> */}
+
+        <div
+          className='flex rounded-t-[10px] justify-between items-center p-4  text-white  bg-button-gpt-hover
+'
+        >
+          <div className='flex gap-2'>
+            <button
+              className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+              onClick={() => navigateYear(-1)}
+            >
+              « Year
+            </button>
+            <button
+              className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+              onClick={() => navigateMonth(-1)}
+            >
+              « Month
+            </button>
+          </div>
+          <span className='text-lg font-medium'>
+            {currentDate.toLocaleString('default', { month: 'long' })}{' '}
+            {currentDate.getFullYear()}
+          </span>
+          <div className='flex gap-2'>
+            <button
+              className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+              onClick={() => navigateYear(1)}
+            >
+              Month »
+            </button>
+            <button
+              className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+              onClick={() => navigateYear(1)}
+            >
+              Year »
+            </button>
+          </div>
         </div>
-        <span className='text-lg font-medium'>
-          {currentDate.toLocaleString('default', { month: 'long' })}{' '}
-          {currentDate.getFullYear()}
-        </span>
-        <div className='flex gap-2'>
-          <button
-            className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
-            onClick={handleNextMonth}
-          >
-            Month »
-          </button>
-          <button
-            className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
-            onClick={handleNextYear}
-          >
-            Year »
-          </button>
-        </div>
-      </div>
-      <table className='w-full rounded-lg'>
-        <thead className="rounded-lg"
->
-          <tr className='grid grid-cols-7 rounded-lg bg-primary text-white'>
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(
-              (day, index) => (
-                <th
-                  key={index}
-                  className='bg-button-gpt flex h-15 items-center justify-center p-1 text-body-xs font-medium sm:text-base xl:p-5'
-                >
-                  {day}
-                </th>
+
+        <table className='w-full'>
+          <thead>
+            <tr className='grid grid-cols-7  bg-primary text-white'>
+              <th className='bg-button-gpt flex h-15 items-center justify-center  p-1 text-body-xs font-medium sm:text-base xl:p-5'>
+                <span className='hidden lg:block'> Sunday </span>
+                <span className='block lg:hidden'> Sun </span>
+              </th>
+              <th className='flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt'>
+                <span className='hidden lg:block'> Monday </span>
+                <span className='block lg:hidden'> Mon </span>
+              </th>
+              <th className='flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt'>
+                <span className='hidden lg:block'> Tuesday </span>
+                <span className='block lg:hidden'> Tue </span>
+              </th>
+              <th className='flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt'>
+                <span className='hidden lg:block'> Wednesday </span>
+                <span className='block lg:hidden'> Wed </span>
+              </th>
+              <th className='flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt'>
+                <span className='hidden lg:block'> Thursday </span>
+                <span className='block lg:hidden'> Thur </span>
+              </th>
+              <th className='flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt'>
+                <span className='hidden lg:block'> Friday </span>
+                <span className='block lg:hidden'> Fri </span>
+              </th>
+              <th className='flex h-15 items-center justify-center rounded-tr-[10px] p-1 text-body-xs font-medium sm:text-base xl:p-5 bg-button-gpt'>
+                <span className='hidden lg:block'> Saturday </span>
+                <span className='block lg:hidden'> Sat </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {[...Array(Math.ceil((totalDaysInMonth + firstDayOfWeek) / 7))].map(
+              (_, rowIndex) => (
+                <tr key={rowIndex} className='grid grid-cols-7'>
+                  {[...Array(7)].map((_, colIndex) => {
+                    const day = rowIndex * 7 + colIndex - firstDayOfWeek + 1
+                    if (day > 0 && day <= totalDaysInMonth) {
+                      const isMarked = markedDates.includes(day)
+                      return (
+                        <td
+                          key={colIndex}
+                          className={`relative h-24 p-2 transition duration-500 border cursor-pointer ease border-stroke hover:bg-gray-2 dark:border-dark-3 dark:hover:bg-dark-2 md:h-25 md:p-6 xl:h-31 ${
+                            isMarked
+                              ? 'bg-button-gpt text-white'
+                              : 'bg-transparent'
+                          }`}
+                        >
+                          {/* <span className='font-medium text-dark dark:text-white'>
+                            {day}
+                          </span> */}
+                          {isMarked ? (
+                            // <div
+                            //   // className='absolute top-0 left-0 w-full h-full bg-button-gpt opacity-40'
+                            // >
+
+                            <div className=' event invisible 
+                            absolute left-2
+                            z-99
+                            
+                            flex
+                            w-[300%]
+                             flex-col
+                             rounded-r-[5px]
+                              border-l-[3px]
+                               border-white
+                               bg-gray-2
+                               px-3 py-1
+                                text-left
+                                 opacity-0
+                                 group-hover:visible
+                                  group-hover:opacity-100
+                                  dark:bg-dark-2
+                                  md:visible
+                                  md:w-[290%]
+                                  md:opacity-100'
+                            >
+                              <span className='event-name font-medium text-dark dark:text-white'>
+                               Upcoming Bill
+                              </span>
+                              <span className='time text-sm'>
+                                {`Day:${day}`}
+                              </span>
+                            </div>
+                          ) : (
+                            // </div>
+                            <span className='font-medium text-dark dark:text-white'>
+                              {day}
+                            </span>
+                          )}
+                        </td>
+                      )
+                    }
+                    return <td key={colIndex}></td>
+                  })}
+                </tr>
               )
             )}
-          </tr>
-        </thead>
-        <tbody>
-          {[...Array(Math.ceil(renderDays().length / 7))].map(
-            (_, weekIndex) => (
-              <tr key={weekIndex} className='grid grid-cols-7'>
-                {renderDays().slice(weekIndex * 7, weekIndex * 7 + 7)}
-              </tr>
-            )
-          )}
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
+    </>
   )
 }
 
 export default CalendarBox
-// 
