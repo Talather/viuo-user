@@ -7,6 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // import { format } from "date-fns";
 import EastIcon from "@mui/icons-material/East";
 import { deleteBill } from "@/lib/clientControllers/bills";
+import { Button } from "@nextui-org/button";
 // import { useNavigate } from "react-router-dom";
 // import { Button } from "@nextui-org/button";
 // import { on } from "events";
@@ -186,6 +187,13 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
           >
             {bill?.name || ""}
           </div>
+
+
+
+
+
+
+
           <div
             className="Date"
             style={{
@@ -223,6 +231,77 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
           >
             Due Date
           </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div
+            className="Date"
+            style={{
+              width: 86,
+              height: 13,
+              left: 110,
+              top: 146,
+              position: "absolute",
+              opacity: 0.9,
+              color: "white",
+              fontSize: 14,
+              fontFamily: "Rubik",
+              fontWeight: "500",
+              letterSpacing: 0.5,
+              wordWrap: "break-word",
+            }}
+          >
+            {bill?.status || 'unpaid'}
+          </div>
+          <div
+            className="DueLabel"
+            style={{
+              width: 115,
+              height: 13,
+              left: 110,
+              top: 124,
+              position: "absolute",
+              opacity: 0.75,
+              color: "white",
+              fontSize: 14,
+              fontFamily: "Rubik",
+              fontWeight: "500",
+              wordWrap: "break-word",
+            }}
+          >
+            Status
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           <div
             className="Apr"
             style={{
@@ -374,26 +453,71 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
             />
           </div>
 
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           {/* <Button name="Pay Now" /> */}
-          {/* <div
+           <div
             className="lendername"
             style={{
               width: 155,
-              height: 13,
-              left: 30,
-              top: 14,
+              height: 144,
+              left: 115,
+              top: 70,
               position: "absolute",
               color: "white",
-              fontSize: 16,
+              fontSize: 30,
               fontFamily: "Rubik",
-              fontWeight: "500",
+              fontWeight: "1000",
               wordWrap: "break-word",
+              // backgroundColor:'red'
             }}
           >
-            Sadeem
-          </div> */}
+            <Button className="bg-blue-500 text-white p-5 shadow-lg rounded-md ">Pay Now</Button>
+          </div > 
 
-          {/* <div
+
+          <div  style={{
+              width: 155,
+              height: 144,
+            left: 270,
+              // right:,
+              top: 70,
+              position: "absolute",
+              color: "white",
+              fontSize: 30,
+              fontFamily: "Rubik",
+              fontWeight: "1000",
+              wordWrap: "break-word",
+              // backgroundColor:'red'
+            }}>
+          <IconButton aria-label='flip' color='primary' onClick={handleFlip}>
+  <EastIcon />
+            </IconButton>
+            </div>
+
+
+           {/* <div
             className="chartlabel"
             style={{
               width: 86,
@@ -412,8 +536,10 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
             }}
           >
             {(12.43).toFixed(0)}% <br /> Paid{" "}
-          </div>
-          <div
+          </div> */}
+
+
+          {/* <div
             className="chartlabel"
             style={{
               width: 86,
@@ -509,10 +635,10 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
                 fontWeight: "500",
                 wordWrap: "break-word",
               }}
-            >
-              Due Date
+            > */}
+              {/* Due Date
             </div>
-          </div> */}
+          </div>  */}
 
           {/* <div
             className="minpay"
@@ -555,7 +681,7 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
             }}
           >
             Min Payment
-          </div> */}
+          </div>
 
           <div
             className="flipbutton"

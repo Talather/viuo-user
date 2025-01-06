@@ -87,7 +87,7 @@ const TotalIncomeLightCard = ({ isLoading }) => {
                         mt: 0.5,
                       }}
                     >
-                      Remaining Credits
+                      Available Credits
                     </Typography>
                   }
                 />

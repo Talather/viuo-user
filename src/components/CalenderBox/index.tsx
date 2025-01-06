@@ -557,13 +557,38 @@ const CalendarBox = () => {
                     const day = rowIndex * 7 + colIndex - firstDayOfWeek + 1
                     if (day > 0 && day <= totalDaysInMonth) {
                       // console.log("koila",result)
-                      const isMarked =
-                        upcomingBills[currentYear] &&
-                        upcomingBills[currentYear][currentMonth.toLowerCase()]
-                          ? upcomingBills[currentYear][
-                              currentMonth.toLowerCase()
-                            ]?.includes(day)
-                          : false
+                      console.log("sidhumoseewala",upcomingBills)
+
+
+
+
+  //                     const m=upcomingBills[currentYear] &&
+  // upcomingBills[currentYear][currentMonth.toLowerCase()]
+  // const n=upcomingBills[currentYear][currentMonth.toLowerCase()]
+  //                     const isMarked =
+  //   m
+  //   ? n.some(
+  //       bill => bill.day === day
+  //     )
+  //   : false
+
+
+
+
+  const markedBill =
+  upcomingBills[currentYear] &&
+  upcomingBills[currentYear][currentMonth.toLowerCase()]
+    ? upcomingBills[currentYear][currentMonth.toLowerCase()].find(
+        (bill) => bill.day === day
+      )
+    : null;
+
+const isMarked = !!markedBill; // Converts the result to a boolean
+const markedBillName = markedBill ? markedBill.name : null;
+const markedBillAmount = markedBill ? markedBill.amount : null;
+
+   
+
 
                       // const isMarked = result[currentYear.toString()][upcomingBills[currentMonth]]?.includes(day)
                       // isMarked===true ? console.log("sadeem bhrwa"): null
@@ -571,7 +596,7 @@ const CalendarBox = () => {
                       return (
                         <td
                           key={colIndex}
-                          className={`relative h-24 p-2 transition duration-500 border cursor-pointer ease border-stroke hover:bg-gray-2 dark:border-dark-3 dark:hover:bg-dark-2 md:h-25 md:p-6 xl:h-31 ${
+                          className={`relative h-24 p-1 transition duration-500 border cursor-pointer ease border-stroke hover:bg-gray-2 dark:border-dark-3 dark:hover:bg-dark-2 md:h-25 md:p-6 xl:h-31 ${
                             isMarked
                               ? 'bg-button-gpt text-white'
                               : 'bg-transparent'
@@ -586,8 +611,9 @@ const CalendarBox = () => {
                             // >
 
                             <div
-                              className=' event invisible 
-                            absolute left-2
+                              className='
+                               event invisible 
+                            absolute left-2 top-3
                             z-99
                             
                             flex
@@ -596,8 +622,9 @@ const CalendarBox = () => {
                              rounded-r-[5px]
                               border-l-[3px]
                                border-white
-                               bg-gray-2
+                               
                                px-3 py-1
+                               
                                 text-left
                                  opacity-0
                                  group-hover:visible
@@ -605,12 +632,17 @@ const CalendarBox = () => {
                                   dark:bg-dark-2
                                   md:visible
                                   md:w-[290%]
+                                  md:mb-10
                                   md:opacity-100'
+                             
                             >
-                              <span className='event-name font-medium text-dark dark:text-white'>
-                                Upcoming Bill
+                              <span className='event-name font-sm text-dark dark:text-white'>
+                                {`Bill:${truncateString(markedBillName,15)}`}
                               </span>
-                              <span className='time text-sm'>
+                              <span className='event-name font-sm text-dark dark:text-white'>
+                                {`Amount:${markedBillAmount}`}
+                              </span>
+                              <span className='event-name font-sm text-dark dark:text-white'>
                                 {`Day:${day}`}
                               </span>
                             </div>
@@ -692,15 +724,15 @@ export default CalendarBox
 //   return groupedBills
 // }
 
-interface Bill {
-  id: string
-  updated_at: any
-  name?: string
-  dueDate: string // "YYYY-MM-DD"
-  user_id: any
-  accountNumber?: string
-  amount?: string
-}
+// interface Bill {
+//   id: string
+//   updated_at: any
+//   name?: string
+//   dueDate: string // "YYYY-MM-DD"
+//   user_id: any
+//   accountNumber?: string
+//   amount?: string
+// }
 
 // function getUpcomingBillsByMonth (bills: Bill[]): Record<string, number[]> {
 //   const currentDate = new Date()
@@ -751,9 +783,77 @@ interface Bill {
 //   return groupedBills
 // }
 
+// function getUpcomingBillsByMonth (
+//   bills: Bill[]
+// ): Record<string, Record<string, number[]>> {
+//   const currentDate = new Date()
+
+//   // Get today's date
+//   const todayDay = currentDate.getDate()
+//   const todayMonth = currentDate
+//     .toLocaleString('default', { month: 'long' })
+//     .toLowerCase()
+//   const todayYear = currentDate.getFullYear()
+
+//   // Filter bills that have a due date greater than or equal to the current date
+//   const upcomingBills = bills.filter(bill => {
+//     const billDueDate = new Date(bill.dueDate)
+//     return billDueDate >= currentDate
+//   })
+
+//   // Group the filtered bills by year and month
+//   const groupedBills: Record<string, Record<string, number[]>> = {}
+
+//   upcomingBills.forEach(bill => {
+//     const billDueDate = new Date(bill.dueDate)
+//     const billYear = billDueDate.getFullYear()
+//     const month = billDueDate
+//       .toLocaleString('default', { month: 'long' })
+//       .toLowerCase() // Get the month in lowercase
+//     const day = billDueDate.getDate() // Get the day of the month
+
+//     if (!groupedBills[billYear]) {
+//       groupedBills[billYear] = {} // Initialize the year
+//     }
+
+//     if (!groupedBills[billYear][month]) {
+//       groupedBills[billYear][month] = [] // Initialize the month if it doesn't exist
+//     }
+
+//     // Add the day to the respective year and month group
+//     groupedBills[billYear][month].push({ name: bill.name, amount: bill.amount, day: day })
+//   })
+
+//   // Check if today's bill is present and add it to the result
+//   if (!groupedBills[todayYear]) {
+//     groupedBills[todayYear] = {} // Initialize the year if it doesn't exist
+//   }
+
+//   if (!groupedBills[todayYear][todayMonth]) {
+//     groupedBills[todayYear][todayMonth] = [] // Initialize the month if it doesn't exist
+//   }
+
+//   // Add today's day to the respective year and month group
+//   // groupedBills[todayYear][todayMonth].push(todayDay)
+
+//   return groupedBills
+// }
+
+
+
+
+interface Bill {
+  name: string
+  dueDate: string
+  amount: number
+}
+
 function getUpcomingBillsByMonth (
   bills: Bill[]
-): Record<string, Record<string, number[]>> {
+): Record<
+  string,
+  Record<string, { name: string; amount: number; day: number }[]>
+> {
   const currentDate = new Date()
 
   // Get today's date
@@ -770,7 +870,10 @@ function getUpcomingBillsByMonth (
   })
 
   // Group the filtered bills by year and month
-  const groupedBills: Record<string, Record<string, number[]>> = {}
+  const groupedBills: Record<
+    string,
+    Record<string, { name: string; amount: number; day: number }[]>
+  > = {}
 
   upcomingBills.forEach(bill => {
     const billDueDate = new Date(bill.dueDate)
@@ -780,29 +883,54 @@ function getUpcomingBillsByMonth (
       .toLowerCase() // Get the month in lowercase
     const day = billDueDate.getDate() // Get the day of the month
 
+    // Initialize year and month groups
     if (!groupedBills[billYear]) {
-      groupedBills[billYear] = {} // Initialize the year
+      groupedBills[billYear] = {}
     }
-
     if (!groupedBills[billYear][month]) {
-      groupedBills[billYear][month] = [] // Initialize the month if it doesn't exist
+      groupedBills[billYear][month] = []
     }
 
-    // Add the day to the respective year and month group
-    groupedBills[billYear][month].push(day)
+    // Add the bill to the respective year and month group
+    groupedBills[billYear][month].push({
+      name: bill.name,
+      amount: bill.amount,
+      day: day
+    })
   })
 
-  // Check if today's bill is present and add it to the result
-  if (!groupedBills[todayYear]) {
-    groupedBills[todayYear] = {} // Initialize the year if it doesn't exist
-  }
+  // Check if today's bills are present and add them if needed
+  bills.forEach(bill => {
+    const billDueDate = new Date(bill.dueDate)
+    if (
+      billDueDate.getFullYear() === todayYear &&
+      billDueDate.getMonth() === currentDate.getMonth() &&
+      billDueDate.getDate() === todayDay
+    ) {
+      if (!groupedBills[todayYear]) {
+        groupedBills[todayYear] = {}
+      }
+      if (!groupedBills[todayYear][todayMonth]) {
+        groupedBills[todayYear][todayMonth] = []
+      }
 
-  if (!groupedBills[todayYear][todayMonth]) {
-    groupedBills[todayYear][todayMonth] = [] // Initialize the month if it doesn't exist
-  }
-
-  // Add today's day to the respective year and month group
-  groupedBills[todayYear][todayMonth].push(todayDay)
+      // Add today's bill if not already added
+      if (
+        !groupedBills[todayYear][todayMonth].some(
+          item => item.day === todayDay && item.name === bill.name
+        )
+      ) {
+        groupedBills[todayYear][todayMonth].push({
+          name: bill.name,
+          amount: bill.amount,
+          day: todayDay
+        })
+      }
+    }
+  })
 
   return groupedBills
+}
+function truncateString(str:any, maxLength:any) {
+  return str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
 }

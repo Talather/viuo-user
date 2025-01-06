@@ -118,7 +118,7 @@ const ChartThree: React.FC = () => {
       {/* Header */}
       <div className="flex justify-between gap-4 mb-6 sm:flex">
         <h4 className="text-xl font-bold text-gray-800 dark:text-white">
-          Calculated Redeemed credits
+          Total Credits Earned
         </h4>
         <DefaultSelectOption options={["Monthly", "Yearly"]} />
       </div>
