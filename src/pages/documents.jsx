@@ -1,7 +1,14 @@
 import React, { useEffect } from "react";
 import DocumentCard from "@/components/documentCard";
 import { db, storage } from "@/lib/firebaseConfig";
-import { collection, onSnapshot, addDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  addDoc,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {
   useUserAssets,
@@ -56,9 +63,13 @@ const DocumentPage = () => {
 
   useEffect(() => {
     const docsCollectionRef = collection(db, "documents");
+    const documentsQuery = query(
+      docsCollectionRef,
+      where("userId", "==", user.id)
+    ); // Filter bills by user_id
 
     const unsubscribe = onSnapshot(
-      docsCollectionRef,
+      documentsQuery,
       (snapshot) => {
         const docs = snapshot.docs.map((doc) => ({
           id: doc.id,

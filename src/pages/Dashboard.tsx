@@ -13,7 +13,7 @@ import {
   useUserAssets,
   useUserAssetsDispatch,
 } from "@/context/userSpecificAssetsContext";
-import { onSnapshot, collection } from "firebase/firestore";
+import { onSnapshot, collection, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebaseConfig"; // Your Firebase setup file
 
 // Define an interface for Bill data
@@ -41,9 +41,14 @@ const Dashboard = () => {
 
   useEffect(() => {
     // if (user) {
-    const billsCollectionRef = collection(db, "bills"); // Replace with your collection name
-    const unsubscribe = onSnapshot(
+    const billsCollectionRef = collection(db, "bills");
+    const billsQuery = query(
       billsCollectionRef,
+      where("user_id", "==", user?.id)
+    ); // Filter bills by user_id
+
+    const unsubscribe = onSnapshot(
+      billsQuery,
       (snapshot) => {
         const bills = snapshot.docs.map((doc) => ({
           id: doc.id,
