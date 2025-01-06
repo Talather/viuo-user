@@ -166,6 +166,15 @@ const ProfilePage: React.FC = () => {
             onChange={handleDocumentUpload}
           />
         </div> */}
+        {/* <div className="mb-6">
+          <label className="block mb-2 text-white">Name:</label>
+          <input
+            type="text"
+            value={address}
+            onChange={handleInputChange(setAddress)}
+            className="w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 "
+          />
+        </div> */}
 
         {/* Address */}
         <div className="mb-6">

@@ -281,7 +281,7 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               wordWrap: "break-word",
             }}
           >
-            ${bill?.amount || ""}
+            ${bill?.amount || ""}.00
           </div>
           <div
             className="AprLabel"
