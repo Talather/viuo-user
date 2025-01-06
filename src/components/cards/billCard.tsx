@@ -188,12 +188,6 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
             {bill?.name || ""}
           </div>
 
-
-
-
-
-
-
           <div
             className="Date"
             style={{
@@ -232,25 +226,6 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
             Due Date
           </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           <div
             className="Date"
             style={{
@@ -268,7 +243,7 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               wordWrap: "break-word",
             }}
           >
-            {bill?.status || 'unpaid'}
+            {bill?.status || "unpaid"}
           </div>
           <div
             className="DueLabel"
@@ -288,19 +263,6 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
           >
             Status
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
           <div
             className="Apr"
@@ -356,7 +318,7 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
             }}
           ></div>
 
-          <div
+          {/* <div
             className="flipbutton"
             style={{
               // width: 75,
@@ -369,7 +331,7 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
             <IconButton aria-label="flip" color="primary" onClick={handleFlip}>
               <EastIcon />
             </IconButton>
-          </div>
+          </div> */}
 
           <div
             className="editbuttons"
@@ -453,31 +415,8 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
             />
           </div>
 
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
           {/* <Button name="Pay Now" /> */}
-           <div
+          <div
             className="lendername"
             style={{
               width: 155,
@@ -493,14 +432,16 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               // backgroundColor:'red'
             }}
           >
-            <Button className="bg-blue-500 text-white p-5 shadow-lg rounded-md ">Pay Now</Button>
-          </div > 
+            <Button className="bg-blue-500 text-white p-5 shadow-lg rounded-md ">
+              Pay Now
+            </Button>
+          </div>
 
-
-          <div  style={{
+          <div
+            style={{
               width: 155,
               height: 144,
-            left: 270,
+              left: 270,
               // right:,
               top: 70,
               position: "absolute",
@@ -510,14 +451,14 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               fontWeight: "1000",
               wordWrap: "break-word",
               // backgroundColor:'red'
-            }}>
-          <IconButton aria-label='flip' color='primary' onClick={handleFlip}>
-  <EastIcon />
+            }}
+          >
+            <IconButton aria-label="flip" color="primary" onClick={handleFlip}>
+              <EastIcon />
             </IconButton>
-            </div>
+          </div>
 
-
-           {/* <div
+          {/* <div
             className="chartlabel"
             style={{
               width: 86,
@@ -537,7 +478,6 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
           >
             {(12.43).toFixed(0)}% <br /> Paid{" "}
           </div> */}
-
 
           {/* <div
             className="chartlabel"
@@ -636,7 +576,7 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
                 wordWrap: "break-word",
               }}
             > */}
-              {/* Due Date
+          {/* Due Date
             </div>
           </div>  */}
 
