@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // const CalendarBox = () => {
 //   return (
 //     <>
@@ -395,120 +396,73 @@
 // //   })}
 // // </tr>
 
-import { useState } from 'react'
-import { useUserAssets } from '@/context/userSpecificAssetsContext'
+import { useState } from "react";
+import { useUserAssets } from "@/context/userSpecificAssetsContext";
 const CalendarBox = () => {
-  const [currentDate, setCurrentDate] = useState(new Date())
-
-  // Example of marked dates for demonstration (you can modify this dynamically)
-  // const markedDates = [5, 15, 25]
-  const { userBills } = useUserAssets()
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const { userBills } = useUserAssets();
   const currentMonth = currentDate
-    .toLocaleString('default', { month: 'long' })
-    .toLowerCase()
-  const currentYear = currentDate.getFullYear()
-  console.log(currentYear)
+    .toLocaleString("default", { month: "long" })
+    .toLowerCase();
+  const currentYear = currentDate.getFullYear();
+  console.log(currentYear);
 
-  //  .toLowerCase()
-
-  //   userBills.forEach((e) => {
-  //     var myDate = new Date(e.dueDate * 1000)
-  // var formatedTime = myDate.toJSON()
-
-  //   })
-
-  const upcomingBills = getUpcomingBillsByMonth(userBills)
-  console.log('laliga', upcomingBills)
-  //   const result = {
-  //   [.toString()]: upcomingBills
-  // }
-
+  const upcomingBills = getUpcomingBillsByMonth(userBills);
   // Function to handle month navigation
   const navigateMonth = (direction: any) => {
-    const newDate = new Date(currentDate)
-    newDate.setMonth(currentDate.getMonth() + direction)
-    setCurrentDate(newDate)
-  }
-
+    const newDate = new Date(currentDate);
+    newDate.setMonth(currentDate.getMonth() + direction);
+    setCurrentDate(newDate);
+  };
   // Function to handle year navigation
   const navigateYear = (direction: any) => {
-    const newDate = new Date(currentDate)
-    newDate.setFullYear(currentDate.getFullYear() + direction)
-    setCurrentDate(newDate)
-  }
-
+    const newDate = new Date(currentDate);
+    newDate.setFullYear(currentDate.getFullYear() + direction);
+    setCurrentDate(newDate);
+  };
   const getDaysInMonth = (date: any) => {
-    const year = date.getFullYear()
-    const month = date.getMonth()
-    return new Date(year, month + 1, 0).getDate() // Get number of days in the month
-  }
-
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    return new Date(year, month + 1, 0).getDate(); // Get number of days in the month
+  };
   const startOfMonth = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
     1
-  ) // First day of the month
-  // const endOfMonth = new Date(
-  //   currentDate.getFullYear(),
-  //   currentDate.getMonth(),
-  //   getDaysInMonth(currentDate)
-  // ) // Last day of the month
-  const firstDayOfWeek = startOfMonth.getDay() // Day of the week the month starts on
-
-  const totalDaysInMonth = getDaysInMonth(currentDate)
-
+  ); // First day of the month
+  const firstDayOfWeek = startOfMonth.getDay(); // Day of the week the month starts on
+  const totalDaysInMonth = getDaysInMonth(currentDate);
   return (
     <>
-      <div className='w-full max-w-full  bg-white shadow-1 dark:bg-gray-dark dark:shadow-card '>
-        {/* <div className=' bg-button-gpt-hover  text-white flex justify-between items-center p-4 rounded-tl-[10px]'>
-          <button onClick={() => navigateYear(-1)} className='text-lg'>
-            &lt;&lt; Prev Year
-          </button>
-          <button onClick={() => navigateMonth(-1)} className='text-lg'>
-            &lt; Prev Month
-          </button>
-          <span className='text-xl font-semibold'>
-            {currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}
-          </span>
-          <button onClick={() => navigateMonth(1)} className='text-lg'>
-            Next Month &gt;
-          </button>
-          <button onClick={() => navigateYear(1)} className='text-lg'>
-            Next Year &gt;&gt;
-          </button>
-        </div> */}
-
-        <div
-          className='flex rounded-t-[10px] justify-between items-center p-4  text-white  bg-button-gpt-hover
-'
-        >
-          <div className='flex gap-2'>
+      <div className="w-full max-w-full  bg-white shadow-1 dark:bg-gray-dark dark:shadow-card ">
+        <div className="flex rounded-t-[10px] justify-between items-center p-4  text-white  bg-button-gpt-hover">
+          <div className="flex gap-2">
             <button
-              className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+              className="px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90"
               onClick={() => navigateYear(-1)}
             >
               « Year
             </button>
             <button
-              className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+              className="px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90"
               onClick={() => navigateMonth(-1)}
             >
               « Month
             </button>
           </div>
-          <span className='text-lg font-medium'>
-            {currentDate.toLocaleString('default', { month: 'long' })}{' '}
+          <span className="text-lg font-medium">
+            {currentDate.toLocaleString("default", { month: "long" })}{" "}
             {currentDate.getFullYear()}
           </span>
-          <div className='flex gap-2'>
+          <div className="flex gap-2">
             <button
-              className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+              className="px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90"
               onClick={() => navigateMonth(1)}
             >
               Month »
             </button>
             <button
-              className='px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90'
+              className="px-3 py-1 bg-button-gpt rounded hover:bg-opacity-90"
               onClick={() => navigateYear(1)}
             >
               Year »
@@ -516,102 +470,74 @@ const CalendarBox = () => {
           </div>
         </div>
 
-        <table className='w-full'>
+        <table className="w-full">
           <thead>
-            <tr className='grid grid-cols-7  bg-primary text-white'>
-              <th className='bg-button-gpt flex h-15 items-center justify-center  p-1 text-body-xs font-medium sm:text-base xl:p-5'>
-                <span className='hidden lg:block'> Sunday </span>
-                <span className='block lg:hidden'> Sun </span>
+            <tr className="grid grid-cols-7  bg-primary text-white">
+              <th className="bg-button-gpt flex h-15 items-center justify-center  p-1 text-body-xs font-medium sm:text-base xl:p-5">
+                <span className="hidden lg:block"> Sunday </span>
+                <span className="block lg:hidden"> Sun </span>
               </th>
-              <th className='flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt'>
-                <span className='hidden lg:block'> Monday </span>
-                <span className='block lg:hidden'> Mon </span>
+              <th className="flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt">
+                <span className="hidden lg:block"> Monday </span>
+                <span className="block lg:hidden"> Mon </span>
               </th>
-              <th className='flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt'>
-                <span className='hidden lg:block'> Tuesday </span>
-                <span className='block lg:hidden'> Tue </span>
+              <th className="flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt">
+                <span className="hidden lg:block"> Tuesday </span>
+                <span className="block lg:hidden"> Tue </span>
               </th>
-              <th className='flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt'>
-                <span className='hidden lg:block'> Wednesday </span>
-                <span className='block lg:hidden'> Wed </span>
+              <th className="flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt">
+                <span className="hidden lg:block"> Wednesday </span>
+                <span className="block lg:hidden"> Wed </span>
               </th>
-              <th className='flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt'>
-                <span className='hidden lg:block'> Thursday </span>
-                <span className='block lg:hidden'> Thur </span>
+              <th className="flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt">
+                <span className="hidden lg:block"> Thursday </span>
+                <span className="block lg:hidden"> Thur </span>
               </th>
-              <th className='flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt'>
-                <span className='hidden lg:block'> Friday </span>
-                <span className='block lg:hidden'> Fri </span>
+              <th className="flex items-center justify-center p-1 font-medium h-15 text-body-xs sm:text-base xl:p-5 bg-button-gpt">
+                <span className="hidden lg:block"> Friday </span>
+                <span className="block lg:hidden"> Fri </span>
               </th>
-              <th className='flex h-15 items-center justify-center rounded-tr-[10px] p-1 text-body-xs font-medium sm:text-base xl:p-5 bg-button-gpt'>
-                <span className='hidden lg:block'> Saturday </span>
-                <span className='block lg:hidden'> Sat </span>
+              <th className="flex h-15 items-center justify-center rounded-tr-[10px] p-1 text-body-xs font-medium sm:text-base xl:p-5 bg-button-gpt">
+                <span className="hidden lg:block"> Saturday </span>
+                <span className="block lg:hidden"> Sat </span>
               </th>
             </tr>
           </thead>
           <tbody>
             {[...Array(Math.ceil((totalDaysInMonth + firstDayOfWeek) / 7))].map(
               (_, rowIndex) => (
-                <tr key={rowIndex} className='grid grid-cols-7'>
+                <tr key={rowIndex} className="grid grid-cols-7">
                   {[...Array(7)].map((_, colIndex) => {
-                    const day = rowIndex * 7 + colIndex - firstDayOfWeek + 1
+                    const day = rowIndex * 7 + colIndex - firstDayOfWeek + 1;
                     if (day > 0 && day <= totalDaysInMonth) {
-                      // console.log("koila",result)
-                      console.log("sidhumoseewala",upcomingBills)
+                      const markedBill =
+                        upcomingBills[currentYear] &&
+                        upcomingBills[currentYear][currentMonth.toLowerCase()]
+                          ? upcomingBills[currentYear][
+                              currentMonth.toLowerCase()
+                            ].find((bill) => bill.day === day)
+                          : null;
 
+                      const isMarked = !!markedBill; // Converts the result to a boolean
+                      const markedBillName = markedBill
+                        ? markedBill.name
+                        : null;
+                      const markedBillAmount = markedBill
+                        ? markedBill.amount
+                        : null;
 
-
-
-  //                     const m=upcomingBills[currentYear] &&
-  // upcomingBills[currentYear][currentMonth.toLowerCase()]
-  // const n=upcomingBills[currentYear][currentMonth.toLowerCase()]
-  //                     const isMarked =
-  //   m
-  //   ? n.some(
-  //       bill => bill.day === day
-  //     )
-  //   : false
-
-
-
-
-  const markedBill =
-  upcomingBills[currentYear] &&
-  upcomingBills[currentYear][currentMonth.toLowerCase()]
-    ? upcomingBills[currentYear][currentMonth.toLowerCase()].find(
-        (bill) => bill.day === day
-      )
-    : null;
-
-const isMarked = !!markedBill; // Converts the result to a boolean
-const markedBillName = markedBill ? markedBill.name : null;
-const markedBillAmount = markedBill ? markedBill.amount : null;
-
-   
-
-
-                      // const isMarked = result[currentYear.toString()][upcomingBills[currentMonth]]?.includes(day)
-                      // isMarked===true ? console.log("sadeem bhrwa"): null
-                      // markedDates.includes(day)
                       return (
                         <td
                           key={colIndex}
                           className={`relative h-24 p-1 transition duration-500 border cursor-pointer ease border-stroke hover:bg-gray-2 dark:border-dark-3 dark:hover:bg-dark-2 md:h-25 md:p-6 xl:h-31 ${
                             isMarked
-                              ? 'bg-button-gpt text-white'
-                              : 'bg-transparent'
+                              ? "bg-button-gpt text-white"
+                              : "bg-transparent"
                           }`}
                         >
-                          {/* <span className='font-medium text-dark dark:text-white'>
-                            {day}
-                          </span> */}
                           {isMarked ? (
-                            // <div
-                            //   // className='absolute top-0 left-0 w-full h-full bg-button-gpt opacity-40'
-                            // >
-
                             <div
-                              className='
+                              className="
                                event invisible 
                             absolute left-2 top-3
                             z-99
@@ -633,29 +559,28 @@ const markedBillAmount = markedBill ? markedBill.amount : null;
                                   md:visible
                                   md:w-[290%]
                                   md:mb-10
-                                  md:opacity-100'
-                             
+                                  md:opacity-100"
                             >
-                              <span className='event-name font-sm text-dark dark:text-white'>
-                                {`Bill:${truncateString(markedBillName,15)}`}
+                              <span className="event-name font-sm text-dark dark:text-white">
+                                {`Bill:${truncateString(markedBillName, 15)}`}
                               </span>
-                              <span className='event-name font-sm text-dark dark:text-white'>
+                              <span className="event-name font-sm text-dark dark:text-white">
                                 {`Amount:${markedBillAmount}`}
                               </span>
-                              <span className='event-name font-sm text-dark dark:text-white'>
+                              <span className="event-name font-sm text-dark dark:text-white">
                                 {`Day:${day}`}
                               </span>
                             </div>
                           ) : (
                             // </div>
-                            <span className='font-medium text-dark dark:text-white'>
+                            <span className="font-medium text-dark dark:text-white">
                               {day}
                             </span>
                           )}
                         </td>
-                      )
+                      );
                     }
-                    return <td key={colIndex}></td>
+                    return <td key={colIndex}></td>;
                   })}
                 </tr>
               )
@@ -664,273 +589,100 @@ const markedBillAmount = markedBill ? markedBill.amount : null;
         </table>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default CalendarBox
-
-// interface Bill {
-//   id: string
-//   updated_at: any
-//   name?: string
-//   dueDate: string // "YYYY-MM-DD"
-//   user_id: any
-//   accountNumber?: string
-//   amount?: string
-//   day?: number // Added to store the day
-//   month?: string // Added to store the month
-// }
-
-// // Function to filter and group bills by upcoming due dates and include day and month
-// function getUpcomingBillsByMonth (
-//   bills: Bill[]
-// ): Record<string, (Bill & { day: number; month: string })[]> {
-//   const currentDate = new Date()
-
-//   // Filter bills that have a due date greater than the current date
-//   const upcomingBills = bills.filter(bill => {
-//     const billDueDate = new Date(bill.dueDate)
-//     return billDueDate > currentDate
-//   })
-
-//   // Group the filtered bills by month
-//   const groupedBills: Record<
-//     string,
-//     (Bill & { day: number; month: string })[]
-//   > = {}
-
-//   upcomingBills.forEach(bill => {
-//     const billDueDate = new Date(bill.dueDate)
-//     const month = billDueDate
-//       .toLocaleString('default', { month: 'long' })
-//       .toLowerCase() // Get the month in lowercase
-//     const day = billDueDate.getDate() // Get the day of the month
-
-//     // Add the day and month to the bill object
-//     const updatedBill = {
-//       ...bill,
-//       day,
-//       month
-//     }
-
-//     if (!groupedBills[month]) {
-//       groupedBills[month] = []
-//     }
-
-//     // Add the updated bill to the respective month group
-//     groupedBills[month].push(updatedBill)
-//   })
-
-//   return groupedBills
-// }
-
-// interface Bill {
-//   id: string
-//   updated_at: any
-//   name?: string
-//   dueDate: string // "YYYY-MM-DD"
-//   user_id: any
-//   accountNumber?: string
-//   amount?: string
-// }
-
-// function getUpcomingBillsByMonth (bills: Bill[]): Record<string, number[]> {
-//   const currentDate = new Date()
-
-//   // Get today's date
-//   const todayDay = currentDate.getDate()
-//   const todayMonth = currentDate
-//     .toLocaleString('default', { month: 'long' })
-//     .toLowerCase()
-//   const todayYear = currentDate.getFullYear()
-
-//   // Filter bills that have a due date greater than or equal to the current date
-//   const upcomingBills = bills.filter(bill => {
-//     const billDueDate = new Date(bill.dueDate)
-//     return billDueDate >= currentDate
-//   })
-
-//   // Group the filtered bills by month
-//   const groupedBills: Record<string, number[]> = {}
-
-//   upcomingBills.forEach(bill => {
-//     const billDueDate = new Date(bill.dueDate)
-//     const month = billDueDate
-//       .toLocaleString('default', { month: 'long' })
-//       .toLowerCase() // Get the month in lowercase
-//     const day = billDueDate.getDate() // Get the day of the month
-//     const billYear = billDueDate.getFullYear().toString()
-
-//     if (!groupedBills[billYear]) {
-//   groupedBills[billYear] = {} // Initialize the year if it doesn't exist
-// }
-
-//     // if (!groupedBills[month]) {
-//     //   groupedBills[month] = []
-//     // }
-
-//     // Add the day to the respective month group
-//     groupedBills[billYear][month].push(day)
-//   })
-
-//   // Check if today's bill is present and add it to the result
-//   // if (!groupedBills[todayMonth]) {
-//   //   groupedBills[todayMonth] = []
-//   // }
-
-//   // groupedBills[todayMonth].push(todayDay)
-
-//   return groupedBills
-// }
-
-// function getUpcomingBillsByMonth (
-//   bills: Bill[]
-// ): Record<string, Record<string, number[]>> {
-//   const currentDate = new Date()
-
-//   // Get today's date
-//   const todayDay = currentDate.getDate()
-//   const todayMonth = currentDate
-//     .toLocaleString('default', { month: 'long' })
-//     .toLowerCase()
-//   const todayYear = currentDate.getFullYear()
-
-//   // Filter bills that have a due date greater than or equal to the current date
-//   const upcomingBills = bills.filter(bill => {
-//     const billDueDate = new Date(bill.dueDate)
-//     return billDueDate >= currentDate
-//   })
-
-//   // Group the filtered bills by year and month
-//   const groupedBills: Record<string, Record<string, number[]>> = {}
-
-//   upcomingBills.forEach(bill => {
-//     const billDueDate = new Date(bill.dueDate)
-//     const billYear = billDueDate.getFullYear()
-//     const month = billDueDate
-//       .toLocaleString('default', { month: 'long' })
-//       .toLowerCase() // Get the month in lowercase
-//     const day = billDueDate.getDate() // Get the day of the month
-
-//     if (!groupedBills[billYear]) {
-//       groupedBills[billYear] = {} // Initialize the year
-//     }
-
-//     if (!groupedBills[billYear][month]) {
-//       groupedBills[billYear][month] = [] // Initialize the month if it doesn't exist
-//     }
-
-//     // Add the day to the respective year and month group
-//     groupedBills[billYear][month].push({ name: bill.name, amount: bill.amount, day: day })
-//   })
-
-//   // Check if today's bill is present and add it to the result
-//   if (!groupedBills[todayYear]) {
-//     groupedBills[todayYear] = {} // Initialize the year if it doesn't exist
-//   }
-
-//   if (!groupedBills[todayYear][todayMonth]) {
-//     groupedBills[todayYear][todayMonth] = [] // Initialize the month if it doesn't exist
-//   }
-
-//   // Add today's day to the respective year and month group
-//   // groupedBills[todayYear][todayMonth].push(todayDay)
-
-//   return groupedBills
-// }
-
-
-
+export default CalendarBox;
 
 interface Bill {
-  name: string
-  dueDate: string
-  amount: number
+  name: string;
+  dueDate: string;
+  amount: number;
 }
 
-function getUpcomingBillsByMonth (
+function getUpcomingBillsByMonth(
   bills: Bill[]
 ): Record<
   string,
   Record<string, { name: string; amount: number; day: number }[]>
 > {
-  const currentDate = new Date()
+  const currentDate = new Date();
 
   // Get today's date
-  const todayDay = currentDate.getDate()
+  const todayDay = currentDate.getDate();
   const todayMonth = currentDate
-    .toLocaleString('default', { month: 'long' })
-    .toLowerCase()
-  const todayYear = currentDate.getFullYear()
+    .toLocaleString("default", { month: "long" })
+    .toLowerCase();
+  const todayYear = currentDate.getFullYear();
 
   // Filter bills that have a due date greater than or equal to the current date
-  const upcomingBills = bills.filter(bill => {
-    const billDueDate = new Date(bill.dueDate)
-    return billDueDate >= currentDate
-  })
+  const upcomingBills = bills.filter((bill) => {
+    const billDueDate = new Date(bill.dueDate);
+    return billDueDate >= currentDate;
+  });
 
   // Group the filtered bills by year and month
   const groupedBills: Record<
     string,
     Record<string, { name: string; amount: number; day: number }[]>
-  > = {}
+  > = {};
 
-  upcomingBills.forEach(bill => {
-    const billDueDate = new Date(bill.dueDate)
-    const billYear = billDueDate.getFullYear()
+  upcomingBills.forEach((bill) => {
+    const billDueDate = new Date(bill.dueDate);
+    const billYear = billDueDate.getFullYear();
     const month = billDueDate
-      .toLocaleString('default', { month: 'long' })
-      .toLowerCase() // Get the month in lowercase
-    const day = billDueDate.getDate() // Get the day of the month
+      .toLocaleString("default", { month: "long" })
+      .toLowerCase(); // Get the month in lowercase
+    const day = billDueDate.getDate(); // Get the day of the month
 
     // Initialize year and month groups
     if (!groupedBills[billYear]) {
-      groupedBills[billYear] = {}
+      groupedBills[billYear] = {};
     }
     if (!groupedBills[billYear][month]) {
-      groupedBills[billYear][month] = []
+      groupedBills[billYear][month] = [];
     }
 
     // Add the bill to the respective year and month group
     groupedBills[billYear][month].push({
       name: bill.name,
       amount: bill.amount,
-      day: day
-    })
-  })
+      day: day,
+    });
+  });
 
   // Check if today's bills are present and add them if needed
-  bills.forEach(bill => {
-    const billDueDate = new Date(bill.dueDate)
+  bills.forEach((bill) => {
+    const billDueDate = new Date(bill.dueDate);
     if (
       billDueDate.getFullYear() === todayYear &&
       billDueDate.getMonth() === currentDate.getMonth() &&
       billDueDate.getDate() === todayDay
     ) {
       if (!groupedBills[todayYear]) {
-        groupedBills[todayYear] = {}
+        groupedBills[todayYear] = {};
       }
       if (!groupedBills[todayYear][todayMonth]) {
-        groupedBills[todayYear][todayMonth] = []
+        groupedBills[todayYear][todayMonth] = [];
       }
 
       // Add today's bill if not already added
       if (
         !groupedBills[todayYear][todayMonth].some(
-          item => item.day === todayDay && item.name === bill.name
+          (item) => item.day === todayDay && item.name === bill.name
         )
       ) {
         groupedBills[todayYear][todayMonth].push({
           name: bill.name,
           amount: bill.amount,
-          day: todayDay
-        })
+          day: todayDay,
+        });
       }
     }
-  })
+  });
 
-  return groupedBills
+  return groupedBills;
 }
-function truncateString(str:any, maxLength:any) {
+function truncateString(str: any, maxLength: any) {
   return str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
 }

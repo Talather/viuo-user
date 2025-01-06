@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { storage, db } from "../lib/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { doc, updateDoc, collection, addDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { Button } from "@nextui-org/button";
 import { useToast } from "../hooks/use-toast";
 
@@ -14,14 +14,12 @@ const ProfilePage: React.FC = () => {
   const [address, setAddress] = useState<string>("");
   const [dob, setDob] = useState<string>("");
   const [profileLink, setProfileLink] = useState<string>("");
-  const [totalDocuments, setTotalDocuments] = useState<number>(0);
+  // const [_, setTotalDocuments] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (user) {
       setProfileLink(
-        `https://vuior.com/user/${user.name
-          ?.toLowerCase()
-          .replace(/ /g, "-")}`
+        `https://vuior.com/user/${user.name?.toLowerCase().replace(/ /g, "-")}`
       );
     }
   }, [user]);
@@ -30,7 +28,7 @@ const ProfilePage: React.FC = () => {
       setProfilePicture(user.avatar || "");
       setAddress(user.address || "1234 Elm Street, Springfield, USA");
       setDob(user.dob || "1995-05-15");
-      setTotalDocuments(user.totalDocuments || 0);
+      // setTotalDocuments(user.totalDocuments || 0);
     }
   }, [user]);
 
@@ -61,36 +59,36 @@ const ProfilePage: React.FC = () => {
     }
   };
 
-  const handleDocumentUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!user || !user.id) {
-      console.log("User is not authenticated or user ID is missing.");
-      return;
-    }
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      const storageRef = ref(storage, `documents/${user?.id}/${file.name}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      const fileUrl = await getDownloadURL(snapshot.ref);
-      // Add document link to Firestore
-      const documentsCollection = collection(db, "documents");
-      await addDoc(documentsCollection, {
-        userId: user.id,
-        documentUrl: fileUrl,
-        documentName: file.name,
-        documentType: file.type,
-        uploadedAt: new Date(),
-      });
-      const userDoc = doc(db, "users", user.id);
-      await updateDoc(userDoc, { totalDocuments: totalDocuments + 1 });
-      setTotalDocuments(totalDocuments + 1);
-      toast({
-        title: "Success",
-        description: "Document Updated",
-      });
-    }
-  };
+  // const handleDocumentUpload = async (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   if (!user || !user.id) {
+  //     console.log("User is not authenticated or user ID is missing.");
+  //     return;
+  //   }
+  //   if (event.target.files && event.target.files[0]) {
+  //     const file = event.target.files[0];
+  //     const storageRef = ref(storage, `documents/${user?.id}/${file.name}`);
+  //     const snapshot = await uploadBytes(storageRef, file);
+  //     const fileUrl = await getDownloadURL(snapshot.ref);
+  //     // Add document link to Firestore
+  //     const documentsCollection = collection(db, "documents");
+  //     await addDoc(documentsCollection, {
+  //       userId: user.id,
+  //       documentUrl: fileUrl,
+  //       documentName: file.name,
+  //       documentType: file.type,
+  //       uploadedAt: new Date(),
+  //     });
+  //     const userDoc = doc(db, "users", user.id);
+  //     await updateDoc(userDoc, { totalDocuments: totalDocuments + 1 });
+  //     setTotalDocuments(totalDocuments + 1);
+  //     toast({
+  //       title: "Success",
+  //       description: "Document Updated",
+  //     });
+  //   }
+  // };
 
   const handleInputChange =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>
@@ -151,7 +149,7 @@ const ProfilePage: React.FC = () => {
         </div>
 
         {/* Document Upload */}
-        <div className="mb-6">
+        {/* <div className="mb-6">
           <label className="block mb-2 text-white">
             Document Upload / Archive ({totalDocuments}):
           </label>
@@ -167,7 +165,7 @@ const ProfilePage: React.FC = () => {
             className="hidden"
             onChange={handleDocumentUpload}
           />
-        </div>
+        </div> */}
 
         {/* Address */}
         <div className="mb-6">

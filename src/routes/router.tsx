@@ -277,7 +277,7 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: "upcoming-bills",
+    path: "organizer",
     element: (
       <ProtectedRoute>
         <DashboardLayout />

@@ -24,7 +24,7 @@ const items = [
   },
   {
     title: "Organizer",
-    url: "/upcoming-bills",
+    url: "/organizer",
     icon: Settings,
   },
   {

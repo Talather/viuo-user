@@ -4,14 +4,14 @@ const rewardData = [
     paymentDate: "2024-12-20",
     earlyByDays: 5,
     reward: "$20",
-    rewardStatus: "Redeemed",
+    rewardStatus: "Pending",
   },
   {
     user: "Netflix",
     paymentDate: "2024-12-22",
     earlyByDays: 3,
     reward: "$15",
-    rewardStatus: "Pending",
+    rewardStatus: "Redeemed",
   },
   {
     user: "Amazon Prime",
@@ -25,7 +25,7 @@ const rewardData = [
     paymentDate: "2024-12-23",
     earlyByDays: 2,
     reward: "$10",
-    rewardStatus: "Pending",
+    rewardStatus: "Redeemed",
   },
   {
     user: "Gas",

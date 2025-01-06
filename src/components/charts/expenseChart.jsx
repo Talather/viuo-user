@@ -1,11 +1,11 @@
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js"
-import { Pie } from "react-chartjs-2"
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
 // import "chart.piecelabel.js"
 
-ChartJS.register(ArcElement, Tooltip, Legend)
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const data = {
-  labels: ["Utility", "Domestic", "Investment", "Others"],
+  labels: ["Gas", "Electricity", "Internet", "Others"],
   datasets: [
     {
       label: "% of Payments",
@@ -15,7 +15,7 @@ const data = {
       borderWidth: 12,
     },
   ],
-}
+};
 
 const options = {
   plugins: {
@@ -98,10 +98,10 @@ const options = {
     //   },
     // ],
   },
-}
+};
 
 function ExpenseChart() {
-  return <Pie data={data} options={options} />
+  return <Pie data={data} options={options} />;
 }
 
-export default ExpenseChart
+export default ExpenseChart;
