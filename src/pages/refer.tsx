@@ -43,7 +43,7 @@ const ReferAFriend = () => {
 
 
       <div>
-      <div className='w-full max-w-sm py-4 px-20 text-center bg-white shadow-lg rounded-xl'>
+      <div className='w-full max-w-sm px-20 py-4 text-center bg-white shadow-lg rounded-xl'>
         <h2 className='mb-4 text-2xl font-semibold text-button-gpt'>
           Your Referral Code
         </h2>
@@ -66,8 +66,8 @@ const ReferAFriend = () => {
         </div>
         </div>
 
-      <div className="mt-5 ">
-      <div className='w-full max-w-sm py-3 px-20 text-center bg-white shadow-lg rounded-xl'>
+      {/* <div className="mt-5 ">
+      <div className='w-full max-w-sm px-20 py-3 text-center bg-white shadow-lg rounded-xl'>
   <h2 className='mb-4 text-2xl font-semibold text-button-gpt'>
     Redeem Code
   </h2>
@@ -75,7 +75,7 @@ const ReferAFriend = () => {
   <input
     type='text'
     placeholder='Enter Code here'
-    className='w-full px-8 py-2 text-gray-800 bg-gray-100  border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:to-button-gpt focus:border-transparent'
+    className='w-full px-8 py-2 text-gray-800 bg-gray-100 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:to-button-gpt focus:border-transparent'
   />
 </div>
 
@@ -86,7 +86,7 @@ const ReferAFriend = () => {
      Redeem Code
   </button>
         </div>
-        </div>
+        </div> */}
 
 
       {/* Call to Action */}

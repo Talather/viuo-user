@@ -28,7 +28,7 @@ const ChartThree: React.FC = () => {
             21% Used
           </div>
         </div>
-        <p className="mt-4 text-lg font-bold text-gray-700">600.00$ Credits</p>
+        <p className="mt-4 text-lg font-bold text-gray-700">$600.00 Credits</p>
       </div>
     </div>
   );
