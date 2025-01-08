@@ -3,13 +3,13 @@ import { Typography, Button as MuiButton } from '@mui/material'
 import { useBillPaymentContext } from '@/context/paymentBillsContext'
 
 const Transaction = () => {
-  
-   const { selectedBills,removeBill,clearBills,calculateTotalBills } = useBillPaymentContext()
+  const { selectedBills, removeBill, clearBills, calculateTotalBills } =
+    useBillPaymentContext()
   const [visibleItems, setVisibleItems] = useState<any[]>([])
-let subtotal = calculateTotalBills()
-let discount = 0.0
+  let subtotal = calculateTotalBills()
+  let discount = 0.0
   let total = subtotal - discount
-  console.log("zaalim",subtotal)
+  console.log('zaalim', subtotal)
 
   const useWarnOnRefresh = () => {
     useEffect(() => {
@@ -98,13 +98,7 @@ const CartItem: React.FC<CartItemProps> = ({
   selected,
   onClick
 }) => {
-  // const [
-    // quantity,
-    // setQuantity] = useState<number>(1)
-
-  // const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setQuantity(Number(e.target.value))
-  // }
+  
 
   return (
     <div
@@ -133,7 +127,6 @@ const CartItem: React.FC<CartItemProps> = ({
               >
                 Remove
               </button>
-              
             </div>
           </div>
         </div>
@@ -141,8 +134,6 @@ const CartItem: React.FC<CartItemProps> = ({
     </div>
   )
 }
-
-// export default CartItem
 
 interface OrderSummaryProps {
   subtotal: number
@@ -188,147 +179,6 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
     </div>
   )
 }
-
-// export default OrderSummary
-
-// import React, { useState } from 'react'
-
-// const PaymentCheckout: React.FC = () => {
-//   const [cardHolderName, setCardHolderName] = useState('')
-//   const [cardNumber, setCardNumber] = useState('')
-//   const [expirationDate, setExpirationDate] = useState('')
-//   const [cvv, setCvv] = useState('')
-
-//   const handleSubmit = () => {
-//     // Logic to handle payment submission
-//     console.log({
-//       cardHolderName,
-//       cardNumber,
-//       expirationDate,
-//       cvv
-//     })
-//   }
-
-//   return (
-//     <div className='px-8 py-4 mt-8 bg-white rounded-lg shadow-lg h-4/5 '>
-//       {/* Top Section with 3 Horizontal Boxes */}
-
-//       <div className='flex items-center justify-around mt-5 mb-5'>
-//         <img
-//           src='https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png'
-//           alt='Visa Logo'
-//           className='h-8'
-//         />
-//         <img
-//           src='https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg'
-//           alt='PayPal Logo'
-//           className='h-8'
-//         />
-//         <img
-//           src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_2019_logo.svg'
-//           alt='MasterCard Logo'
-//           className='h-8'
-//         />
-//       </div>
-
-//       <div className='space-y-7'>
-//         {/* Card Holder Name */}
-//         <div>
-//           <label
-//             htmlFor='cardHolderName'
-//             className='block text-sm font-semibold text-gray-700'
-//           >
-//             Card Holder Name
-//           </label>
-//           <input
-//             type='text'
-//             id='cardHolderName'
-//             value={cardHolderName}
-//             onChange={e => setCardHolderName(e.target.value)}
-//             className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-//             placeholder='Enter your name'
-//           />
-//         </div>
-
-//         {/* Card Number */}
-//         <div>
-//           <label
-//             htmlFor='cardNumber'
-//             className='block text-sm font-semibold text-gray-700'
-//           >
-//             Card Number
-//           </label>
-//           <input
-//             type='text'
-//             id='cardNumber'
-//             value={cardNumber}
-//             onChange={e => setCardNumber(e.target.value)}
-//             className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-//             placeholder='Enter your card number'
-//           />
-//         </div>
-
-//         {/* Expiration Date and CVV */}
-//         <div className='flex space-x-4'>
-//           {/* Expiration Date */}
-//           <div className='w-1/2'>
-//             <label
-//               htmlFor='expirationDate'
-//               className='block text-sm font-semibold text-gray-700'
-//             >
-//               Expiration Date
-//             </label>
-//             <input
-//               type='text'
-//               id='expirationDate'
-//               value={expirationDate}
-//               onChange={e => setExpirationDate(e.target.value)}
-//               className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-//               placeholder='MM/YY'
-//             />
-//           </div>
-
-//           {/* CVV */}
-//           <div className='w-1/2'>
-//             <label
-//               htmlFor='cvv'
-//               className='block text-sm font-semibold text-gray-700'
-//             >
-//               CVV
-//             </label>
-//             <input
-//               type='text'
-//               id='cvv'
-//               value={cvv}
-//               onChange={e => setCvv(e.target.value)}
-//               className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-//               placeholder='Enter CVV'
-//             />
-//           </div>
-//         </div>
-
-//         {/* Pay Now Button */}
-//         <div>
-//           <button
-//             onClick={handleSubmit}
-//             className='w-full py-3 mt-10 text-white rounded-md bg-button-gpt hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'
-//           >
-//             Pay Now
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// // export default PaymentCheckout
-
-
-
-
-
-// import React, { useState } from 'react'
-// import { useState } from 'react'
 
 const PaymentCheckout: React.FC = () => {
   const [selectedMethod, setSelectedMethod] = useState<string | null>(
@@ -468,51 +318,47 @@ const PaymentCheckout: React.FC = () => {
         )}
 
         {/* PayPal Input (No additional inputs for PayPal) */}
-        {
-  selectedMethod === 'paypal' && (
-    <>
-      <div className='mt-10'>
-        <label
-          htmlFor='paypalEmail'
-          className='block text-sm font-semibold text-gray-700'
-        >
-          PayPal Email Address
-        </label>
-        <input
-          type='email'
-          id='paypalEmail'
-          value={''}
-          // onChange={e => setPaypalEmail(e.target.value)}
-          className='w-full p-3 mt-1 border border-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
-          placeholder='Enter your PayPal email'
-        />
-      </div>
-      <div>
-        <label
-          htmlFor='paypalAccountId'
-          className='block text-sm font-semibold text-gray-700'
-        >
-          PayPal Account ID (Optional)
-        </label>
-        <input
-          type='text'
-          id='paypalAccountId'
-          value={"paypalAccountId"}
-          // onChange={e => setPaypalAccountId(e.target.value)}
-          className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-          placeholder='Enter your PayPal account ID'
-        />
-      </div>
-    </>
-  )
-}
-
+        {selectedMethod === 'paypal' && (
+          <>
+            <div className='mt-10'>
+              <label
+                htmlFor='paypalEmail'
+                className='block text-sm font-semibold text-gray-700'
+              >
+                PayPal Email Address
+              </label>
+              <input
+                type='email'
+                id='paypalEmail'
+                value={''}
+                // onChange={e => setPaypalEmail(e.target.value)}
+                className='w-full p-3 mt-1 border border-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                placeholder='Enter your PayPal email'
+              />
+            </div>
+            <div>
+              <label
+                htmlFor='paypalAccountId'
+                className='block text-sm font-semibold text-gray-700'
+              >
+                PayPal Account ID (Optional)
+              </label>
+              <input
+                type='text'
+                id='paypalAccountId'
+                value={'paypalAccountId'}
+                // onChange={e => setPaypalAccountId(e.target.value)}
+                className='w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                placeholder='Enter your PayPal account ID'
+              />
+            </div>
+          </>
+        )}
 
         {/* Bank Transfer Input Fields */}
         {selectedMethod === 'plaid' && (
           <>
-            <div className = 'mt-10'
->
+            <div className='mt-10'>
               <label
                 htmlFor='bankAccount'
                 className='block text-sm font-semibold text-gray-700'
@@ -569,5 +415,3 @@ const PaymentCheckout: React.FC = () => {
     </div>
   )
 }
-
-// export default PaymentCheckout

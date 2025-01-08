@@ -1,3 +1,4 @@
+import { useAuth } from "@/context/AuthContext"
 import { useToast } from "@/hooks/use-toast"
 
 
@@ -25,8 +26,9 @@ export default Refer
 
 const ReferAFriend = () => {
   const { toast } = useToast()
+  const {user}=useAuth()
 
-  const referralCode = 'SAVE123'
+  const referralCode:any = user?.referralCode || ''
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-b from-gray-100 to-button-gpt'>

@@ -113,7 +113,8 @@ const TotalIncomeLightCard = ({ isLoading }) => {
                       justifyContent: 'center'
                     }}
                   >
-                    <div style={{ marginRight: '10px' }}>
+                      <div style={{ marginRight: '10px' }}>
+                       
                       <Avatar
                         variant='rounded'
                         sx={{
@@ -139,8 +140,10 @@ const TotalIncomeLightCard = ({ isLoading }) => {
                   </Box>
 
                   {/* Right Content: Icon */}
-                  <div>
-                    <Tooltip content='Add Credit'>
+                    <div>
+                      
+                      <Tooltip content='Add Credit'>
+                        <a href='/transaction/credit/add'>
                       <Avatar
                         variant='rounded'
                         sx={{
@@ -151,10 +154,13 @@ const TotalIncomeLightCard = ({ isLoading }) => {
                       >
                         {/* <AiFillFund size={30} /> */}
                         <GrTransaction size={25} />
-                      </Avatar>
+                        </Avatar>
+                         </a>
+                         
                     </Tooltip>
 
-                    <Tooltip content='Send Credit' placement='bottom'>
+                      <Tooltip content='Send Credit' placement='bottom'>
+                        <a href='/transaction/credit/send'>
                       <Avatar
                         variant='rounded'
                         sx={{
@@ -164,7 +170,8 @@ const TotalIncomeLightCard = ({ isLoading }) => {
                       >
                         {/* <AiOutlineFund  size={30}/> */}
                         <GrTransaction  size={25} />
-                      </Avatar>
+                          </Avatar>
+                          </a>
                     </Tooltip>
                   </div>
                 </Box>
