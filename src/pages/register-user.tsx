@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -24,14 +25,15 @@ const RegisterUser = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location?.state?.from?.pathname || "/";
+  // const location = useLocation();
+  // const from = location?.state?.from?.pathname || "/";
   const form = useForm<RegisterUserFormData>({
     resolver: zodResolver(RegisterUserSchema),
     defaultValues: {
       email: "",
       password: "",
-      name: "",
+      firstName: "",
+      lastName: "",
       phoneNumber: "",
       agreeToPromotionalMessages: true,
     },
@@ -49,37 +51,22 @@ const RegisterUser = () => {
   const onSubmit = async (values: RegisterUserFormData) => {
     setIsLoading(true);
     try {
-      // const formData = {
-      //   subject: "New User Registered",
-      //   name: `${values.name}`,
-      //   email: `${values.email}`,
-      //   message: `
-      //   Name: ${values.name}
-      //   Email: ${values.email}
-      //   Promotional Messages: ${
-      //     values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
-      //   }`,
-      // };
-
-      // await emailjs.send(
-      //   import.meta.env.VITE_EMAIL_JS_SERVICE_KEY,
-      //   import.meta.env.VITE_EMAIL_JS_TEMPLATE_ID,
-      //   formData,
-      //   {
-      //     publicKey: import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY,
-      //   }
-      // );
-
       setIsLoading(false);
-      const timeZone:any=Intl.DateTimeFormat().resolvedOptions().timeZone
-
-      registerUser(values.email, values.password,timeZone);
-
-      toast({
-        title: "Account Created Successfully.",
-        description: "Use your email and password to login again anytime.",
+      const timeZone: any = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      registerUser(
+        values.email,
+        values.password,
+        values.firstName,
+        values.lastName,
+        values.phoneNumber,
+        timeZone
+      ).then(() => {
+        toast({
+          title: "Account Created Successfully.",
+          description: "Use your email and password to login again anytime.",
+        });
+        navigate("/dashboard", { replace: true });
       });
-      navigate(from, { replace: true });
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -116,7 +103,7 @@ const RegisterUser = () => {
             <div className="grid gap-5 md:grid-cols-2 md:gap-2">
               <FormField
                 control={control}
-                name="name"
+                name="firstName"
                 render={({ field }) => (
                   <FormItem className="relative items-center ">
                     {/* <FormLabel className="">Email</FormLabel> */}
@@ -126,17 +113,39 @@ const RegisterUser = () => {
                           variant="bordered"
                           size="md"
                           type="name"
-                          label="Name"
-                          errorMessage={errors.name?.message}
-                          isInvalid={!!errors.name?.message}
+                          label="First Name"
+                          errorMessage={errors.firstName?.message}
+                          isInvalid={!!errors.firstName?.message}
                           {...field}
                         />
                       </FormControl>
-                      {/* <FormMessage className="mt-1.5 absolute text-xs" /> */}
                     </div>
                   </FormItem>
                 )}
               />
+              <FormField
+                control={control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem className="relative items-center ">
+                    <div className="w-full">
+                      <FormControl>
+                        <Input
+                          variant="bordered"
+                          size="md"
+                          type="name"
+                          label="Last Name"
+                          errorMessage={errors.lastName?.message}
+                          isInvalid={!!errors.lastName?.message}
+                          {...field}
+                        />
+                      </FormControl>
+                    </div>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid gap-5 md:grid-cols-2 md:gap-2">
               <FormField
                 control={control}
                 name="email"
@@ -160,44 +169,44 @@ const RegisterUser = () => {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem className="relative items-center  lg:gap-3">
+                    {/* <FormLabel>Password</FormLabel> */}
+                    <div className="w-full">
+                      <FormControl>
+                        <Input
+                          variant="bordered"
+                          size="md"
+                          label="Password"
+                          errorMessage={errors.password?.message}
+                          isInvalid={!!errors.password?.message}
+                          {...field}
+                          endContent={
+                            <button
+                              className="focus:outline-none"
+                              type="button"
+                              onClick={toggleVisibility}
+                              aria-label="toggle password visibility"
+                            >
+                              {isVisible ? (
+                                <EyeOpenIcon className="text-2xl pointer-events-none text-default-400" />
+                              ) : (
+                                <EyeClosedIcon className="text-2xl pointer-events-none text-default-400" />
+                              )}
+                            </button>
+                          }
+                          type={isVisible ? "text" : "password"}
+                        />
+                      </FormControl>
+                      {/* <FormMessage className="mt-1.5 absolute text-xs" /> */}
+                    </div>
+                  </FormItem>
+                )}
+              />
             </div>
-            <FormField
-              control={control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className="relative items-center  lg:gap-3">
-                  {/* <FormLabel>Password</FormLabel> */}
-                  <div className="w-full">
-                    <FormControl>
-                      <Input
-                        variant="bordered"
-                        size="md"
-                        label="Password"
-                        errorMessage={errors.password?.message}
-                        isInvalid={!!errors.password?.message}
-                        {...field}
-                        endContent={
-                          <button
-                            className="focus:outline-none"
-                            type="button"
-                            onClick={toggleVisibility}
-                            aria-label="toggle password visibility"
-                          >
-                            {isVisible ? (
-                              <EyeOpenIcon className="text-2xl pointer-events-none text-default-400" />
-                            ) : (
-                              <EyeClosedIcon className="text-2xl pointer-events-none text-default-400" />
-                            )}
-                          </button>
-                        }
-                        type={isVisible ? "text" : "password"}
-                      />
-                    </FormControl>
-                    {/* <FormMessage className="mt-1.5 absolute text-xs" /> */}
-                  </div>
-                </FormItem>
-              )}
-            />
 
             <FormField
               control={control}

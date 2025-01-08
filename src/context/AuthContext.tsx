@@ -16,9 +16,9 @@ import { auth, db } from "@/lib/firebaseConfig";
 import { User } from "../types"; // Your custom user type
 import { doc, getDoc } from "firebase/firestore";
 import { useUserAssets } from "./userSpecificAssetsContext";
-import { useUserAssetsDispatch } from './userSpecificAssetsContext'
+import { useUserAssetsDispatch } from "./userSpecificAssetsContext";
 import { fetchBillsForSpecificUser } from "@/lib/clientControllers/bills";
-import { fetchDocumentsForSpecificUser } from '@/lib/clientControllers/userSpecificAssets'
+import { fetchDocumentsForSpecificUser } from "@/lib/clientControllers/userSpecificAssets";
 
 // Define types for the user and context
 interface AuthContextType {
@@ -39,44 +39,35 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const {userBills,userDocuments}=useUserAssets()
+  const { userBills, userDocuments } = useUserAssets();
 
-const dispatch=useUserAssetsDispatch()
-
-
-
-
-
-
-
-
-
+  const dispatch = useUserAssetsDispatch();
 
   useEffect(() => {
-
-
-
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        // Fetch user data from Firestore
         try {
           const userDocRef = doc(db, "users", firebaseUser.uid);
           const userDoc = await getDoc(userDocRef);
 
           if (userDoc.exists()) {
             const userData = userDoc.data();
-
             // Map Firestore data to your User type
             const customUser: User = {
               id: firebaseUser.uid,
-              name:
-                userData.name || firebaseUser.email?.split("@")[0] || "Unknown",
+              firstName: userData.firstName,
+              lastName: userData.lastName,
               email: userData.email || firebaseUser.email || "",
               role: userData.role || "user",
               avatar: userData.avatar || "",
               dob: userData.dob || "",
               address: userData.address || "",
               totalDocuments: userData.totalDocuments || 0,
+              phoneNo: userData.phoneNo,
+              referralCode: userData.referralCode,
+              profileLink: userData.profileLink,
+              redeemedReferralCode: userData.redeemedReferralCode,
+              availableCredits: userData.availableCredits,
             };
 
             setUser(customUser);
@@ -85,29 +76,17 @@ const dispatch=useUserAssetsDispatch()
             setUser(null);
           }
 
-
-
-
-
           if (!userBills.length) {
-            const bills = await fetchBillsForSpecificUser(firebaseUser.uid)
-            console.log("zaaaaaaalim", bills)
-            dispatch({ type: 'SET_ALL_BILLS', payload: bills })
+            const bills = await fetchBillsForSpecificUser(firebaseUser.uid);
+            dispatch({ type: "SET_ALL_BILLS", payload: bills });
           }
 
-           if (!userDocuments.length) {
-            const documents = await fetchDocumentsForSpecificUser(firebaseUser.uid)
-            dispatch({ type: 'SET_ALL_DOCUMENTS', payload: documents })
+          if (!userDocuments.length) {
+            const documents = await fetchDocumentsForSpecificUser(
+              firebaseUser.uid
+            );
+            dispatch({ type: "SET_ALL_DOCUMENTS", payload: documents });
           }
-
-
-          
-
-
-
-
-
-
         } catch (error) {
           console.error("Error fetching user data from Firestore:", error);
         }

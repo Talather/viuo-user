@@ -1,25 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { useContext } from "react";
-// import { AuthContext } from "../context/AuthContext";
-
-// import { AuthContext } from "@/context/AuthContext";
 
 import { useState } from "react";
-// import { useToast } from './use-toast'
-// import { useNavigate } from "react-router-dom";
-
-// import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
-// import { doc, getDoc, setDoc } from "firebase/firestore";
-// import { auth, db } from "@/lib/firebaseConfig";
-
-// export const useAuth = () => {
-//   const context = useContext(AuthContext);
-
-//   if (context === undefined) {
-//     throw new Error("useAuth must be used with in an AuthProvider");
-//   }
-//   return context;
-// };
 
 import { AuthContext } from "@/context/AuthContext";
 import { useContext } from "react";
@@ -53,6 +34,9 @@ export const useAuth = () => {
   const registerUser = async (
     email: string,
     password: string,
+    firstName: string,
+    lastName: string,
+    phoneNo: string,
     timeZone: any
   ) => {
     setIsLoading(true);
@@ -67,17 +51,19 @@ export const useAuth = () => {
       // Create a user document in Firestore
       await setDoc(doc(db, "users", user.uid), {
         email: user.email,
-        name: email.split("@")[0],
+        firstName: firstName,
+        lastName: lastName,
         role: "user",
+        phoneNo: phoneNo,
         avatar: DEFAULT_AVATAR,
         timeZone: timeZone,
         createdAt: new Date(),
       });
 
-      toast({
-        title: "Account Created Successfully.",
-        description: "Use your email and password to login again anytime.",
-      });
+      // toast({
+      //   title: "Account Created Successfully.",
+      //   description: "Use your email and password to login again anytime.",
+      // });
 
       setIsLoading(false);
       return { success: true, user };

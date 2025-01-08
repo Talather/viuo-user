@@ -62,7 +62,7 @@ const Dashboard = () => {
       <div className="flex flex-col items-start justify-between w-full gap-2 mt-3 md:flex-row">
         <div className="flex flex-row justify-between w-full">
           <div>
-            <h2 className="text-2xl font-bold">Hey, {user?.name}!</h2>
+            <h2 className="text-2xl font-bold">Hey, {user?.firstName}!</h2>
             <p className="mt-2 text-gray-500">Upcoming Bills</p>
           </div>
 
