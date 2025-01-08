@@ -6,13 +6,16 @@ import TotalIncomeLightCard from "../../src/components/cards/TotalIncomeLightCar
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@nextui-org/button";
 import { useToast } from "@/hooks/use-toast";
+import {loadStripe} from '@stripe/stripe-js'
 const Transaction = ({ add }: any) => {
   const { toast } = useToast();
   const { user } = useAuth();
   const [credits, setCredits] = useState<number>(0);
   const [profileLink, setProfileLink] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
-  const handleAddCredit = () => {
+    const handleAddCredit = async() => {
+      await makePayment()
+
     // Logic to send or add the credits
     console.log(`Credits added: ${credits}`);
   };
@@ -90,6 +93,71 @@ const Transaction = ({ add }: any) => {
     console.log(`Credits sent: ${credits}`);
   };
 
+    
+    
+    const makePayment = async () => {
+        const stripe=await loadStripe('pk_test_51L42JBBjhuRU5cGW2oXLq1IubYuai5huuBi0eMrODKEwvZDSe7KgTMWStEAxOVIcj9nPxWiaOvHEm7pEqhoa8vB400KVHlGKBY')
+        const body = {
+            credits: credits,
+            userId: user?.id,
+            success_url: "http://localhost:5173/dashboard",
+            cancel_url: 'http://localhost:5173/dashboard'
+      }
+      // console.log("body:",body)
+      //   const headers = {
+      //       'Content_Type':"application/json"
+      //   }
+        const apiUrl='https://createcheckoutsession-5risxnudva-uc.a.run.app '
+      //   const response = await fetch(`${apiUrl}`, {
+      //       method: "POST",
+      //       headers: headers,
+      //       body:JSON.stringify(body)
+      //   })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      const response = await fetch(
+        apiUrl,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify( {
+            credits: credits,
+            userId: user?.id,
+            success_url: "http://localhost:5173/dashboard",
+            cancel_url: 'http://localhost:5173/dashboard'
+      }),
+        }
+      );
+
+
+
+
+
+
+
+
+        const session = await response.json()
+      console.log("bhrwa", session)
+      console.log("hijra",stripe)
+        const result=stripe.redirectToCheckout({sessionId:session.sessionId})
+        if (result.error) {
+            console.log("mayusi",result.error)
+        }
+    }
   return (
     <div
       className="flex flex-col justify-center items-center w-full bg-gray-200 border lg:flex-row lg:w-full "
