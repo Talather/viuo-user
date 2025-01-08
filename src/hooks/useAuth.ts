@@ -31,7 +31,6 @@ import {
   signOut,
   confirmPasswordReset,
   verifyPasswordResetCode,
-
   // onAuthStateChanged
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";

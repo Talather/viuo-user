@@ -1,4 +1,5 @@
 export interface User {
+  phoneNo: string;
   id: string;
   name: string;
   email: string;
@@ -7,6 +8,10 @@ export interface User {
   dob: string;
   address: string;
   totalDocuments: number;
+  availableCredits: number;
+  profileLink: number;
+  referralCode: number;
+  redeemedReferralCode: boolean;
 }
 
 export interface AuthState {
