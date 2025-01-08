@@ -1,24 +1,93 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
-import { Typography, Button as MuiButton } from "@mui/material";
-import { useBillPaymentContext } from "@/context/paymentBillsContext";
-// import Button from '@/compoennts/button'
+import { useState } from "react";
+import { Typography } from "@mui/material";
 
-const Transaction = (add: any) => {
-  const { selectedBills, calculateTotalBills } = useBillPaymentContext();
-  const [visibleItems, setVisibleItems] = useState<any[]>([]);
+import TotalIncomeLightCard from "../../src/components/cards/TotalIncomeLightCard";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@nextui-org/button";
+import { useToast } from "@/hooks/use-toast";
+const Transaction = ({ add }: any) => {
+  const { toast } = useToast();
+  const { user } = useAuth();
   const [credits, setCredits] = useState<number>(0);
-  const subtotal = calculateTotalBills();
-  const discount = 0.0;
-  const total = subtotal - discount;
-  console.log(visibleItems, total);
-  useEffect(() => {
-    setVisibleItems(selectedBills);
-  }, [selectedBills]);
-
+  const [profileLink, setProfileLink] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
   const handleAddCredit = () => {
     // Logic to send or add the credits
     console.log(`Credits added: ${credits}`);
+  };
+
+  const handleSendCredit = async () => {
+    setIsLoading(true);
+    if (!user?.availableCredits) {
+      return;
+    }
+
+    if (credits > user?.availableCredits) {
+      toast({
+        title: "Error",
+        description: `Credits Cannot be greater than ${user?.availableCredits}`,
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    if (profileLink === user?.profileLink) {
+      toast({
+        title: "Error",
+        description: `Profile link not correct`,
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    if (credits < 1 || profileLink.length < 5) {
+      toast({
+        title: "Error",
+        description: `Please enter the data correctly`,
+      });
+      setIsLoading(false);
+      return;
+    }
+    try {
+      const response = await fetch(
+        "https://sendcredit-5risxnudva-uc.a.run.app",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: user?.id,
+            creditToSend: credits,
+            profileLink: profileLink,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Success",
+          description: result.message,
+        });
+        console.log(result.message);
+      } else {
+        toast({
+          title: "Error",
+          description: result.message,
+        });
+        console.log(result.message);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+
+      console.error("Error sending referral code:", error);
+    }
+
+    console.log(`Credits sent: ${credits}`);
   };
 
   return (
@@ -28,7 +97,12 @@ const Transaction = (add: any) => {
     >
       {/* Transaction Section */}
       <div className="flex flex-row justify-center items-center w-full ">
-        <div className="w-full lg:w-1/2   items-center lg:mr-5">
+        <div className="w-full lg:w-1/2  justify-center items-center lg:mr-5">
+          <TotalIncomeLightCard
+            isLoading={isLoading}
+            user={user}
+            buttons={false}
+          />
           <div className="w-full px-6 py-20 mx-5 mt-8 bg-white rounded-xl shadow-lg">
             {/* Header */}
             <div className="flex items-center justify-center mb-12">
@@ -36,10 +110,9 @@ const Transaction = (add: any) => {
                 variant="h4"
                 className="text-2xl font-bold text-gray-800"
               >
-                Credits
+                {add === true ? "Add Credits" : "Send Credits"}
               </Typography>
             </div>
-
             {/* Input Section */}
             <div className="flex flex-col items-center">
               <label className="block mb-2 text-lg font-semibold text-gray-800 hover:text-button-gpt transition duration-300">
@@ -57,36 +130,36 @@ const Transaction = (add: any) => {
                   💰
                 </div>
               </div>
-
               {!add && (
-                <div className="relative w-2/3 mt-4">
-                  <input
-                    type="number"
-                    value={credits}
-                    onChange={(e) => setCredits(Number(e.target.value))}
-                    placeholder="Enter number of credits"
-                    className="w-full p-4 text-black bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-button-gpt focus:border-button-gpt transition duration-300 hover:shadow-lg"
-                  />
-                  <div className="absolute inset-y-0 right-3 flex items-center text-gray-400">
-                    💰
+                <>
+                  <label className="block mb-2 text-lg font-semibold text-gray-800 hover:text-button-gpt transition duration-300">
+                    Profile Link:
+                  </label>
+                  <div className="relative w-2/3 mt-4">
+                    <input
+                      type="text"
+                      value={profileLink}
+                      onChange={(e) => setProfileLink(e.target.value)}
+                      placeholder="Enter the profile link to send "
+                      className="w-full p-4 text-black bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-button-gpt focus:border-button-gpt transition duration-300 hover:shadow-lg"
+                    />
                   </div>
-                </div>
+                </>
               )}
             </div>
-
             {/* Add Credit Button */}
             <div className="mt-6 flex justify-center">
-              <MuiButton
-                className="bg-button-gpt"
-                variant="contained"
-                // color='button-gpt'
-                sx={{ backgroundColor: "#10a37f" }}
-                //   style:{{backgroundColor:"#10a37f"}}
-                onClick={handleAddCredit}
-                disabled={credits <= 0}
-              >
-                {add ? "Add Credit" : "Send Credit"}
-              </MuiButton>
+              <div className="mt-8 mb-10">
+                <Button
+                  children={add ? "Add Credits" : "Send Credits"}
+                  className="justify-center font-bold text-white hover:bg-button-gpt-hover bg-button-gpt"
+                  isLoading={isLoading}
+                  variant="faded"
+                  type="submit"
+                  onPress={add ? handleAddCredit : handleSendCredit}
+                  disabled={isLoading}
+                />
+              </div>
             </div>
           </div>
         </div>

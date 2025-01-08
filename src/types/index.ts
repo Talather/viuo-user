@@ -10,7 +10,7 @@ export interface User {
   address: string;
   totalDocuments?: number;
   availableCredits?: number;
-  profileLink?: number;
+  profileLink?: string;
   referralCode?: number;
   redeemedReferralCode?: boolean;
 }

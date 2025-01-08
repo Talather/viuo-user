@@ -14,7 +14,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "@/lib/firebaseConfig";
 import { User } from "../types"; // Your custom user type
-import { doc, getDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { useUserAssets } from "./userSpecificAssetsContext";
 import { useUserAssetsDispatch } from "./userSpecificAssetsContext";
 import { fetchBillsForSpecificUser } from "@/lib/clientControllers/bills";
@@ -44,61 +44,87 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const dispatch = useUserAssetsDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    // Listen for authentication state changes
+    const unsubscribeAuth = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
-        try {
-          const userDocRef = doc(db, "users", firebaseUser.uid);
-          const userDoc = await getDoc(userDocRef);
+        // Reference to the user's document in Firestore
+        const userDocRef = doc(db, "users", firebaseUser.uid);
 
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            // Map Firestore data to your User type
-            const customUser: User = {
-              id: firebaseUser.uid,
-              firstName: userData.firstName,
-              lastName: userData.lastName,
-              email: userData.email || firebaseUser.email || "",
-              role: userData.role || "user",
-              avatar: userData.avatar || "",
-              dob: userData.dob || "",
-              address: userData.address || "",
-              totalDocuments: userData.totalDocuments || 0,
-              phoneNo: userData.phoneNo,
-              referralCode: userData.referralCode,
-              profileLink: userData.profileLink,
-              redeemedReferralCode: userData.redeemedReferralCode,
-              availableCredits: userData.availableCredits,
-            };
+        // Set up a real-time listener for the user's document
+        const unsubscribeUserDoc = onSnapshot(
+          userDocRef,
+          async (docSnapshot) => {
+            if (docSnapshot.exists()) {
+              const userData = docSnapshot.data();
 
-            setUser(customUser);
-          } else {
-            console.warn("No user document found for the authenticated user.");
-            setUser(null);
+              // Map Firestore data to your User type
+              const customUser = {
+                id: firebaseUser.uid,
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                email: userData.email || firebaseUser.email || "",
+                role: userData.role || "user",
+                avatar: userData.avatar || "",
+                dob: userData.dob || "",
+                address: userData.address || "",
+                totalDocuments: userData.totalDocuments || 0,
+                phoneNo: userData.phoneNo,
+                referralCode: userData.referralCode,
+                profileLink: userData.profileLink,
+                redeemedReferralCode: userData.redeemedReferralCode,
+                availableCredits: userData.availableCredits,
+              };
+
+              setUser(customUser);
+
+              // Fetch bills if not already loaded
+              if (!userBills.length) {
+                try {
+                  const bills = await fetchBillsForSpecificUser(
+                    firebaseUser.uid
+                  );
+                  dispatch({ type: "SET_ALL_BILLS", payload: bills });
+                } catch (error) {
+                  console.error("Error fetching bills:", error);
+                }
+              }
+
+              // Fetch documents if not already loaded
+              if (!userDocuments.length) {
+                try {
+                  const documents = await fetchDocumentsForSpecificUser(
+                    firebaseUser.uid
+                  );
+                  dispatch({ type: "SET_ALL_DOCUMENTS", payload: documents });
+                } catch (error) {
+                  console.error("Error fetching documents:", error);
+                }
+              }
+            } else {
+              console.warn(
+                "No user document found for the authenticated user."
+              );
+              setUser(null);
+            }
+            setLoading(false);
+          },
+          (error) => {
+            console.error("Error listening to user document:", error);
+            setLoading(false);
           }
+        );
 
-          if (!userBills.length) {
-            const bills = await fetchBillsForSpecificUser(firebaseUser.uid);
-            dispatch({ type: "SET_ALL_BILLS", payload: bills });
-          }
-
-          if (!userDocuments.length) {
-            const documents = await fetchDocumentsForSpecificUser(
-              firebaseUser.uid
-            );
-            dispatch({ type: "SET_ALL_DOCUMENTS", payload: documents });
-          }
-        } catch (error) {
-          console.error("Error fetching user data from Firestore:", error);
-        }
+        // Clean up the Firestore listener when the auth state changes
+        return () => unsubscribeUserDoc();
       } else {
         setUser(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
-    // Clean up the subscription on unmount
-    return () => unsubscribe();
-  }, []);
+    // Clean up the auth listener on unmount
+    return () => unsubscribeAuth();
+  }, [dispatch, userBills.length, userDocuments.length]);
 
   const logout = async (): Promise<void> => {
     await signOut(auth);
