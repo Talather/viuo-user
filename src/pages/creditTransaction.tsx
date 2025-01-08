@@ -6,15 +6,15 @@ import TotalIncomeLightCard from "../../src/components/cards/TotalIncomeLightCar
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@nextui-org/button";
 import { useToast } from "@/hooks/use-toast";
-import {loadStripe} from '@stripe/stripe-js'
+import { loadStripe } from "@stripe/stripe-js";
 const Transaction = ({ add }: any) => {
   const { toast } = useToast();
   const { user } = useAuth();
   const [credits, setCredits] = useState<number>(0);
   const [profileLink, setProfileLink] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
-    const handleAddCredit = async() => {
-      await makePayment()
+  const handleAddCredit = async () => {
+    await makePayment();
 
     // Logic to send or add the credits
     console.log(`Credits added: ${credits}`);
@@ -93,85 +93,52 @@ const Transaction = ({ add }: any) => {
     console.log(`Credits sent: ${credits}`);
   };
 
-    
-    
-    const makePayment = async () => {
-        const stripe=await loadStripe('pk_test_51L42JBBjhuRU5cGW2oXLq1IubYuai5huuBi0eMrODKEwvZDSe7KgTMWStEAxOVIcj9nPxWiaOvHEm7pEqhoa8vB400KVHlGKBY')
-        const body = {
-            credits: credits,
-            userId: user?.id,
-            success_url: "http://localhost:5173/dashboard",
-            cancel_url: 'http://localhost:5173/dashboard'
-      }
-      // console.log("body:",body)
-      //   const headers = {
-      //       'Content_Type':"application/json"
-      //   }
-        const apiUrl='https://createcheckoutsession-5risxnudva-uc.a.run.app '
-      //   const response = await fetch(`${apiUrl}`, {
-      //       method: "POST",
-      //       headers: headers,
-      //       body:JSON.stringify(body)
-      //   })
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51L42JBBjhuRU5cGW2oXLq1IubYuai5huuBi0eMrODKEwvZDSe7KgTMWStEAxOVIcj9nPxWiaOvHEm7pEqhoa8vB400KVHlGKBY"
+    );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-      const response = await fetch(
-        apiUrl,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify( {
-            credits: credits,
-            userId: user?.id,
-            success_url: "http://localhost:5173/dashboard",
-            cancel_url: 'http://localhost:5173/dashboard'
-      }),
-        }
-      );
-
-
-
-
-
-
-
-
-        const session = await response.json()
-      console.log("bhrwa", session)
-      console.log("hijra",stripe)
-        const result=stripe.redirectToCheckout({sessionId:session.sessionId})
-        if (result.error) {
-            console.log("mayusi",result.error)
-        }
+    if (!stripe) {
+      return;
     }
+    const apiUrl = "https://createcheckoutsession-5risxnudva-uc.a.run.app ";
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        credits: credits,
+        userId: user?.id,
+        success_url: "http://localhost:5173/dashboard",
+        cancel_url: "http://localhost:5173/dashboard",
+      }),
+    });
+
+    const session = await response.json();
+    const result = stripe.redirectToCheckout({ sessionId: session.sessionId });
+    if (result) {
+      console.log(result);
+    }
+  };
   return (
     <div
       className="flex flex-col justify-center items-center w-full bg-gray-200 border lg:flex-row lg:w-full "
       style={{ height: "100vh" }}
     >
       {/* Transaction Section */}
-      <div className="flex flex-row justify-center items-center w-full  " style={{marginTop:add ? '0vh' : "8vh"}}>
-              <div className="w-full lg:w-1/2  justify-center items-center lg:mr-5 ">
-                  <div className="ml-9">
-          <TotalIncomeLightCard
-            isLoading={isLoading}
-            user={user}
-            buttons={false}
-          /></div>
+      <div
+        className="flex flex-row justify-center items-center w-full  "
+        style={{ marginTop: add ? "0vh" : "8vh" }}
+      >
+        <div className="w-full lg:w-1/2  justify-center items-center lg:mr-5 ">
+          <div className="ml-9">
+            <TotalIncomeLightCard
+              isLoading={isLoading}
+              user={user}
+              buttons={false}
+            />
+          </div>
           <div className="w-full px-6 py-12 mx-5 mt-8 bg-white rounded-xl shadow-lg">
             {/* Header */}
             <div className="flex items-center justify-center mb-12">
@@ -190,7 +157,7 @@ const Transaction = ({ add }: any) => {
               <div className="relative w-2/3">
                 <input
                   type="number"
-                //   value={credits}
+                  //   value={credits}
                   onChange={(e) => setCredits(Number(e.target.value))}
                   placeholder="Enter number of credits"
                   className="w-full p-4 text-black bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-button-gpt focus:border-button-gpt transition duration-300 hover:shadow-lg"
