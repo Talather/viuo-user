@@ -150,10 +150,11 @@ import { useNavigate } from 'react-router-dom'
 import BillCard from '@/components/cards/billCard'
 import { Grid, Box } from '@mui/material'
 import Button from '@/components/button'
-import { fetchBillsForSpecificUser } from '@/lib/clientControllers/bills'
+// import { fetchBillsForSpecificUser } from '@/lib/clientControllers/bills'
 import { ClipLoader } from 'react-spinners'
 import { Timestamp } from 'firebase/firestore'
 import { useBillPaymentContext } from '../context/paymentBillsContext'
+import { useUserAssets } from '@/context/userSpecificAssetsContext'
 
 interface Bill {
   id?: string
@@ -169,50 +170,53 @@ interface Bill {
   updated_at: Timestamp
 }
 
-const filterAndMarkBills = (bills: Bill[]): Bill[] => {
-  const today = new Date()
-  const fifteenDaysFromNow = new Date()
-  fifteenDaysFromNow.setDate(today.getDate() + 15)
+// const filterAndMarkBills = (bills: Bill[]): Bill[] => {
+//   const today = new Date()
+//   const fifteenDaysFromNow = new Date()
+//   fifteenDaysFromNow.setDate(today.getDate() + 15)
 
-  return bills.map(bill => {
-    const dueDate = new Date(bill.due_date)
-    const isTopPriority = dueDate >= today && dueDate <= fifteenDaysFromNow
+//   return bills.map(bill => {
+//     const dueDate = new Date(bill.due_date)
+//     const isTopPriority = dueDate >= today && dueDate <= fifteenDaysFromNow
 
-    return {
-      ...bill,
-      topPriority: isTopPriority
-    }
-  })
-}
+//     return {
+//       ...bill,
+//       topPriority: isTopPriority
+//     }
+//   })
+// }
 
 const PayEarly = () => {
   const { user } = useAuth()
-  const [bills, setBills] = useState<Bill[]>([])
+  const [bills] = useState<Bill[]>([])
+  const {userBills}=useUserAssets()
   const [selectedBillsArray, setSelectedBillsArray] = useState<any[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading] = useState<boolean>(false)
   const navigate = useNavigate()
   const { addAllBillsOnce } = useBillPaymentContext()
 
-  const fetchBills = async () => {
-    if (!user?.id) return
+  // const fetchBills = async () => {
+  //   if (!user?.id) return
 
-    setLoading(true)
-    try {
-      let billsData: any = await fetchBillsForSpecificUser(user?.id)
-      billsData = filterAndMarkBills(billsData)
-      setBills(billsData)
-    } catch (error) {
-      console.error('Error fetching bills:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  //   setLoading(true)
+  //   try {
+  //     let billsData: any = await fetchBillsForSpecificUser(user?.id)
+  //     billsData = filterAndMarkBills(billsData)
+  //     setBills(billsData)
+  //   } catch (error) {
+  //     console.error('Error fetching bills:', error)
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
 
-  useEffect(() => {
-    fetchBills()
-  }, [user?.id])
+  // useEffect(() => {
+  //   fetchBills()
+  // }, [user?.id])
 
-  // Update the context with the selected bills
+  // // Update the context with the selected bills
+  
+  
   useEffect(() => {
     addAllBillsOnce(selectedBillsArray) // Update the context with selected bills
   }, [selectedBillsArray, addAllBillsOnce])
@@ -262,7 +266,7 @@ const PayEarly = () => {
           </div>
         ) : (
           <Grid container justifyContent='center' spacing={2}>
-            {bills.map(bill => (
+            {userBills.map((bill:any) => (
               <Grid item key={bill.id}>
                 <div
                   className={`${
