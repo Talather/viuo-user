@@ -8,9 +8,14 @@ import { Button } from '@nextui-org/button'
 import { useToast } from '../hooks/use-toast'
 
 const ProfilePage: React.FC = () => {
-  const { user } = useAuth()
+  const { user }:any = useAuth()
   const { toast } = useToast()
   const [profilePicture, setProfilePicture] = useState<string>('')
+  const [firstName, setFirstName] = useState<string>('')
+  const [lastName, setLastName] = useState<string>('')
+  const [phoneNo, setPhoneNo] = useState<string>('')
+
+
   const [address, setAddress] = useState<string>('')
   const [dob, setDob] = useState<string>('')
   const [profileLink, setProfileLink] = useState<string>('')
@@ -28,6 +33,10 @@ const ProfilePage: React.FC = () => {
       setProfilePicture(user.avatar || '')
       setAddress(user.address || '1234 Elm Street, Springfield, USA')
       setDob(user.dob || '1995-05-15')
+      setFirstName(user.name || 'John')
+      setLastName(user.name || 'doe')
+      setPhoneNo(user?.phoneNo || '0317068136')
+
       // setTotalDocuments(user.totalDocuments || 0);
     }
   }, [user])
@@ -106,7 +115,11 @@ const ProfilePage: React.FC = () => {
       const userDocRef = doc(db, 'users', user.id)
       await updateDoc(userDocRef, {
         address: address,
-        dob: dob
+        dob: dob,
+        name:`${firstName} ${lastName}`,
+        phoneNo:phoneNo
+
+
       })
       toast({
         title: 'Success',
@@ -177,6 +190,44 @@ const ProfilePage: React.FC = () => {
         </div> */}
 
         {/* Address */}
+
+
+
+
+        <div className='mb-6'>
+  <label className='block mb-2 text-white'>First Name</label>
+  <input
+    type='text'
+    value={firstName}
+    onChange={handleInputChange(setAddress)}
+    className='w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 '
+  />
+</div>
+        
+        <div className='mb-6'>
+  <label className='block mb-2 text-white'>Last Name:</label>
+  <input
+    type='text'
+    value={lastName}
+    onChange={handleInputChange(setAddress)}
+    className='w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 '
+  />
+        </div>
+        
+
+        <div className='mb-6'>
+  <label className='block mb-2 text-white'>Phone Number</label>
+  <input
+    type='text'
+    value={phoneNo}
+    onChange={handleInputChange(setAddress)}
+    className='w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 '
+  />
+</div>
+
+
+
+
         <div className='mb-6'>
           <label className='block mb-2 text-white'>Address:</label>
           <input
