@@ -48,8 +48,10 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 }));
 
 // ==============================|| DASHBOARD - TOTAL INCOME LIGHT CARD ||============================== //
+import { NavLink } from 'react-router-dom'
 
 const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
+  
   const theme = useTheme();
 
   return (
@@ -59,7 +61,7 @@ const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
       ) : (
         <CardWrapper border={false} content={false}>
           <Box sx={{ p: 2 }}>
-            <List sx={{ py: 0 }}>
+            <List sx={{ py: 0,}}>
               <ListItem alignItems="center" disableGutters sx={{ py: 0 }}>
                 <Box
                   sx={{
@@ -111,7 +113,7 @@ const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
                   {buttons && (
                     <div>
                       <Tooltip content="Add Credit">
-                        <a href="/transaction/credit/add">
+                       <NavLink to='/transaction/credit/add'>
                           <Avatar
                             variant="rounded"
                             sx={{
@@ -123,11 +125,12 @@ const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
                             {/* <AiFillFund size={30} /> */}
                             <GrTransaction size={25} />
                           </Avatar>
-                        </a>
+                        </NavLink>
                       </Tooltip>
 
                       <Tooltip content="Send Credit" placement="bottom">
-                        <a href="/transaction/credit/send">
+                          {/* <a href="/transaction/credit/send"> */}
+                          <NavLink to='/transaction/credit/send'>
                           <Avatar
                             variant="rounded"
                             sx={{
@@ -138,7 +141,8 @@ const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
                             {/* <AiOutlineFund  size={30}/> */}
                             <GrTransaction size={25} />
                           </Avatar>
-                        </a>
+                            {/* </a> */}
+                            </NavLink>
                       </Tooltip>
                     </div>
                   )}

@@ -29,7 +29,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Calendar from "../pages/calendar/page";
 import Profile from "../pages/profile";
-import CreditTransaction from "../pages/creditTransaction";
+import CreditTransaction from '../pages/creditTransaction'
 
 import Dashboard from "../pages/Dashboard";
 import RewardTracker from "../pages/reward-tracker";
@@ -38,6 +38,7 @@ import CreateBill from "../components/ui/billForm/form";
 
 import PaymentHistory from "../pages/payments-history";
 import DocumentPage from "@/pages/documents";
+
 
 // import DashboardSettings from "../pages/DashboardSettings"
 
@@ -200,11 +201,13 @@ export const router = createBrowserRouter([
         element: <Transaction />,
       },
       {
-        path: "/transaction/credit/add",
+        path:'/transaction/credit/add',
+        // index: true,
         element: <CreditTransaction add={true} />,
       },
       {
-        path: "/transaction/credit/send",
+        path:'/transaction/credit/send',
+        // index: true,
         element: <CreditTransaction add={false} />,
       },
     ],

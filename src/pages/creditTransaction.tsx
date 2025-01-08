@@ -96,14 +96,15 @@ const Transaction = ({ add }: any) => {
       style={{ height: "100vh" }}
     >
       {/* Transaction Section */}
-      <div className="flex flex-row justify-center items-center w-full ">
-        <div className="w-full lg:w-1/2  justify-center items-center lg:mr-5">
+      <div className="flex flex-row justify-center items-center w-full  " style={{marginTop:add ? '0vh' : "8vh"}}>
+              <div className="w-full lg:w-1/2  justify-center items-center lg:mr-5 ">
+                  <div className="ml-9">
           <TotalIncomeLightCard
             isLoading={isLoading}
             user={user}
             buttons={false}
-          />
-          <div className="w-full px-6 py-20 mx-5 mt-8 bg-white rounded-xl shadow-lg">
+          /></div>
+          <div className="w-full px-6 py-12 mx-5 mt-8 bg-white rounded-xl shadow-lg">
             {/* Header */}
             <div className="flex items-center justify-center mb-12">
               <Typography
@@ -121,7 +122,7 @@ const Transaction = ({ add }: any) => {
               <div className="relative w-2/3">
                 <input
                   type="number"
-                  value={credits}
+                //   value={credits}
                   onChange={(e) => setCredits(Number(e.target.value))}
                   placeholder="Enter number of credits"
                   className="w-full p-4 text-black bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-button-gpt focus:border-button-gpt transition duration-300 hover:shadow-lg"
@@ -132,10 +133,10 @@ const Transaction = ({ add }: any) => {
               </div>
               {!add && (
                 <>
-                  <label className="block mb-2 text-lg font-semibold text-gray-800 hover:text-button-gpt transition duration-300">
+                  <label className="block  mt-6 text-lg font-semibold text-gray-800 hover:text-button-gpt transition duration-300">
                     Profile Link:
                   </label>
-                  <div className="relative w-2/3 mt-4">
+                  <div className="relative w-2/3 mt-2">
                     <input
                       type="text"
                       value={profileLink}
@@ -152,7 +153,7 @@ const Transaction = ({ add }: any) => {
               <div className="mt-8 mb-10">
                 <Button
                   children={add ? "Add Credits" : "Send Credits"}
-                  className="justify-center font-bold text-white hover:bg-button-gpt-hover bg-button-gpt"
+                  className="p-5 justify-center font-bold text-white hover:bg-button-gpt-hover bg-button-gpt"
                   isLoading={isLoading}
                   variant="faded"
                   type="submit"

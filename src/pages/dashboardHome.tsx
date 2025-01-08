@@ -16,6 +16,14 @@ const DashboardHome = () => {
   const [isLoading, setLoading] = useState(true);
   const [selectedPeriod, setSelectedPeriod] = useState("monthly"); // To track selected period (monthly/yearly)
 
+
+
+
+  useEffect(() => {
+  // Preload any assets or data
+  import('@/pages/creditTransaction')
+}, [])
+
   useEffect(() => {
     setLoading(false);
   }, []);

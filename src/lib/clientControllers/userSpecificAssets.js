@@ -82,4 +82,35 @@ const fetchDocumentsForSpecificUser = async userId => {
 
 
 
-export {  fetchBillsForSpecificUser,fetchDocumentsForSpecificUser }
+
+
+// Fetch bills for a specific user
+const fetchCreditHistoryForSpecificUser = async userId => {
+  try {
+    // Convert user_id to a DocumentReference
+    // const userRef = doc(db, 'users', userId)
+
+    // Create a query to get bills where the user_id field matches the user reference
+    const billsQuery = query(
+      collection(db, 'creditHistory'),
+      where('userId', '==', userId)
+    )
+
+    // Execute the query to fetch bills
+    const querySnapshot = await getDocs(billsQuery)
+
+    // Create an array of bills from the querySnapshot
+    const bills = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }))
+
+    return bills // Return the array of bills
+  } catch (error) {
+    console.error('Error fetching bills:', error)
+    throw new Error('Error fetching bills')
+  }
+}
+
+
+export {  fetchBillsForSpecificUser,fetchDocumentsForSpecificUser,fetchCreditHistoryForSpecificUser }

@@ -2,7 +2,49 @@
 // import TableOne from "../components/TableOneForRewards";
 import ChartR from "../components/chartR";
 import TableCredits from "@/components/TableOneForCredits";
+import { useAuth } from "@/context/AuthContext";
+import { fetchCreditHistoryForSpecificUser } from "@/lib/clientControllers/userSpecificAssets";
+import { useState,useEffect } from "react";
 const RewardTracker = () => {
+
+
+    // const [data, setData] = useState(null);
+  // const [
+    // loading,
+  //   setLoading] = useState(true);
+  // const [
+  //   error,
+  //   setError] = useState<any>(null);
+
+  const [creditDocs, setCreditDocs] = useState<any>(null)
+
+const{user}=useAuth()
+  useEffect(() => {
+    // Fetch Firestore document
+    const fetchDocument = async () => {
+      // setLoading(true);
+      // setError(null);
+      try {
+        // const docRef = doc(db, collectionName, documentId);
+        const creditDocs = await fetchCreditHistoryForSpecificUser(user?.id);
+        setCreditDocs(creditDocs)
+      
+      } catch (err) {
+        console.error('Error fetching document:', err);
+        // setError(err.message);
+      } finally {
+        // setLoading(false);
+      }
+    };
+    fetchDocument();
+  }, [user]);
+
+
+  useEffect(() => {
+    console.log("zalimbadhsah",creditDocs)
+  },[creditDocs])
+
+
   return (
     <div className="w-full">
       {/* Chart Section */}
@@ -42,7 +84,7 @@ const RewardTracker = () => {
         </div>
         <div className="flex items-center justify-center mt-12 mb-10">
           <div className="w-full max-w-4xl p-4 border border-gray-200 rounded-lg shadow-lg">
-            <TableCredits />
+            {creditDocs?.length && <TableCredits creditDocs={creditDocs} />}
           </div>
         </div>
       </div>

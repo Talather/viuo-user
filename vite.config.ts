@@ -5,6 +5,8 @@ import TsconfigPathsPlugin from 'vite-plugin-tsconfig-paths';
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
+
+  
   plugins: [react(), TsconfigPathsPlugin(),
     viteStaticCopy({
       targets: [
