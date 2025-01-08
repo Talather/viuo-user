@@ -35,7 +35,7 @@ const ContactForm = () => {
     defaultValues: {
       email: user?.email || "",
       message: "",
-      name: user?.name || "",
+      name: user?.firstName || "",
       subject: "",
       agreeToPromotionalMessages: true,
       phoneNumber: "",

@@ -1,5 +1,5 @@
 export interface User {
-  phoneNo: string;
+  phoneNo?: string;
   id: string;
   firstName: string;
   lastName: string;
@@ -8,11 +8,11 @@ export interface User {
   role: "admin" | "user";
   dob: string;
   address: string;
-  totalDocuments: number;
-  availableCredits: number;
-  profileLink: number;
-  referralCode: number;
-  redeemedReferralCode: boolean;
+  totalDocuments?: number;
+  availableCredits?: number;
+  profileLink?: number;
+  referralCode?: number;
+  redeemedReferralCode?: boolean;
 }
 
 export interface AuthState {

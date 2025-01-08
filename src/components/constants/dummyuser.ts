@@ -2,7 +2,8 @@ import { User } from "../../types";
 
 export const dummyUser: User = {
   id: "djjadjawkdawdawd",
-  name: "MrWick",
+  firstName: "Mr",
+  lastName: "Wick",
   email: "test@test.com",
   role: "user",
   avatar:
