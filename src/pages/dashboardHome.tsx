@@ -16,13 +16,10 @@ const DashboardHome = () => {
   const [isLoading, setLoading] = useState(true);
   const [selectedPeriod, setSelectedPeriod] = useState("monthly"); // To track selected period (monthly/yearly)
 
-
-
-
   useEffect(() => {
-  // Preload any assets or data
-  import('@/pages/creditTransaction')
-}, [])
+    // Preload any assets or data
+    import("@/pages/creditTransaction");
+  }, []);
 
   useEffect(() => {
     setLoading(false);
@@ -46,7 +43,11 @@ const DashboardHome = () => {
           <TotalIncomeDarkCard isLoading={isLoading} />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
-          <TotalIncomeLightCard isLoading={isLoading} user={user} />
+          <TotalIncomeLightCard
+            isLoading={isLoading}
+            user={user}
+            buttons={true}
+          />
         </Grid>
       </Grid>
 
