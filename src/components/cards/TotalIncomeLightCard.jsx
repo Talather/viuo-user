@@ -93,7 +93,7 @@ const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
                     <div>
                       <Typography variant="h4">
                         {user?.availableCredits?.toString().includes(".")
-                          ? user.availableCredits
+                          ? user.availableCredits.toFixed(2)
                           : `${user?.availableCredits}.00`}
                       </Typography>
                       <Typography
