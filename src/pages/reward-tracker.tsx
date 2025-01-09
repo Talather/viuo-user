@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import ChartThree from "../components/ChartThree";
 // import TableOne from "../components/TableOneForRewards";
 import ChartR from "../components/chartR";
