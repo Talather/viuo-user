@@ -98,7 +98,7 @@ const Transaction = ({ add }: any) => {
       "pk_test_51L42JBBjhuRU5cGW2oXLq1IubYuai5huuBi0eMrODKEwvZDSe7KgTMWStEAxOVIcj9nPxWiaOvHEm7pEqhoa8vB400KVHlGKBY"
     );
 
-    if (!stripe) {
+    if (!stripe || !user) {
       return;
     }
     const apiUrl = "https://createcheckoutsession-5risxnudva-uc.a.run.app ";
@@ -108,11 +108,10 @@ const Transaction = ({ add }: any) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        sessionType: "addCredit",
         credits: credits,
-        userId: user?.id,
-        successUrl: `${window.location.origin}/credit-tracker`,
-        cancelUrl: `${window.location.origin}/credit-tracker`,
+        userId: user.id,
+        success_url: `${window.location.origin}/credit-tracker`,
+        cancel_url: `${window.location.origin}/credit-tracker`,
       }),
     });
 
