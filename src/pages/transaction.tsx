@@ -92,8 +92,8 @@ const Transaction = () => {
         subtotal: subtotal,
         savings: discount,
         total: total,
-        successUrl: `${window.location.origin}/bills`,
-        cancelUrl: `${window.location.origin}/bills`,
+        successUrl: `${window.location.origin}/dashboard`,
+        cancelUrl: `${window.location.origin}/dashboard`,
       }),
     });
 
@@ -258,7 +258,7 @@ const OrderSummary: React.FC<any> = ({
   percentageApplied,
   makePayment,
 }) => {
-  console.log(visibleItems);
+  // console.log(visibleItems);
   // Convert unifiedDueDate to a DateTime object for comparison
   const dueDate = unifiedDueDate ? DateTime.fromISO(unifiedDueDate) : null;
   const today = DateTime.now();
