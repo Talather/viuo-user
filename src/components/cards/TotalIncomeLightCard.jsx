@@ -157,6 +157,8 @@ const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
 
 TotalIncomeLightCard.propTypes = {
   isLoading: PropTypes.bool,
+  user: PropTypes.object,
+  buttons: PropTypes.boolean,
 };
 
 export default TotalIncomeLightCard;
