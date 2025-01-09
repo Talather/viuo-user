@@ -108,6 +108,7 @@ const Transaction = ({ add }: any) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        sessionType: "addCredit",
         credits: credits,
         userId: user?.id,
         successUrl: `${window.location.origin}/credit-tracker`,

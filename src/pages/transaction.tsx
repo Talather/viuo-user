@@ -86,6 +86,7 @@ const Transaction = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        sessionType: "billsPayment",
         creditApplied: creditApplied,
         userId: user?.id,
         visibleItems: visibleItems,
