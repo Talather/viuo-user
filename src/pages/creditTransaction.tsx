@@ -110,8 +110,8 @@ const Transaction = ({ add }: any) => {
       body: JSON.stringify({
         credits: credits,
         userId: user?.id,
-        success_url: "http://localhost:5173/dashboard",
-        cancel_url: "http://localhost:5173/dashboard",
+        successUrl: `${window.location.origin}/credit-tracker`,
+        cancelUrl: `${window.location.origin}/credit-tracker`,
       }),
     });
 

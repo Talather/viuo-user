@@ -1,87 +1,146 @@
-import { useState, useEffect } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect, useMemo } from "react";
 import {
   Typography,
   Button as MuiButton,
   Modal,
   TextField,
-  Fade
-} from '@mui/material'
-import { useBillPaymentContext } from '@/context/paymentBillsContext'
-import { useAuth } from '@/context/AuthContext'
+  Fade,
+} from "@mui/material";
+import { useBillPaymentContext } from "@/context/paymentBillsContext";
+import { useAuth } from "@/context/AuthContext";
+import { DateTime } from "luxon";
+import { useToast } from "@/hooks/use-toast";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Transaction = () => {
-  const { user }: any = useAuth()
+  const { toast } = useToast();
+  const { user }: any = useAuth();
   const { selectedBills, removeBill, clearBills, calculateTotalBills } =
-    useBillPaymentContext()
-  const [visibleItems, setVisibleItems] = useState<any[]>([])
-  const [isModalOpen, setIsModalOpen] = useState(false)
+    useBillPaymentContext();
+  const [visibleItems, setVisibleItems] = useState<any[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [availableCredits, setAvailableCredits] = useState(
     user?.availableCredits || 0
-  )
-  const [creditInput, setCreditInput] = useState(0)
-
-  let subtotal = calculateTotalBills()
-  let discount = creditInput >= 0 ? creditInput : 0
-  let total = subtotal - discount
+  );
+  console.log(setAvailableCredits);
+  const [creditInput, setCreditInput] = useState(0);
+  const [creditApplied, setCreditApplied] = useState(0);
 
   useEffect(() => {
-    setVisibleItems(selectedBills)
-  }, [selectedBills])
+    setVisibleItems(selectedBills);
+  }, [selectedBills]);
+  const savingsForBill = useMemo(() => {
+    if (visibleItems.length > 0) {
+      return calculateSavingsForBills(user, visibleItems);
+    } else {
+      return {
+        totalSavings: 0,
+        unifiedDueDate: "",
+        percentageApplied: 0,
+      };
+    }
+  }, [user, visibleItems]);
+  const subtotal = calculateTotalBills();
+  const discount = savingsForBill.totalSavings;
+  const total = useMemo(() => {
+    return subtotal - discount - creditApplied;
+  }, [subtotal, discount, creditApplied]);
 
-  const handleOpenModal = () => setIsModalOpen(true)
-  const handleCloseModal = () => setIsModalOpen(false)
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   const handleApplyCredits = () => {
     if (creditInput > availableCredits) {
-      alert('You cannot apply more credits than available!')
+      toast({
+        title: "Warning",
+        description: "You cannot apply more credits than available!",
+      });
     } else if (creditInput > subtotal) {
-      alert('Credits cannot exceed the subtotal!')
+      toast({
+        title: "Warning",
+        description: "Credits cannot exceed the subtotal!",
+      });
     } else {
-      setAvailableCredits(availableCredits - creditInput)
-      handleCloseModal()
+      setCreditApplied(creditInput);
+      // setAvailableCredits(availableCredits - creditInput);
+      handleCloseModal();
     }
-  }
+  };
 
   const handleCreditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCreditInput(Number(e.target.value))
-  }
+    setCreditInput(Number(e.target.value));
+  };
+
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51L42JBBjhuRU5cGW2oXLq1IubYuai5huuBi0eMrODKEwvZDSe7KgTMWStEAxOVIcj9nPxWiaOvHEm7pEqhoa8vB400KVHlGKBY"
+    );
+    if (!stripe) {
+      return;
+    }
+    const apiUrl = "https://createbillscheckoutsession-5risxnudva-uc.a.run.app";
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        creditApplied: creditApplied,
+        userId: user?.id,
+        visibleItems: visibleItems,
+        subtotal: subtotal,
+        savings: discount,
+        total: total,
+        successUrl: `${window.location.origin}/bills`,
+        cancelUrl: `${window.location.origin}/bills`,
+      }),
+    });
+
+    const session = await response.json();
+    console.log(session);
+    const result = stripe.redirectToCheckout({ sessionId: session.sessionId });
+    if (result) {
+      console.log(result);
+    }
+  };
 
   return (
-    <div className='flex flex-col w-full h-full pb-20 border pt-7 bg-gray-50 lg:h-full lg:flex-row lg:justify-between animate-fadeIn'>
+    <div className="flex flex-col w-full h-full pb-20 border pt-7 bg-gray-50 lg:h-full lg:flex-row lg:justify-between animate-fadeIn">
       {/* Transaction Section */}
-      <div className='w-full px-5 lg:px-8'>
-        <div className='flex justify-center mb-10'>
+      <div className="w-full px-5 lg:px-8">
+        <div className="flex justify-center mb-10">
           <button
             onClick={handleOpenModal}
-            className='px-6 py-4 text-lg font-semibold text-white transition-transform transform rounded-lg shadow-lg bg-button-gpt hover:bg-button-gpt-dark hover:scale-105'
+            className="px-6 py-4 text-lg font-semibold text-white transition-transform transform rounded-lg shadow-lg bg-button-gpt hover:bg-button-gpt-dark hover:scale-105"
           >
             Utilize Credit for Discount
           </button>
         </div>
 
-        <div className='flex flex-col lg:flex-row lg:space-x-6'>
-          <div className='w-full p-6 bg-white rounded-lg shadow-lg'>
+        <div className="flex flex-col lg:flex-row lg:space-x-6">
+          <div className="w-full p-6 bg-white rounded-lg shadow-lg">
             {/* Header */}
-            <div className='flex items-center justify-between mb-6'>
-              <Typography variant='h4' className='text-xl sm:text-2xl'>
+            <div className="flex items-center justify-between mb-6">
+              <Typography variant="h4" className="text-xl sm:text-2xl">
                 Bills
               </Typography>
-              <MuiButton variant='outlined' color='error' onClick={clearBills}>
+              <MuiButton variant="outlined" color="error" onClick={clearBills}>
                 Remove All
               </MuiButton>
             </div>
 
             {/* Scrollable List of Bills */}
-            <div className='w-full space-y-4 overflow-y-auto h-80 custom-scrollbar'>
-              {visibleItems.map(bill => (
+            <div className="w-full space-y-4 overflow-y-auto h-80 custom-scrollbar">
+              {visibleItems.map((bill) => (
                 <CartItem
                   key={bill.id}
                   productName={bill.name}
                   productPrice={bill.amount}
                   productStatus={bill.status}
-                  onRemove={() => { removeBill(bill.id) }
-                
-                }
+                  onRemove={() => {
+                    removeBill(bill.id);
+                  }}
                   selected={false}
                   onClick={() =>
                     console.log(`Item with ID ${bill.id} clicked.`)
@@ -91,11 +150,16 @@ const Transaction = () => {
             </div>
           </div>
 
-          <div className='w-full mt-8 lg:mt-0'>
+          <div className="w-full mt-8 lg:mt-0">
             <OrderSummary
+              visibleItems={visibleItems}
               subtotal={subtotal}
               discount={discount}
               total={total}
+              creditApplied={creditApplied}
+              unifiedDueDate={savingsForBill.unifiedDueDate}
+              percentageApplied={savingsForBill.percentageApplied}
+              makePayment={makePayment}
             />
           </div>
         </div>
@@ -106,37 +170,37 @@ const Transaction = () => {
         open={isModalOpen}
         onClose={handleCloseModal}
         closeAfterTransition
-        className='flex items-center justify-center ml-48'
+        className="flex items-center justify-center ml-48"
       >
         <Fade in={isModalOpen}>
-          <div className='p-6 bg-white rounded-lg shadow-xl w-96'>
-            <h2 className='mb-4 text-2xl font-bold text-center text-gray-800'>
+          <div className="p-6 bg-white rounded-lg shadow-xl w-96">
+            <h2 className="mb-4 text-2xl font-bold text-center text-gray-800">
               Utilize Credit
             </h2>
-            <p className='mb-4 text-lg text-center text-gray-600'>
-              Available Credits:{' '}
-              <span className='font-semibold'>{availableCredits}</span>
+            <p className="mb-4 text-lg text-center text-gray-600">
+              Available Credits:{" "}
+              <span className="font-semibold">{availableCredits}</span>
             </p>
             <TextField
-              type='number'
-              label='Enter Credit Amount'
+              type="number"
+              label="Enter Credit Amount"
               // value={creditInput}
               onChange={handleCreditChange}
               fullWidth
-              variant='outlined'
+              variant="outlined"
             />
-            <div className='flex justify-end mt-6'>
+            <div className="flex justify-end mt-6">
               <MuiButton
-                variant='outlined'
+                variant="outlined"
                 onClick={handleCloseModal}
-                sx={{ color: '#10a37f', borderColor: '#10a37f' }}
+                sx={{ color: "#10a37f", borderColor: "#10a37f" }}
               >
                 Cancel
               </MuiButton>
               <MuiButton
-                variant='contained'
+                variant="contained"
                 onClick={handleApplyCredits}
-                sx={{ marginLeft: '10px', backgroundColor: '#10a37f' }}
+                sx={{ marginLeft: "10px", backgroundColor: "#10a37f" }}
               >
                 Apply Credits
               </MuiButton>
@@ -145,11 +209,10 @@ const Transaction = () => {
         </Fade>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default Transaction
-
+export default Transaction;
 // CartItem Component
 const CartItem: React.FC<any> = ({
   productName,
@@ -157,25 +220,25 @@ const CartItem: React.FC<any> = ({
   productStatus,
   onRemove,
   selected,
-  onClick
+  onClick,
 }) => (
   <div
     className={`w-full rounded-lg shadow-xl overflow-hidden bg-gray-50 text-lg ${
-      selected ? 'border-4 border-blue-500' : ''
+      selected ? "border-4 border-blue-500" : ""
     }`}
     onClick={onClick}
   >
-    <div className='flex p-4'>
-      <div className='w-full pl-4'>
-        <h3 className='text-2xl font-semibold text-gray-900'>{productName}</h3>
-        <p className='mt-2 text-gray-600'>{productStatus}</p>
-        <div className='flex justify-between mt-6'>
-          <span className='text-2xl font-bold text-button-gpt'>
+    <div className="flex p-4">
+      <div className="w-full pl-4">
+        <h3 className="text-2xl font-semibold text-gray-900">{productName}</h3>
+        <p className="mt-2 text-gray-600">{productStatus}</p>
+        <div className="flex justify-between mt-6">
+          <span className="text-2xl font-bold text-button-gpt">
             ${productPrice}
           </span>
           <button
             onClick={onRemove}
-            className='px-3 py-1 mr-3 text-white rounded-md bg-button-gpt hover:bg-red-600'
+            className="px-3 py-1 mr-3 text-white rounded-md bg-button-gpt hover:bg-red-600"
           >
             Remove
           </button>
@@ -183,54 +246,169 @@ const CartItem: React.FC<any> = ({
       </div>
     </div>
   </div>
-)
+);
 
-// // OrderSummary Component
-// const OrderSummary: React.FC<any> = ({
-//   subtotal,
-//   discount,
-//   total
-// }) => (
-//   <div className='w-full px-4 py-2 ml-5 bg-white rounded-lg shadow-md h-fit'>
-//     <h2 className='mb-4 text-2xl font-semibold text-gray-800'>Order Summary</h2>
-//     <div className='flex items-center justify-between py-2 border-b border-gray-300'>
-//       <span className='text-lg text-gray-700'>Subtotal</span>
-//       <span className='text-lg text-gray-800'>${subtotal}</span>
-//     </div>
-//     <div className='flex items-center justify-between py-2 border-b border-gray-300'>
-//       <span className='text-lg text-gray-700'>Discount</span>
-//       <span className='text-lg text-green-500'>- ${discount.toFixed(2)}</span>
-//     </div>
-//     <div className='flex items-center justify-between py-2 text-lg font-semibold'>
-//       <span className='text-gray-800'>Total</span>
-//       <span className='text-xl text-blue-600'>${total.toFixed(2)}</span>
-//     </div>
-//   </div>
-// )
+const OrderSummary: React.FC<any> = ({
+  visibleItems,
+  subtotal,
+  discount,
+  total,
+  creditApplied,
+  unifiedDueDate,
+  percentageApplied,
+  makePayment,
+}) => {
+  console.log(visibleItems);
+  // Convert unifiedDueDate to a DateTime object for comparison
+  const dueDate = unifiedDueDate ? DateTime.fromISO(unifiedDueDate) : null;
+  const today = DateTime.now();
 
+  // Determine error messages
+  const errors: string[] = [];
+  if (visibleItems.length >= 2 && total < 100) {
+    errors.push(
+      "Total must be at least $100 when there are two or more items."
+    );
+  }
+  if (dueDate && today > dueDate) {
+    errors.push("The payment is past the due date.");
+  }
 
-
-const OrderSummary: React.FC<any> = ({ subtotal, discount, total }) => (
-  <div className='flex flex-col justify-between w-full ml-5 bg-white rounded-lg shadow-md px-9 py-9 h-fit'>
-    <div>
-      <h2 className='mb-4 text-2xl font-semibold text-gray-800'>
-        Order Summary
-      </h2>
-      <div className='flex items-center justify-between py-2 border-b border-gray-300'>
-        <span className='text-lg text-gray-700'>Subtotal</span>
-        <span className='text-lg text-gray-800'>${subtotal}</span>
+  return (
+    <div className="flex flex-col justify-between w-full ml-5 bg-white rounded-lg shadow-md px-9 py-9 h-fit">
+      <div>
+        <h2 className="mb-4 text-2xl font-semibold text-gray-800">
+          Order Summary
+        </h2>
+        <div className="flex items-center justify-between py-2 border-b border-gray-300">
+          <span className="text-lg text-gray-700">Subtotal</span>
+          <span className="text-lg text-gray-800">${subtotal}</span>
+        </div>
+        {unifiedDueDate && (
+          <div className="flex items-center justify-between py-2 border-b border-gray-300">
+            <span className="text-lg text-gray-700">Due Date</span>
+            <span className="text-lg text-gray-800">{unifiedDueDate}</span>
+          </div>
+        )}
+        {percentageApplied !== 0 && (
+          <div className="flex items-center justify-between py-2 border-b border-gray-300">
+            <span className="text-lg text-gray-700">Savings Applied</span>
+            <span className="text-lg text-gray-800">{percentageApplied}%</span>
+          </div>
+        )}
+        <div className="flex items-center justify-between py-2 border-b border-gray-300">
+          <span className="text-lg text-gray-700">Discount</span>
+          <span className="text-lg text-green-500">
+            - ${discount.toFixed(2)}
+          </span>
+        </div>
+        {creditApplied > 0 && (
+          <div className="flex items-center justify-between py-2 border-b border-gray-300">
+            <span className="text-lg text-gray-700">Credit </span>
+            <span className="text-lg text-green-500">
+              - ${creditApplied.toFixed(2)}
+            </span>
+          </div>
+        )}
+        <div className="flex items-center justify-between py-2 text-lg font-semibold">
+          <span className="text-gray-800">Total</span>
+          <span className="text-xl text-blue-600">${total.toFixed(2)}</span>
+        </div>
       </div>
-      <div className='flex items-center justify-between py-2 border-b border-gray-300'>
-        <span className='text-lg text-gray-700'>Discount</span>
-        <span className='text-lg text-green-500'>- ${discount.toFixed(2)}</span>
-      </div>
-      <div className='flex items-center justify-between py-2 text-lg font-semibold'>
-        <span className='text-gray-800'>Total</span>
-        <span className='text-xl text-blue-600'>${total.toFixed(2)}</span>
-      </div>
+      <button
+        className="px-10 py-3 text-lg font-semibold text-white transition-transform transform rounded-lg shadow-md mt-6 bg-button-gpt hover:bg-button-gpt-dark hover:scale-105"
+        disabled={errors.length > 0 ? true : false}
+        onClick={makePayment}
+      >
+        Pay Now
+      </button>
+      {errors.length > 0 && (
+        <div className="mt-4 text-red-600">
+          {errors.map((error, index) => (
+            <p key={index}>{error}</p>
+          ))}
+        </div>
+      )}
     </div>
-    <button className='px-10 py-3 text-lg font-semibold text-white transition-transform transform rounded-lg shadow-md mt-28 bg-button-gpt hover:bg-button-gpt-dark hover:scale-105'>
-      Pay Now
-    </button>
-  </div>
-)
+  );
+};
+
+interface Bill {
+  accountNumber: string;
+  amount: string; // Amount is now a string, so we need to convert it to number
+  created_at: string; // Timestamp, not needed for calculations
+  dueDate: string; // Due date in string format
+  name: string;
+  updated_at: string; // Timestamp, not needed for calculations
+  user_id: string;
+}
+
+const calculateSavingsForBills = (
+  user: any, // User information, including timezone
+  bills: Bill[] // Array of bill objects
+): {
+  totalSavings: number;
+  unifiedDueDate: string | null;
+  percentageApplied: number;
+} => {
+  // Helper function to determine savings percentage based on days paid early
+  const calculateSavingsPercentage = (
+    dueDate: DateTime,
+    paymentDate: DateTime
+  ): number => {
+    const daysEarly = Math.floor(dueDate.diff(paymentDate, "days").days);
+
+    if (daysEarly >= 15) return 15;
+    if (daysEarly >= 8) return 10;
+    if (daysEarly >= 4) return 5;
+    if (daysEarly >= 1) return 2;
+    return 0;
+  };
+
+  if (bills.length === 0) {
+    return { totalSavings: 0, unifiedDueDate: null, percentageApplied: 0 };
+  }
+
+  const today = DateTime.now().setZone(user.timeZone);
+  let totalSavings = 0;
+  let percentageApplied = 0;
+
+  // When there is one bill
+  if (bills.length === 1) {
+    const bill = bills[0];
+    const dueDate = DateTime.fromISO(bill.dueDate, { zone: user.timeZone });
+
+    if (!dueDate.isValid) {
+      console.error("Invalid due date:", bill);
+      return { totalSavings: 0, unifiedDueDate: null, percentageApplied: 0 };
+    }
+
+    const amount = parseFloat(bill.amount);
+    percentageApplied = calculateSavingsPercentage(dueDate, today);
+    totalSavings = (amount * percentageApplied) / 100;
+
+    return {
+      totalSavings,
+      unifiedDueDate: dueDate.toISODate(),
+      percentageApplied,
+    };
+  }
+
+  // When there are multiple bills
+  const totalAmount = bills.reduce(
+    (totalAmount, bill) => totalAmount + parseFloat(bill.amount),
+    0
+  );
+
+  totalSavings = totalAmount * 0.25;
+  percentageApplied = 25;
+
+  // Calculate unified due date as the latest due date among the bills
+  const unifiedDueDate = bills
+    .map((bill) => DateTime.fromISO(bill.dueDate, { zone: user.timeZone }))
+    .filter((dueDate) => dueDate.isValid)
+    .sort((a, b) => a.valueOf() - b.valueOf())[0] // Get the earliest valid due date
+    ?.toISODate();
+
+  return { totalSavings, unifiedDueDate, percentageApplied };
+};
