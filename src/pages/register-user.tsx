@@ -13,6 +13,7 @@ import { useToast } from "../hooks/use-toast";
 // import { dummyUser } from "../components/constants/dummyuser";
 import { Form, FormControl, FormField, FormItem } from "../components/ui/form";
 import { Checkbox, Image } from "@nextui-org/react";
+import CurrencyFormat from "react-currency-format";
 
 // import emailjs from "@emailjs/browser";
 
@@ -43,9 +44,10 @@ const RegisterUser = () => {
     control,
     handleSubmit,
     register,
+    watch,
     formState: { errors },
   } = form;
-
+  console.log(watch("phoneNumber"));
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const onSubmit = async (values: RegisterUserFormData) => {
@@ -216,17 +218,18 @@ const RegisterUser = () => {
                   {/* <FormLabel className="">Email</FormLabel> */}
                   <div className="w-full">
                     <FormControl>
-                      <Input
+                      <CurrencyFormat
+                        customInput={Input}
                         variant="bordered"
                         size="md"
-                        type="number"
                         label="Phone number"
                         errorMessage={errors.phoneNumber?.message}
                         isInvalid={!!errors.phoneNumber?.message}
-                        {...field}
+                        format="+1 (###) ###-####"
+                        // mask="_"
+                        {...(field as any)}
                       />
                     </FormControl>
-                    {/* <FormMessage className="mt-1.5 absolute text-xs" /> */}
                   </div>
                 </FormItem>
               )}

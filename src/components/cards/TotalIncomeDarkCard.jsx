@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 // material-ui
 import { useTheme, styled } from "@mui/material/styles";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
-
+import CurrencyFormat from "react-currency-format";
 // third-party
 import Chart from "react-apexcharts";
 
@@ -12,8 +12,8 @@ import Chart from "react-apexcharts";
 import MainCard from "./mainCard";
 import SkeletonTotalOrderCard from "./earningCard/skeletonEarningCard";
 
-import ChartDataMonth from "./chart-data/total-order-month-line-chart";
-import ChartDataYear from "./chart-data/total-order-year-line-chart";
+// import ChartDataMonth from "./chart-data/total-order-month-line-chart";
+// import ChartDataYear from "./chart-data/total-order-year-line-chart";
 
 // assets
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
@@ -63,13 +63,114 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 // ==============================|| DASHBOARD - TOTAL ORDER LINE CHART CARD ||============================== //
 
-const TotalOrderLineChartCard = ({ isLoading }) => {
+const TotalOrderLineChartCard = ({ isLoading, stats }) => {
   const theme = useTheme();
 
-  const [timeValue, setTimeValue] = useState(false);
+  const [timeValue, setTimeValue] = useState(true);
   const handleChangeTime = (event, newValue) => {
     setTimeValue(newValue);
   };
+  const chartDataMonth = useMemo(() => {
+    return {
+      type: "line",
+      height: 90,
+      options: {
+        chart: {
+          sparkline: {
+            enabled: true,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        colors: ["#fff"],
+        fill: {
+          type: "solid",
+          opacity: 1,
+        },
+        stroke: {
+          curve: "smooth",
+          width: 3,
+        },
+        yaxis: {
+          min: 0,
+          max: 100,
+        },
+
+        tooltip: {
+          theme: "dark",
+          fixed: {
+            enabled: false,
+          },
+          x: {
+            show: false,
+          },
+          y: {
+            title: "Total Order",
+          },
+          marker: {
+            show: false,
+          },
+        },
+      },
+      series: [
+        {
+          name: "Payment",
+          data: stats?.billPaymentsHistory,
+        },
+      ],
+    };
+  }, [stats]);
+  const chartDataYear = useMemo(() => {
+    return {
+      type: "line",
+      height: 90,
+      options: {
+        chart: {
+          sparkline: {
+            enabled: true,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        colors: ["#fff"],
+        fill: {
+          type: "solid",
+          opacity: 1,
+        },
+        stroke: {
+          curve: "smooth",
+          width: 3,
+        },
+        yaxis: {
+          min: 0,
+          max: 100,
+        },
+        tooltip: {
+          theme: "dark",
+          fixed: {
+            enabled: false,
+          },
+          x: {
+            show: false,
+          },
+          y: {
+            title: "Total Order",
+          },
+          marker: {
+            show: false,
+          },
+        },
+      },
+      series: [
+        {
+          name: "Payment",
+          data: stats?.yearlyBillPayments,
+        },
+      ],
+    };
+  }, [stats]);
 
   return (
     <>
@@ -139,7 +240,25 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                               mb: 0.75,
                             }}
                           >
-                            $700.00
+                            <CurrencyFormat
+                              value={`${
+                                stats?.totalBillPaymentsThisMonth
+                                  ?.toString()
+                                  .includes(".")
+                                  ? stats.totalBillPaymentsThisMonth.toLocaleString(
+                                      undefined,
+                                      {
+                                        maximumFractionDigits: 2,
+                                      }
+                                    )
+                                  : stats?.totalBillPaymentsThisMonth
+                                  ? `${stats?.totalBillPaymentsThisMonth}.00`
+                                  : `${0}.00`
+                              }`}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix={"$"}
+                            />
                           </Typography>
                         ) : (
                           <Typography
@@ -151,29 +270,29 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                               mb: 0.75,
                             }}
                           >
-                            $3500.00
+                            <CurrencyFormat
+                              value={`${
+                                stats?.totalBillPaymentsThisYear
+                                  ?.toString()
+                                  .includes(".")
+                                  ? stats.totalBillPaymentsThisYear.toLocaleString(
+                                      undefined,
+                                      {
+                                        maximumFractionDigits: 2,
+                                      }
+                                    )
+                                  : stats?.totalBillPaymentsThisYear
+                                  ? `${stats?.totalBillPaymentsThisYear}.00`
+                                  : `${0}.00`
+                              }`}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix={"$"}
+                            />
                           </Typography>
                         )}
                       </Grid>
-                      {/* <Grid item> */}
-                      {/* <Avatar
-                          sx={{
-                            ...theme.typography.smallAvatar,
-                            cursor: "pointer",
-                            backgroundColor: "black",
-                            //   theme.palette.primary[200],
-                            color: theme.palette.primary.dark,
-                          }}
-                        >
-                          <ArrowDownwardIcon
-                            fontSize="inherit"
-                            sx={{
-                              transform: "rotate3d(1, 1, 1, 45deg)",
-                              color: "white",
-                            }}
-                          />
-                        </Avatar> */}
-                      {/* </Grid> */}
+
                       <Grid item xs={12}>
                         <Typography
                           sx={{
@@ -189,9 +308,9 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                   </Grid>
                   <Grid item xs={6}>
                     {timeValue ? (
-                      <Chart {...ChartDataMonth} />
+                      <Chart {...chartDataMonth} />
                     ) : (
-                      <Chart {...ChartDataYear} />
+                      <Chart {...chartDataYear} />
                     )}
                   </Grid>
                 </Grid>
@@ -206,6 +325,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
 
 TotalOrderLineChartCard.propTypes = {
   isLoading: PropTypes.bool,
+  stats: PropTypes.object,
 };
 
 export default TotalOrderLineChartCard;

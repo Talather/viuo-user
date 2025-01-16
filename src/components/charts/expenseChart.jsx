@@ -1,194 +1,80 @@
-// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-// import { Pie } from "react-chartjs-2";
-// // import "chart.piecelabel.js"
+import React, { useMemo } from "react";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import { Pie } from "react-chartjs-2";
 
-// ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
-// const data = {
-//   labels: ["Gas", "Electricity", "Internet", "Others"],
-//   datasets: [
-//     {
-//       label: "% of Payments",
-//       data: [30, 15, 35, 20],
-//       backgroundColor: ["#FA00FF", "#1814F3", "#FC7900", "#343C6A"],
-//       borderColor: "white",
-//       borderWidth: 12,
-//     },
-//   ],
-// };
-
-// const options = {
-//   plugins: {
-//     title: {
-//       display: true,
-//     },
-//     legend: {
-//       display: true,
-//     },
-//     tooltip: {
-//       enabled: false,
-//     },
-//     pieceLabel: {
-//       // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
-//       render: "label",
-
-//       // precision for percentage, default is 0
-//       precision: 0,
-
-//       // identifies whether or not labels of value 0 are displayed, default is false
-//       showZero: true,
-
-//       // font size, default is defaultFontSize
-//       fontSize: 12,
-
-//       // font color, can be color array for each data or function for dynamic color, default is defaultFontColor
-//       fontColor: "#fff",
-
-//       // font style, default is defaultFontStyle
-//       fontStyle: "normal",
-
-//       // font family, default is defaultFontFamily
-//       fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-
-//       // draw text shadows under labels, default is false
-//       textShadow: true,
-
-//       // text shadow intensity, default is 6
-//       shadowBlur: 10,
-
-//       // text shadow X offset, default is 3
-//       shadowOffsetX: -5,
-
-//       // text shadow Y offset, default is 3
-//       shadowOffsetY: 5,
-
-//       // text shadow color, default is 'rgba(0,0,0,0.3)'
-//       shadowColor: "rgba(255,0,0,0.75)",
-
-//       // draw label in arc, default is false
-//       arc: true,
-
-//       // position to draw label, available value is 'default', 'border' and 'outside'
-//       // default is 'default'
-//       position: "default",
-
-//       // draw label even it's overlap, default is false
-//       overlap: true,
-
-//       // show the real calculated percentages from the values and don't apply the additional logic to fit the percentages to 100 in total, default is false
-//       showActualPercentages: true,
-
-//       // add padding when position is `outside`
-//       // default is 2
-//       outsidePadding: 4,
-
-//       // add margin of text when position is `outside` or `border`
-//       // default is 2
-//       textMargin: 4,
-//     },
-//     // labels: [
-//     //   {
-//     //     render: "label",
-//     //     fontColor: "#fff",
-//     //     position: "outside",
-//     //   },
-//     //   {
-//     //     render: "percentage",
-//     //     precision: 2,
-//     //   },
-//     // ],
-//   },
-// };
-
-// function ExpenseChart() {
-//   return <Pie data={data} options={options} />;
-// }
-
-// export default ExpenseChart;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-import ChartDataLabels from 'chartjs-plugin-datalabels' // Import the plugin
-import { Pie } from 'react-chartjs-2'
-
-ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels) // Register the plugin
-
-const data = {
-  labels: ['Gas', 'Electricity', 'Internet', 'Others'],
+const defaultData = {
+  labels: ["Gas", "Electricity", "Internet", "Others"],
   datasets: [
     {
-      label: '% of Payments',
+      label: "% of Payments",
       data: [30, 15, 35, 20],
-      backgroundColor: ['#FA00FF', '#1814F3', '#FC7900', '#343C6A'],
-      borderColor: 'white',
-      borderWidth: 12
-    }
-  ]
-}
+      backgroundColor: ["#FA00FF", "#1814F3", "#FC7900", "#343C6A"],
+      borderColor: "white",
+      borderWidth: 12,
+    },
+  ],
+};
 
 const options = {
   plugins: {
     datalabels: {
       formatter: (value, context) => {
-        // Calculate and show the percentage
-        const total = context.dataset.data.reduce((sum, val) => sum + val, 0)
-        const percentage = ((value / total) * 100).toFixed(1) + '%'
-        return percentage
+        const total = context.dataset.data.reduce(
+          (sum, val) => sum + Number(val),
+          0
+        );
+        const percentage = ((value / total) * 100).toFixed(1) + "%";
+        return percentage;
       },
-      color: '#fff', // Set the color of the percentage
+      color: "#fff",
       font: {
         size: 14,
-        weight: 'bold'
-      }
+        weight: "bold",
+      },
     },
     legend: {
-      display: true
+      display: true,
+      position: "top",
     },
     tooltip: {
-      enabled: true // Enable tooltips if needed
+      enabled: true,
+    },
+  },
+};
+
+function ExpenseChart({ stats, period }) {
+  const chartData = useMemo(() => {
+    if (stats?.billsBreakdown) {
+      let breakdownData;
+      // Choose the data based on the period
+      if (period === "month") {
+        breakdownData = stats.billsBreakdown.month;
+      } else if (period === "year") {
+        breakdownData = stats.billsBreakdown.year;
+      }
+
+      if (breakdownData?.labels?.length > 0) {
+        return {
+          labels: breakdownData.labels,
+          datasets: [
+            {
+              label: `% of Payments (${period.value})`,
+              data: breakdownData.data,
+              backgroundColor: ["#FA00FF", "#1814F3", "#FC7900", "#343C6A"],
+              borderColor: "white",
+              borderWidth: 12,
+            },
+          ],
+        };
+      }
     }
-  }
+    return defaultData;
+  }, [stats, period]);
+
+  return <Pie data={chartData} options={options} />;
 }
 
-function ExpenseChart () {
-  return <Pie data={data} options={options} />
-}
-
-export default ExpenseChart
+export default ExpenseChart;

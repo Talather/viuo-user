@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -6,9 +8,9 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-import {faker} from '@faker-js/faker'
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { faker } from "@faker-js/faker";
 
 ChartJS.register(
   CategoryScale,
@@ -20,31 +22,14 @@ ChartJS.register(
 );
 
 const options = {
-  
-
-
-
-  // scales: {
-  //   x: {
-  //     barPercentage: 0.5, // Adjust width of individual bars (0.0 to 1.0)
-  //     categoryPercentage: 0.8, // Adjust spacing between categories (bars in groups)
-  //   },
-  //   y: {
-  //     beginAtZero: true,
-  //   },
-  // },
-
-
-
-
   responsive: true,
   plugins: {
     datalabels: {
-   display:false
-  },
+      display: false,
+    },
     legend: {
       display: false,
-      position: 'top',
+      position: "top",
     },
     title: {
       display: false,
@@ -52,47 +37,93 @@ const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+function WeeklyChart({ stats }) {
+  const data = useMemo(() => {
+    if (stats?.chartData) {
+      const labels = stats.chartData.labels;
+      return {
+        labels,
+        datasets: [
+          {
+            label: "Total Credits Earned",
+            data: stats?.chartData?.datasets?.totalCreditsEarned,
+            backgroundColor: "rgba(45, 96, 255, 1)",
+            borderWidth: 2,
+            borderRadius: 30,
+            barPercentage: 0.45,
+            categoryPercentage: 1,
+            barThickness: 18,
+          },
+          {
+            label: "Total Savings",
+            data: stats?.chartData?.datasets?.totalSavings,
+            backgroundColor: "rgba(22, 219, 204, 1)",
+            borderWidth: 2,
+            borderRadius: 30,
+            barPercentage: 0.45,
+            categoryPercentage: 1,
+            barThickness: 18,
+          },
+          {
+            label: "Total Bill payment",
+            data: stats?.chartData?.datasets?.totalBillPayments,
+            backgroundColor: "#ff6600",
+            borderWidth: 2,
+            borderRadius: 30,
+            barPercentage: 0.45,
+            categoryPercentage: 1,
+            barThickness: 18,
+          },
+        ],
+      };
+    } else {
+      const labels = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+      ];
+      return {
+        labels,
+        datasets: [
+          {
+            label: "Total Credits Earned",
+            data: labels.map(() => faker.number.int({ min: 200, max: 500 })),
+            backgroundColor: "rgba(45, 96, 255, 1)",
+            borderWidth: 2,
+            borderRadius: 30,
+            barPercentage: 0.45,
+            categoryPercentage: 1,
+            barThickness: 18,
+          },
+          {
+            label: "Total Savings",
+            data: labels.map(() => faker.number.int({ min: 200, max: 500 })),
+            backgroundColor: "rgba(22, 219, 204, 1)",
+            borderWidth: 2,
+            borderRadius: 30,
+            barPercentage: 0.45,
+            categoryPercentage: 1,
+            barThickness: 18,
+          },
+          {
+            label: "Total Bill payment",
+            data: labels.map(() => faker.number.int({ min: 200, max: 500 })),
+            backgroundColor: "#ff6600",
+            borderWidth: 2,
+            borderRadius: 30,
+            barPercentage: 0.45,
+            categoryPercentage: 1,
+            barThickness: 18,
+          },
+        ],
+      };
+    }
+  }, [stats]);
 
-const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Total Credits',
-      data: labels.map(() => faker.number.int({ min: 200, max: 500 })),
-      backgroundColor: 'rgba(45, 96, 255, 1)',
-      borderWidth: 2,
-      borderRadius: 30,
-      barPercentage: 0.45,
-      categoryPercentage: 1,
-      barThickness: 18, 
-    },
-    {
-      label: 'Earned Credits',
-      data: labels.map(() => faker.number.int({ min: 200, max: 500 })),
-        backgroundColor:
-            'rgba(22, 219, 204, 1)',
-      borderWidth: 2,
-      borderRadius: 30,
-      barPercentage: 0.45,
-      categoryPercentage: 1,
-      barThickness: 18, 
-    },
-    {
-      label: 'Total Savings',
-      data: labels.map(() => faker.number.int({ min: 200, max: 500 })),
-        backgroundColor:'#ff6600',
-            // '#FF4D00',
-      borderWidth: 2,
-      borderRadius: 30,
-      barPercentage: 0.45,
-      categoryPercentage: 1,
-      barThickness: 18, 
-    },
-  ],
-};
-
-function WeeklyChart() {
   return <Bar height={150} options={options} data={data} />;
 }
 

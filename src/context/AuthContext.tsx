@@ -15,10 +15,6 @@ import {
 import { auth, db } from "@/lib/firebaseConfig";
 import { User } from "../types"; // Your custom user type
 import { doc, onSnapshot } from "firebase/firestore";
-import { useUserAssets } from "./userSpecificAssetsContext";
-import { useUserAssetsDispatch } from "./userSpecificAssetsContext";
-import { fetchBillsForSpecificUser } from "@/lib/clientControllers/bills";
-import { fetchDocumentsForSpecificUser } from "@/lib/clientControllers/userSpecificAssets";
 
 // Define types for the user and context
 interface AuthContextType {
@@ -39,9 +35,6 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const { userBills, userDocuments } = useUserAssets();
-
-  const dispatch = useUserAssetsDispatch();
 
   useEffect(() => {
     // Listen for authentication state changes
@@ -76,30 +69,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
               };
 
               setUser(customUser);
-
-              // Fetch bills if not already loaded
-              if (!userBills.length) {
-                try {
-                  const bills = await fetchBillsForSpecificUser(
-                    firebaseUser.uid
-                  );
-                  dispatch({ type: "SET_ALL_BILLS", payload: bills });
-                } catch (error) {
-                  console.error("Error fetching bills:", error);
-                }
-              }
-
-              // Fetch documents if not already loaded
-              if (!userDocuments.length) {
-                try {
-                  const documents = await fetchDocumentsForSpecificUser(
-                    firebaseUser.uid
-                  );
-                  dispatch({ type: "SET_ALL_DOCUMENTS", payload: documents });
-                } catch (error) {
-                  console.error("Error fetching documents:", error);
-                }
-              }
             } else {
               console.warn(
                 "No user document found for the authenticated user."
@@ -124,7 +93,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     // Clean up the auth listener on unmount
     return () => unsubscribeAuth();
-  }, [dispatch, userBills.length, userDocuments.length]);
+  }, []);
 
   const logout = async (): Promise<void> => {
     await signOut(auth);

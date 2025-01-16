@@ -9,12 +9,13 @@ import EarningCard from "@/components/cards/earningCard/code";
 import TotalOrderLineChartCard from "@/components/cards/totalOrderLineChartCard/code";
 import { Button } from "@nextui-org/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserAssets } from "@/context/userSpecificAssetsContext";
 
 const DashboardHome = () => {
   const { user } = useAuth();
-  console.log(user);
   const [isLoading, setLoading] = useState(true);
   const [selectedPeriod, setSelectedPeriod] = useState("monthly"); // To track selected period (monthly/yearly)
+  const { stats } = useUserAssets();
 
   useEffect(() => {
     // Preload any assets or data
@@ -34,13 +35,13 @@ const DashboardHome = () => {
       {/* Cards Section */}
       <Grid container spacing={4}>
         <Grid item xs={12} sm={6} md={4}>
-          <EarningCard isLoading={isLoading} />
+          <EarningCard isLoading={isLoading} stats={stats} />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
-          <TotalOrderLineChartCard isLoading={isLoading} />
+          <TotalOrderLineChartCard isLoading={isLoading} stats={stats} />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
-          <TotalIncomeDarkCard isLoading={isLoading} />
+          <TotalIncomeDarkCard isLoading={isLoading} stats={stats} />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <TotalIncomeLightCard
@@ -59,7 +60,7 @@ const DashboardHome = () => {
               <h2 className="mb-4 text-lg font-medium text-gray-800">
                 Annually Overview
               </h2>
-              <WeeklyChart />
+              <WeeklyChart stats={stats} />
             </div>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -99,7 +100,7 @@ const DashboardHome = () => {
                 </div>
               </div>
               <div className="h-96">
-                <ExpenseChart />
+                <ExpenseChart stats={stats} period="month" />
               </div>
             </div>
           </Grid>

@@ -146,6 +146,9 @@ dependencies:
   react-chartjs-2:
     specifier: ^5.2.0
     version: 5.3.0(chart.js@4.4.7)(react@18.3.1)
+  react-currency-format:
+    specifier: ^1.1.0
+    version: 1.1.0(react-dom@18.3.1)(react@18.3.1)
   react-day-picker:
     specifier: 8.10.1
     version: 8.10.1(date-fns@4.1.0)(react@18.3.1)
@@ -205,6 +208,9 @@ devDependencies:
   '@types/react':
     specifier: ^18.3.12
     version: 18.3.18
+  '@types/react-currency-format':
+    specifier: ^1.0.4
+    version: 1.0.4
   '@types/react-dom':
     specifier: ^18.3.1
     version: 18.3.5(@types/react@18.3.18)
@@ -5246,6 +5252,12 @@ packages:
   /@types/prop-types@15.7.14:
     resolution: {integrity: sha512-gNMvNH49DJ7OJYv+KAKn0Xp45p8PLl6zo2YnvDIbTd4J6MER2BmWN49TG7n9LvkyihINxeKW8+3bfS2yDC9dzQ==}
 
+  /@types/react-currency-format@1.0.4:
+    resolution: {integrity: sha512-qHxKxe7MSGbWkxTj6DAgnKFnc/zXrRPljxaBnw29IlLyBmTBXZjGuCnn3UBH+tzHrYBFt4mkmxbWqpyeq6Ls0g==}
+    dependencies:
+      '@types/react': 18.3.18
+    dev: true
+
   /@types/react-dom@18.3.5(@types/react@18.3.18):
     resolution: {integrity: sha512-P4t6saawp+b/dFrUr2cvkVsfvPguwsxtH6dNIYRllMsefqFzkZk5UIjzyDOv5g1dXIPdG4Sp1yCR4Z6RCUsG/Q==}
     peerDependencies:
@@ -7134,6 +7146,17 @@ packages:
     dependencies:
       chart.js: 4.4.7
       react: 18.3.1
+    dev: false
+
+  /react-currency-format@1.1.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-WWrEOIp/3GbDSk1wlhFXaBc7IHGT3IwL306DHbGP3GVr4YFa0iS5hHPbKjHa0haruGL4Ly+WG4/5jBHpUtgqZg==}
+    peerDependencies:
+      react: ^0.14 || ^15.0.0-rc || ^15.0.0 || ^16.0.0-rc || ^16.0.0 || ^17.0.0
+      react-dom: ^0.14 || ^15.0.0-rc || ^15.0.0 || ^16.0.0-rc || ^16.0.0 || ^17.0.0
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /react-day-picker@8.10.1(date-fns@4.1.0)(react@18.3.1):

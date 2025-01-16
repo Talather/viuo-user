@@ -7,6 +7,8 @@ import {
   TextField,
   Fade,
 } from "@mui/material";
+import CurrencyFormat from "react-currency-format";
+
 import { useBillPaymentContext } from "@/context/paymentBillsContext";
 import { useAuth } from "@/context/AuthContext";
 import { DateTime } from "luxon";
@@ -180,7 +182,20 @@ const Transaction = () => {
             </h2>
             <p className="mb-4 text-lg text-center text-gray-600">
               Available Credits:{" "}
-              <span className="font-semibold">{availableCredits}</span>
+              <span className="font-semibold">
+                <CurrencyFormat
+                  value={`${
+                    availableCredits?.toString().includes(".")
+                      ? availableCredits.toLocaleString(undefined, {
+                          maximumFractionDigits: 2,
+                        })
+                      : `${availableCredits}.00`
+                  }`}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                  prefix={"$"}
+                />
+              </span>
             </p>
             <TextField
               type="number"
@@ -235,7 +250,18 @@ const CartItem: React.FC<any> = ({
         <p className="mt-2 text-gray-600">{productStatus}</p>
         <div className="flex justify-between mt-6">
           <span className="text-2xl font-bold text-button-gpt">
-            ${productPrice}
+            <CurrencyFormat
+              value={`${
+                productPrice.toString().includes(".")
+                  ? productPrice.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })
+                  : `{${productPrice}}.00`
+              }`}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"$"}
+            />
           </span>
           <button
             onClick={onRemove}
@@ -283,7 +309,20 @@ const OrderSummary: React.FC<any> = ({
         </h2>
         <div className="flex items-center justify-between py-2 border-b border-gray-300">
           <span className="text-lg text-gray-700">Subtotal</span>
-          <span className="text-lg text-gray-800">${subtotal}</span>
+          <span className="text-lg text-gray-800">
+            <CurrencyFormat
+              value={`${
+                subtotal.toString().includes(".")
+                  ? subtotal.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })
+                  : `{${subtotal}}.00`
+              }`}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"$"}
+            />
+          </span>
         </div>
         {unifiedDueDate && (
           <div className="flex items-center justify-between py-2 border-b border-gray-300">
@@ -300,20 +339,55 @@ const OrderSummary: React.FC<any> = ({
         <div className="flex items-center justify-between py-2 border-b border-gray-300">
           <span className="text-lg text-gray-700">Discount</span>
           <span className="text-lg text-green-500">
-            - ${discount.toFixed(2)}
+            <CurrencyFormat
+              value={`-${
+                discount.toString().includes(".")
+                  ? discount.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })
+                  : `{${discount}}.00`
+              }`}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"$"}
+            />
           </span>
         </div>
         {creditApplied > 0 && (
           <div className="flex items-center justify-between py-2 border-b border-gray-300">
             <span className="text-lg text-gray-700">Credit </span>
             <span className="text-lg text-green-500">
-              - ${creditApplied.toFixed(2)}
+              <CurrencyFormat
+                value={`-${
+                  creditApplied.toString().includes(".")
+                    ? creditApplied.toLocaleString(undefined, {
+                        maximumFractionDigits: 2,
+                      })
+                    : `{${creditApplied}}.00`
+                }`}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+              />
             </span>
           </div>
         )}
         <div className="flex items-center justify-between py-2 text-lg font-semibold">
           <span className="text-gray-800">Total</span>
-          <span className="text-xl text-blue-600">${total.toFixed(2)}</span>
+          <span className="text-xl text-blue-600">
+            <CurrencyFormat
+              value={`${
+                total.toString().includes(".")
+                  ? total.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })
+                  : `{${total}}.00`
+              }`}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"$"}
+            />
+          </span>
         </div>
       </div>
       <button

@@ -10,17 +10,13 @@ import {
   where,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import {
-  useUserAssets,
-  useUserAssetsDispatch,
-} from "@/context/userSpecificAssetsContext";
+import { useUserAssets } from "@/context/userSpecificAssetsContext";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { Tooltip } from "@nextui-org/react";
 
 const DocumentPage = () => {
   const { userDocuments } = useUserAssets();
-  const dispatch = useUserAssetsDispatch();
   const toast = useToast();
   const { user } = useAuth();
 
@@ -60,30 +56,6 @@ const DocumentPage = () => {
       }
     }
   };
-
-  useEffect(() => {
-    const docsCollectionRef = collection(db, "documents");
-    const documentsQuery = query(
-      docsCollectionRef,
-      where("userId", "==", user.id)
-    ); // Filter bills by user_id
-
-    const unsubscribe = onSnapshot(
-      documentsQuery,
-      (snapshot) => {
-        const docs = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        dispatch({ type: "SET_ALL_DOCUMENTS", payload: docs });
-      },
-      (error) => {
-        console.error("Error listening to document updates:", error);
-      }
-    );
-
-    return () => unsubscribe();
-  }, [dispatch]);
 
   const renderDocuments = (documents, purpose) => {
     const filteredDocs = documents.filter((doc) => doc?.purpose === purpose);

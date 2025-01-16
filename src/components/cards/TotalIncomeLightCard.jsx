@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import { AiFillFund, AiOutlineFund } from "react-icons/ai";
-import { GrTransaction } from "react-icons/gr";
-
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import { MdOutlineAddCard } from "react-icons/md";
+import CurrencyFormat from "react-currency-format";
 // material-ui
 import { useTheme, styled } from "@mui/material/styles";
 import {
@@ -92,9 +92,21 @@ const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
                     </div>
                     <div>
                       <Typography variant="h4">
-                        {user?.availableCredits?.toString().includes(".")
-                          ? user.availableCredits.toFixed(2)
-                          : `${user?.availableCredits}.00`}
+                        <CurrencyFormat
+                          value={`${
+                            user?.availableCredits?.toString().includes(".")
+                              ? user.availableCredits.toLocaleString(
+                                  undefined,
+                                  {
+                                    maximumFractionDigits: 2,
+                                  }
+                                )
+                              : `${user?.availableCredits}.00`
+                          }`}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                        />
                       </Typography>
                       <Typography
                         variant="subtitle2"
@@ -121,8 +133,7 @@ const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
                               marginBottom: "3px",
                             }}
                           >
-                            {/* <AiFillFund size={30} /> */}
-                            <GrTransaction size={25} />
+                            <MdOutlineAddCard size={25} />
                           </Avatar>
                         </NavLink>
                       </Tooltip>
@@ -137,8 +148,7 @@ const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
                               color: "black",
                             }}
                           >
-                            {/* <AiOutlineFund  size={30}/> */}
-                            <GrTransaction size={25} />
+                            <FaMoneyBillTrendUp size={25} />
                           </Avatar>
                           {/* </a> */}
                         </NavLink>

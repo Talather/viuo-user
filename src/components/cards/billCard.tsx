@@ -6,6 +6,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // import EditIcon from '@mui/icons-material/Edit'
 // import { format } from "date-fns";
 import EastIcon from "@mui/icons-material/East";
+import CurrencyFormat from "react-currency-format";
+
 import { deleteBill } from "@/lib/clientControllers/bills";
 import { Button } from "@nextui-org/button";
 // import { useNavigate } from "react-router-dom";
@@ -281,7 +283,14 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               wordWrap: "break-word",
             }}
           >
-            ${bill?.amount || ""}.00
+            <CurrencyFormat
+              value={`${bill?.amount.toLocaleString(undefined, {
+                maximumFractionDigits: 2,
+              })}`}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"$"}
+            />
           </div>
           <div
             className="AprLabel"

@@ -1,6 +1,7 @@
 import React from "react";
-
 // Define the type for a single credit document
+import CurrencyFormat from "react-currency-format";
+
 interface CreditDoc {
   credits: number;
   date: {
@@ -12,15 +13,11 @@ interface CreditDoc {
   type: string;
   userId: string;
 }
-
-// Define the props for the component
 interface TableCreditsProps {
   creditDocs: CreditDoc[];
 }
-
 const TableCredits: React.FC<TableCreditsProps> = ({ creditDocs }) => {
   console.log("Credits Data:", creditDocs);
-
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h4 className="mb-10 font-bold text-body-2xlg text-dark dark:text-white">
@@ -36,11 +33,6 @@ const TableCredits: React.FC<TableCreditsProps> = ({ creditDocs }) => {
                 Date
               </h5>
             </div>
-            <div className="px-2 pb-3.5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Credit Amount
-              </h5>
-            </div>
 
             <div className="px-2 pb-3.5 text-center">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
@@ -50,6 +42,11 @@ const TableCredits: React.FC<TableCreditsProps> = ({ creditDocs }) => {
             <div className="px-2 pb-3.5 text-center">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
                 Type
+              </h5>
+            </div>
+            <div className="px-2 pb-3.5">
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Credit Amount
               </h5>
             </div>
             <div className="px-2 pb-3.5 text-center">
@@ -75,12 +72,6 @@ const TableCredits: React.FC<TableCreditsProps> = ({ creditDocs }) => {
                   {new Date(credit.date.seconds * 1000).toLocaleDateString()}
                 </p>
               </div>
-              {/* Credit Amount */}
-              <div className="flex justify-center items-center mr-5 gap-3.5 px-2 py-4">
-                <p className="font-medium text-dark dark:text-white">
-                  {credit.credits}
-                </p>
-              </div>
 
               {/* Reference */}
               <div className="flex items-center justify-center px-2 py-4">
@@ -92,6 +83,28 @@ const TableCredits: React.FC<TableCreditsProps> = ({ creditDocs }) => {
               <div className="flex items-center justify-center px-2 py-4">
                 <p className="font-medium text-dark dark:text-white">
                   {credit.type}
+                </p>
+              </div>
+              {/* Credit Amount */}
+              <div className="flex justify-center items-center mr-5 gap-3.5 px-2 py-4">
+                <p
+                  className="font-medium text-dark dark:text-white"
+                  style={{
+                    color: `${credit.credits > 0 ? "green" : "red"}`,
+                  }}
+                >
+                  <CurrencyFormat
+                    value={`${
+                      credit.credits?.toString().includes(".")
+                        ? credit.credits.toLocaleString(undefined, {
+                            maximumFractionDigits: 2,
+                          })
+                        : `${credit.credits}.00`
+                    }`}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                  />
                 </p>
               </div>
 

@@ -79,7 +79,7 @@ const fetchCreditHistoryForSpecificUser = async (userId) => {
     const creditHistoryQuery = query(
       collection(db, "creditHistory"),
       where("userId", "==", userId),
-      orderBy("date", "desc") // Sort by date in descending order
+      orderBy("date", "desc")
     );
 
     // Execute the query to fetch credit history
