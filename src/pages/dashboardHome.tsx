@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TotalIncomeDarkCard from "../../src/components/cards/TotalIncomeDarkCard";
 import TotalIncomeLightCard from "../../src/components/cards/TotalIncomeLightCard";
 import WeeklyChart from "../../src/components/charts/weekly";
@@ -12,6 +12,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useUserAssets } from "@/context/userSpecificAssetsContext";
 
 const DashboardHome = () => {
+  console.log(React);
   const { user } = useAuth();
   const [isLoading, setLoading] = useState(true);
   const [selectedPeriod, setSelectedPeriod] = useState("monthly"); // To track selected period (monthly/yearly)

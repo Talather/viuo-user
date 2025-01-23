@@ -66,6 +66,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 profileLink: userData.profileLink,
                 redeemedReferralCode: userData.redeemedReferralCode,
                 availableCredits: userData.availableCredits,
+                createdAt: userData.createdAt,
               };
 
               setUser(customUser);

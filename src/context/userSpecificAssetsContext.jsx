@@ -7,9 +7,11 @@ import {
   where,
   orderBy,
   documentId,
+  doc,
+  updateDoc,
 } from "firebase/firestore";
 import { useAuth } from "@/hooks/useAuth"; // Import the useAuth hook for user information
-
+import { DateTime } from "luxon";
 // Initial State
 const initialState = {
   userBills: [],
@@ -67,6 +69,29 @@ export const UserAssetsProvider = ({ children }) => {
         id: doc.id,
         ...doc.data(),
       }));
+
+      const today = DateTime.now().setZone(user.timeZone);
+
+      bills.forEach((bill) => {
+        const dueDate = DateTime.fromISO(bill.dueDate, { zone: user.timeZone });
+        const daysEarly = Math.floor(dueDate.diff(today, "days").days);
+        if (bill.status === "paid") {
+          if (daysEarly < -1) {
+            const newDueDate = dueDate
+              .set({ month: (dueDate.month + 1) % 12 })
+              .toISO();
+            console.log(newDueDate);
+            const billRef = doc(db, "bills", bill.id);
+            updateDoc(billRef, { status: "unpaid", dueDate: newDueDate }).then(
+              () => {
+                console.log("BILL UPDATED");
+              }
+            );
+          }
+        }
+
+        console.log(daysEarly);
+      });
       dispatch({ type: "SET_ALL_BILLS", payload: bills });
     });
 

@@ -124,7 +124,11 @@ const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
                   {buttons && (
                     <div>
                       <Tooltip content="Add Credit">
-                        <NavLink to="/transaction/credit/add">
+                        <NavLink
+                          to="/transaction/credit/add"
+                          className="flex justify-center items-center font-bold"
+                        >
+                          Add
                           <Avatar
                             variant="rounded"
                             sx={{
@@ -137,10 +141,13 @@ const TotalIncomeLightCard = ({ isLoading, user, buttons = true }) => {
                           </Avatar>
                         </NavLink>
                       </Tooltip>
-
                       <Tooltip content="Send Credit" placement="bottom">
                         {/* <a href="/transaction/credit/send"> */}
-                        <NavLink to="/transaction/credit/send">
+                        <NavLink
+                          to="/transaction/credit/send"
+                          className="flex justify-center items-center font-bold"
+                        >
+                          Send
                           <Avatar
                             variant="rounded"
                             sx={{

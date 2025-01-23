@@ -207,7 +207,7 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               wordWrap: "break-word",
             }}
           >
-            {bill?.dueDate}
+            {bill?.dueDate.split("T")[0]}
           </div>
           <div
             className="DueLabel"
