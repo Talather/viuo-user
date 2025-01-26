@@ -50,93 +50,279 @@ export default function BillFormComponent({ bill = {}, update = false }) {
 
   const isUploadMode = upload === "true";
 
-  const extractText = async (event) => {
-    const file = event.target.files[0];
+//   const extractText = async (event) => {
+//     const file = event.target.files[0];
 
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      const storageRef = ref(storage, `documents/${user?.id}/${file.name}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      const fileUrl = await getDownloadURL(snapshot.ref);
-      // Add document link to Firestore
-      const documentsCollection = collection(db, "documents");
-      await addDoc(documentsCollection, {
-        userId: user.id,
-        documentUrl: fileUrl,
-        documentName: file.name,
-        documentType: file.type,
-        uploadedAt: new Date(),
-        purpose: "Bill",
-      });
-      const userDoc = doc(db, "users", user.id);
-      // await updateDoc(userDoc, { totalDocuments: totalDocuments + 1 })
-      // setTotalDocuments(totalDocuments + 1)
-      console.log("bawaji");
-      toast({
-        title: "Success",
-        description: "Document Updated",
-      });
-    }
+//     if (event.target.files && event.target.files[0]) {
+//       const file = event.target.files[0];
+//       const storageRef = ref(storage, `documents/${user?.id}/${file.name}`);
+//       const snapshot = await uploadBytes(storageRef, file);
+//       const fileUrl = await getDownloadURL(snapshot.ref);
+//       // Add document link to Firestore
+//       const documentsCollection = collection(db, "documents");
+//       await addDoc(documentsCollection, {
+//         userId: user.id,
+//         documentUrl: fileUrl,
+//         documentName: file.name,
+//         documentType: file.type,
+//         uploadedAt: new Date(),
+//         purpose: "Bill",
+//       });
+//       const userDoc = doc(db, "users", user.id);
+//       // await updateDoc(userDoc, { totalDocuments: totalDocuments + 1 })
+//       // setTotalDocuments(totalDocuments + 1)
+//       console.log("bawaji");
+//       toast({
+//         title: "Success",
+//         description: "Document Updated",
+//       });
+//     }
 
+//     try {
+//       const cleanValues = (values) => {
+//         return Object.fromEntries(
+//           Object.entries(values).filter(
+//             ([key, value]) => value !== "" && value != null
+//           )
+//         );
+//       };
+
+//       const text = await pdfToText(file);
+      
+//       console.log('sadeem-churail',text)
+
+//       // Clean and normalize the text (e.g., remove extra spaces, handle punctuation)
+//       const cleanedText = text.replace(/\s+/g, " ").toLowerCase(); // Replace multiple spaces with a single space
+
+//       // const values = {
+//       //   name:
+//       //     cleanedText.match(
+//       //       /name\s*[:=]\s*["'“”]?\s*([^"'”]+)\s*["'”]?/
+//       //     )?.[1] || "N/A",
+//       //   amount:
+//       //     cleanedText
+//       //       .match(/amount\s*[:=]\s*(\d[\d,.]*)/)?.[1]
+//       //       .replace(/[^0-9.-]+/g, "") || "0",
+//       //   accountNumber:
+//       //     cleanedText.match(
+//       //       /accountnumber\s*[:=]\s*["'“”]?\s*([^"'”]+)\s*["'”]?/
+//       //     )?.[1] || "N/A",
+
+//       //   // Handle multiple date formats with fallback
+//       //   dueDate:
+//       //     cleanedText.match(
+//       //       /due\s*date\s*[:=]\s*["'“”]?\s*(\d{1,2}[\/-]?\d{1,2}[\/-]?\d{2,4}|[a-z]+ \d{1,2}, \d{4})\s*["'”]?/
+//       //     )?.[1] || "",
+
+//       //   remainingBalance:
+//       //     cleanedText
+//       //       .match(/remainingbalance\s*[:=]\s*(\d[\d,.]*)/)?.[1]
+//       //       .replace(/[^0-9.-]+/g, "") || "0",
+//       //   pastDue:
+//       //     cleanedText
+//       //       .match(/pastdue\s*[:=]\s*(\d[\d,.]*)/)?.[1]
+//       //       .replace(/[^0-9.-]+/g, "") || "0",
+//       // };
+
+
+
+
+
+//       const values = {
+//   name:
+//     cleanedText.match(/name\s*[:=]\s*["'“”]?\s*([^"'”\n]+)\s*["'”]?/i)?.[1] || "N/A",
+
+//   amount:
+//     cleanedText.match(/amount\s*[:=]\s*([$]?\d[\d,.]*)/i)?.[1]?.replace(/[^0-9.-]+/g, "") || "0",
+
+//   accountNumber:
+//     cleanedText.match(/account\s*number\s*[:=]\s*["'“”]?\s*([\d-]+)/i)?.[1] || "N/A",
+
+//   billDate:
+//     cleanedText.match(/bill\s*date\s*[:=]\s*["'“”]?\s*([a-zA-Z]+\s\d{1,2},\s\d{4})/i)?.[1] || "N/A",
+
+//   dueDate:
+//     cleanedText.match(/due\s*by\s*["'“”]?\s*([a-zA-Z]+\s\d{1,2},?\s?\d{4})/i)?.[1] || "N/A",
+
+//   autoPayAmount:
+//     cleanedText.match(/auto\s*pay\s*amount\s*[:=]\s*[$]?([\d,.]+)/i)?.[1]?.replace(/[^0-9.-]+/g, "") || "0",
+
+//   autoPayDate:
+//     cleanedText.match(/auto\s*pay\s*date\s*[:=]\s*["'“”]?\s*([a-zA-Z]+\s\d{1,2})/i)?.[1] || "N/A",
+
+//   totalDue:
+//     cleanedText.match(/total\s*due\s*[:=]?\s*[$]?([\d,.]+)/i)?.[1]?.replace(/[^0-9.-]+/g, "") || "0",
+
+//   discountsApplied:
+//     cleanedText.match(/discounts\s*this\s*month\s*[:=]?\s*[-$]?([\d,.]+)/i)?.[1]?.replace(/[^0-9.-]+/g, "") || "0",
+
+//   previousBalance:
+//     cleanedText.match(/previous\s*balance\s*[:=]?\s*[$]?([\d,.]+)/i)?.[1]?.replace(/[^0-9.-]+/g, "") || "0",
+
+//   paymentReceived:
+//     cleanedText.match(/payment\s*received.*?[-$]?([\d,.]+)/i)?.[1]?.replace(/[^0-9.-]+/g, "") || "0",
+
+//   balanceForward:
+//     cleanedText.match(/balance\s*forward\s*[:=]?\s*[$]?([\d,.]+)/i)?.[1]?.replace(/[^0-9.-]+/g, "") || "0",
+// };
+
+
+      
+//       const cleanedValues = cleanValues(values);
+
+//       setExtractedText(cleanedValues);
+
+//       console.log("values", cleanedValues);
+//       // Set form values automatically
+//       for (const [key, value] of Object.entries(cleanedValues)) {
+//         // if (value) {
+//         setValue(key, value);
+//         // }
+//       }
+//     } catch (error) {
+//       console.error("Failed to extract text from PDF", error);
+//     }
+//   };
+
+  
+
+
+
+
+
+
+  const extractText = async event => {
     try {
-      const cleanValues = (values) => {
-        return Object.fromEntries(
-          Object.entries(values).filter(
-            ([key, value]) => value !== "" && value != null
-          )
-        );
-      };
-
-      const text = await pdfToText(file);
-
-      // Clean and normalize the text (e.g., remove extra spaces, handle punctuation)
-      const cleanedText = text.replace(/\s+/g, " ").toLowerCase(); // Replace multiple spaces with a single space
-
-      const values = {
-        name:
-          cleanedText.match(
-            /name\s*[:=]\s*["'“”]?\s*([^"'”]+)\s*["'”]?/
-          )?.[1] || "N/A",
-        amount:
-          cleanedText
-            .match(/amount\s*[:=]\s*(\d[\d,.]*)/)?.[1]
-            .replace(/[^0-9.-]+/g, "") || "0",
-        accountNumber:
-          cleanedText.match(
-            /accountnumber\s*[:=]\s*["'“”]?\s*([^"'”]+)\s*["'”]?/
-          )?.[1] || "N/A",
-
-        // Handle multiple date formats with fallback
-        dueDate:
-          cleanedText.match(
-            /due\s*date\s*[:=]\s*["'“”]?\s*(\d{1,2}[\/-]?\d{1,2}[\/-]?\d{2,4}|[a-z]+ \d{1,2}, \d{4})\s*["'”]?/
-          )?.[1] || "",
-
-        remainingBalance:
-          cleanedText
-            .match(/remainingbalance\s*[:=]\s*(\d[\d,.]*)/)?.[1]
-            .replace(/[^0-9.-]+/g, "") || "0",
-        pastDue:
-          cleanedText
-            .match(/pastdue\s*[:=]\s*(\d[\d,.]*)/)?.[1]
-            .replace(/[^0-9.-]+/g, "") || "0",
-      };
-
-      const cleanedValues = cleanValues(values);
-
-      setExtractedText(cleanedValues);
-
-      console.log("values", cleanedValues);
-      // Set form values automatically
-      for (const [key, value] of Object.entries(cleanedValues)) {
-        // if (value) {
-        setValue(key, value);
-        // }
-      }
-    } catch (error) {
-      console.error("Failed to extract text from PDF", error);
+    
+    const file = event.target.files[0]
+console.log("uplaodBillHit",file)
+    if (!file) {
+      throw new Error('No file selected.')
     }
-  };
+
+    // Step 1: Upload file to storage
+    const storageRef = ref(storage, `documents/${user?.id}/${file.name}`)
+    const snapshot = await uploadBytes(storageRef, file)
+    const fileUrl = await getDownloadURL(snapshot.ref)
+
+    // Step 2: Add document metadata to Firestore
+    const documentsCollection = collection(db, 'documents')
+    await addDoc(documentsCollection, {
+      userId: user.id,
+      documentUrl: fileUrl,
+      documentName: file.name,
+      documentType: file.type,
+      uploadedAt: new Date(),
+      purpose: 'Bill'
+    })
+
+    // Notify user of successful upload
+    toast({
+      title: 'Success',
+      description: 'Document Uploaded Successfully'
+    })
+
+    // Step 3: Extract text from the PDF
+    const text = await pdfToText(file)
+    console.log('Extracted Text:', text)
+
+    // Clean and normalize the extracted text
+    const cleanedText = text.replace(/\s+/g, ' ').toLowerCase()
+
+    // Step 4: Extract values using regex
+    const values = {
+      name:
+        cleanedText.match(
+          /name\s*[:=]\s*["'“”]?\s*([^"'”\n]+)\s*["'”]?/i
+        )?.[1] || 'N/A',
+
+      amount:
+        cleanedText
+          .match(/amount\s*[:=]\s*([$]?\d[\d,.]*)/i)?.[1]
+          ?.replace(/[^0-9.-]+/g, '') || '0',
+
+      accountNumber:
+        cleanedText.match(
+          /account\s*number\s*[:=]\s*["'“”]?\s*([\d-]+)/i
+        )?.[1] || 'N/A',
+
+      billDate:
+        // formatDateForInput(
+          cleanedText.match(
+          /bill\s*date\s*[:=]\s*["'“”]?\s*([a-zA-Z]+\s\d{1,2},\s\d{4})/i
+          )?.[1] || 'N/A'
+      // )
+      ,
+
+      dueDate:
+        cleanedText.match(
+          /due\s*by\s*["'“”]?\s*([a-zA-Z]+\s\d{1,2},?\s?\d{4})/i
+        )?.[1] || 'N/A',
+
+      autoPayAmount:
+        cleanedText
+          .match(/auto\s*pay\s*amount\s*[:=]\s*[$]?([\d,.]+)/i)?.[1]
+          ?.replace(/[^0-9.-]+/g, '') || '0',
+
+      autoPayDate:
+        cleanedText.match(
+          /auto\s*pay\s*date\s*[:=]\s*["'“”]?\s*([a-zA-Z]+\s\d{1,2})/i
+        )?.[1] || 'N/A',
+
+      totalDue:
+        cleanedText
+          .match(/total\s*due\s*[:=]?\s*[$]?([\d,.]+)/i)?.[1]
+          ?.replace(/[^0-9.-]+/g, '') || '0',
+
+      discountsApplied:
+        cleanedText
+          .match(/discounts\s*this\s*month\s*[:=]?\s*[-$]?([\d,.]+)/i)?.[1]
+          ?.replace(/[^0-9.-]+/g, '') || '0',
+
+      previousBalance:
+        cleanedText
+          .match(/previous\s*balance\s*[:=]?\s*[$]?([\d,.]+)/i)?.[1]
+          ?.replace(/[^0-9.-]+/g, '') || '0',
+
+      paymentReceived:
+        cleanedText
+          .match(/payment\s*received.*?[-$]?([\d,.]+)/i)?.[1]
+          ?.replace(/[^0-9.-]+/g, '') || '0',
+
+      balanceForward:
+        cleanedText
+          .match(/balance\s*forward\s*[:=]?\s*[$]?([\d,.]+)/i)?.[1]
+          ?.replace(/[^0-9.-]+/g, '') || '0'
+    }
+
+    // Step 5: Clean extracted values
+    const cleanValues = values =>
+      Object.fromEntries(
+        Object.entries(values).filter(
+          ([key, value]) => value !== '' && value != null
+        )
+      )
+
+    
+    console.log("sadeemekilo",values)
+    const cleanedValues = cleanValues(values)
+
+    // Step 6: Set extracted values in the form
+    setExtractedText(cleanedValues)
+
+    for (const [key, value] of Object.entries(cleanedValues)) {
+      setValue(key, value) // Dynamically set form values
+    }
+
+    console.log('Extracted Values:', cleanedValues)
+  } catch (error) {
+    console.error('Failed to extract text from PDF:', error)
+    toast({
+      title: 'Error',
+      description: 'Failed to extract text. Please try again.'
+    })
+  }
+}
 
   const onSubmit = async (formData) => {
     try {
@@ -268,11 +454,42 @@ export default function BillFormComponent({ bill = {}, update = false }) {
                     accept=".pdf,.jpg,.png"
                     radius="sm"
                     variant="bordered"
+                    // required
+
+                    //  {...register("uploadBill", { required: true })}
                   />
                 </div>
               </div>
             </ModalBody>
           )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           {extractedText && (
             <ModalBody>
@@ -311,6 +528,9 @@ export default function BillFormComponent({ bill = {}, update = false }) {
                     variant="bordered"
                   />
                 </div>
+
+
+
                 <div className={styles.formElementsWrapper}>
                   <Input
                     className={styles.formInput}
@@ -328,10 +548,13 @@ export default function BillFormComponent({ bill = {}, update = false }) {
                     type="text"
                     variant="bordered"
                   />
+
+
+
                   <Input
                     className={styles.formInput}
-                    defaultValue={extractedText?.dueDate || ""}
-                    // value={extractedText?.dueDate || ''}
+                    defaultValue={ extractedText?.billDate ||'' }
+                    // value={extractedText?.billDate || ''}
                     errorMessage={
                       !!errors.dueDate && "Please provide the due date"
                     }
@@ -344,50 +567,14 @@ export default function BillFormComponent({ bill = {}, update = false }) {
                     variant="bordered"
                   />
                 </div>
-                <div className={styles.formElementsWrapper}>
-                  <Input
-                    className={styles.formInput}
-                    defaultValue={extractedText?.remainingBalance || ""}
-                    // value={extractedText?.remainingBalance || ''}
-                    errorMessage={
-                      !!errors.remainingBalance &&
-                      "Please provide the remaining balance"
-                    }
-                    isInvalid={!!errors.remainingBalance}
-                    label={formLabels.remainingBalance}
-                    labelPlacement="outside"
-                    {...register("remainingBalance", { required: true })}
-                    radius="sm"
-                    type="number"
-                    variant="bordered"
-                  />
-                  <Input
-                    className={styles.formInput}
-                    defaultValue={extractedText?.pastDue || ""}
-                    errorMessage={
-                      !!errors.pastDue && "Please provide the past due balance"
-                    }
-                    // value={extractedText?.pastDue || ''}
-                    isInvalid={!!errors.pastDue}
-                    label={formLabels.pastDue}
-                    labelPlacement="inside"
-                    {...register("pastDue", { required: true })}
-                    radius="sm"
-                    type="number"
-                    variant="bordered"
-                  />
-                </div>
 
-                <div className={styles.formElementsWrapper}>
-                  <Input
-                    type="file"
-                    label="Upload Bill"
-                    onChange={extractText}
-                    accept=".pdf,.jpg,.png"
-                    radius="sm"
-                    variant="bordered"
-                  />
-                </div>
+
+
+
+
+
+
+               
               </div>
             </ModalBody>
           )}
@@ -415,3 +602,54 @@ export default function BillFormComponent({ bill = {}, update = false }) {
     </Modal>
   );
 }
+
+
+const formatDateForInput = dateString => {
+  const date = new Date(dateString) // Parse the string into a Date object
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-based
+  const day = String(date.getDate()).padStart(2, '0')
+  console.log("saadia maam",`${year}-${month}-${day}`)
+  return `${year}-${month}-${day}` // Format as YYYY-MM-DD
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
