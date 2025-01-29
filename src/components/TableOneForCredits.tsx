@@ -1,3 +1,4 @@
+import { Tooltip } from "@mui/material";
 import React from "react";
 // Define the type for a single credit document
 import CurrencyFormat from "react-currency-format";
@@ -75,9 +76,24 @@ const TableCredits: React.FC<TableCreditsProps> = ({ creditDocs }) => {
 
               {/* Reference */}
               <div className="flex items-center justify-center px-2 py-4">
+                <Tooltip title={credit.reference}
+                
+                
+                arrow
+  componentsProps={{
+    tooltip: {
+      sx: {
+        bgcolor: '#10a37f',
+        '& .MuiTooltip-arrow': {
+          color: 'common.black',
+        },
+      },
+    },
+  }}
+                >
                 <p className="font-medium text-dark dark:text-white">
                   {truncateString(credit.reference, 15)}
-                </p>
+                </p></Tooltip>
               </div>
               {/* Type */}
               <div className="flex items-center justify-center px-2 py-4">
