@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useUserAssets } from "@/context/userSpecificAssetsContext";
 import CurrencyFormat from "react-currency-format";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 const CalendarBox = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -14,24 +14,24 @@ const CalendarBox = () => {
   const currentYear = currentDate.getFullYear();
   const upcomingBills = getUpcomingBillsByMonth(userBills);
 
-  useEffect(() => {
-    if (!upcomingBills[currentYear][currentMonth]) {
-      // Find the first month in upcomingBills[currentYear] and navigate to it
-      const upcomingMonths = Object.keys(upcomingBills[currentYear] || {});
-      if (upcomingMonths.length > 0) {
-        const firstAvailableMonth = upcomingMonths[0];
-        const targetMonthIndex = new Date(
-          `${firstAvailableMonth} 1, ${currentYear}`
-        ).getMonth();
-        const currentMonthIndex = currentDate.getMonth();
-        const monthDifference = targetMonthIndex - currentMonthIndex;
+  // useEffect(() => {
+  //   if (!upcomingBills[currentYear][currentMonth]) {
+  //     // Find the first month in upcomingBills[currentYear] and navigate to it
+  //     const upcomingMonths = Object.keys(upcomingBills[currentYear] || {});
+  //     if (upcomingMonths.length > 0 || !upcomingMonths) {
+  //       const firstAvailableMonth = upcomingMonths[0];
+  //       const targetMonthIndex = new Date(
+  //         `${firstAvailableMonth} 1, ${currentYear}`
+  //       ).getMonth();
+  //       const currentMonthIndex = currentDate.getMonth();
+  //       const monthDifference = targetMonthIndex - currentMonthIndex;
 
-        if (monthDifference !== 0) {
-          navigateMonth(monthDifference);
-        }
-      }
-    }
-  }, []);
+  //       if (monthDifference !== 0) {
+  //         navigateMonth(monthDifference);
+  //       }
+  //     }
+  //   }
+  // }, []);
 
   // Function to handle month navigation
   const navigateMonth = (direction: any) => {
