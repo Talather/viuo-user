@@ -1,4 +1,5 @@
-import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
+// useLocation
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +10,7 @@ import { Button } from "@nextui-org/button";
 import { useToast } from "../hooks/use-toast";
 import { useAuth } from "../hooks/useAuth";
 import { LoginSchema } from "../lib/validations";
-import { dummyUser } from "../components/constants/dummyuser";
+// import { dummyUser } from "../components/constants/dummyuser";
 import { FormField, FormItem, FormControl, Form } from "../components/ui/form";
 import { Image } from "@nextui-org/react";
 
@@ -19,10 +20,10 @@ const LoginPage = () => {
   const { toast } = useToast();
 
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const { login } = useAuth();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const from = location?.state?.from?.pathname || "/";
+  // const from = location?.state?.from?.pathname || "/";
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const form = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
@@ -39,32 +40,33 @@ const LoginPage = () => {
     formState: { errors },
   } = form;
 
-  const handleLogin = (values: LoginFormData) => {
-    setIsLoading(true);
-    try {
-      console.log(values);
+const handleLogin = async (values: LoginFormData) => {
+  setIsLoading(true)
+  try {
+    console.log(values)
 
-      setTimeout(() => {
-        setIsLoading(false);
-        login(dummyUser);
+    // Simulate delay using a promise
+    await new Promise((resolve) => setTimeout(resolve, 3000))
 
-        toast({
-          title: "Success",
-          description: "Login Success",
-        });
+    await login(values.email, values.password)
 
-        navigate(from, { replace: true });
-      }, 3000);
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: "Error",
-        description: "Unable to login right now",
-        variant: "destructive",
-      });
-      setIsLoading(false);
-    }
-  };
+    toast({
+      title: "Success",
+      description: "Login Success",
+    })
+
+    navigate("/dashboard", { replace: true })
+  } catch (error) {
+    console.error(error)
+    toast({
+      title: "Error",
+      description: "Unable to login right now",
+      variant: "destructive",
+    })
+  } finally {
+    setIsLoading(false)
+  }
+}
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -150,7 +152,7 @@ const LoginPage = () => {
             <div className="flex items-center justify-between mt-10">
               <div>
                 <NavLink
-                  to={"/reset-password"}
+                  to={"/forget-password"}
                   className={
                     "text-button-gpt font-semibold hover:underline transition-all"
                   }

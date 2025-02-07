@@ -12,4 +12,5 @@ export const ContactSchema = z.object({
   phoneNumber: z.string().min(1, "Phone number is required"),
   email: z.string().email(),
   message: z.string().min(1, "Message is required"),
+  file: z.object({}),
 });

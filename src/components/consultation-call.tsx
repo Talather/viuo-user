@@ -6,6 +6,7 @@ import Button from "./button";
 import { ConsultationSchema } from "../validations/schema";
 
 type ConsultationFormData = z.infer<typeof ConsultationSchema>;
+import CurrencyFormat from "react-currency-format";
 
 const ConsultationCall = ({ hideButton = true }: { hideButton?: boolean }) => {
   const {
@@ -31,15 +32,6 @@ const ConsultationCall = ({ hideButton = true }: { hideButton?: boolean }) => {
       console.log("Done");
     }
   };
-
-  // const hasErrors = Object.keys(errors).length > 0;
-  // const hasDirtyFields = Object.keys(dirtyFields).length > 0;
-
-  // const customErrorMessage = hasErrors
-  //   ? "All fields are required."
-  //   : !hasDirtyFields
-  //   ? "All fields are required."
-  //   : "";
 
   return (
     <div className="min-h-[90vh]">
@@ -91,14 +83,16 @@ const ConsultationCall = ({ hideButton = true }: { hideButton?: boolean }) => {
                     className=" w-[20%] py-2 px-4 border rounded-md focus:outline-none"
                     placeholder="+1"
                   />
-                  <input
+                  <CurrencyFormat
                     min={1}
-                    type="number"
                     {...register("phoneNumber")}
                     id="countryCode"
                     className="w-full py-2 px-4 border rounded-md focus:outline-none"
                     placeholder="Phone number"
+                    format="+1 (###) ###-####"
+                    mask="_"
                   />
+                  <input />
                 </div>
                 {/* {customErrorMessage && customErrorMessage.length && (
                   <p className="text-red-500 text-center font-semibold text-sm">

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,17 +10,14 @@ import { ContactSchema } from "../validations/schema";
 export type ContactFormData = z.infer<typeof ContactSchema>;
 
 const ContactInfo = () => {
-  const {
-    register,
-    handleSubmit,
-    // formState: { errors, dirtyFields },
-  } = useForm<ContactFormData>({
+  const { register, handleSubmit } = useForm<ContactFormData>({
     resolver: zodResolver(ContactSchema),
     defaultValues: {
       fullName: "",
       email: "",
       message: "",
       phoneNumber: "",
+      file: "",
     },
   });
 
@@ -33,22 +31,13 @@ const ContactInfo = () => {
     }
   };
 
-  // const hasErrors = Object.keys(errors).length > 0;
-  // const hasDirtyFields = Object.keys(dirtyFields).length > 0;
-
-  // const customErrorMessage = hasErrors
-  //   ? "All fields are required."
-  //   : !hasDirtyFields
-  //   ? "All fields are required."
-  //   : "";
-
   return (
     <div className="flex  items-start justify-between flex-wrap w-full">
       <div className="mt-10  lg:mt-32 mx-auto">
         <div className="flex w-full flex-col md:flex-row justify-between flex-wrap gap-y-10">
           <div className="flex md:max-w-[500px]   flex-col px-5">
             <div className="md:w-fit heading flex items-center justify-center flex-col w-full  font-semibold text-emerald-900 capitalize">
-              <h1 className="">We’re Here to Help</h1>
+              <h1 className="">We're Here to Help</h1>
               <div className="border-b-4 border-[#23AB84] w-[30%] md:w-[90%]"></div>
             </div>
             <h2 className="text-[16px] hidden md:block mt-4 text-emerald-900">
@@ -70,7 +59,7 @@ const ContactInfo = () => {
             />
             <InfoCard
               imgSrc="/assets/icons/business.png"
-              linkText="Vuior HQ, 123 Innovation Lane, Baltimore, MD"
+              linkText="Vuior HQ, 1207 Delaware Ave #3968, Wilmington, DE 19806"
               href=""
               label="Address"
             />
@@ -127,6 +116,7 @@ const ContactInfo = () => {
                 {customErrorMessage}
               </p>
             )} */}
+
             <Button type="submit" className="mt-10">
               Submit Form
             </Button>

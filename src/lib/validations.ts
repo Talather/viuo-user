@@ -7,14 +7,17 @@ export const LoginSchema = z.object({
 
 export const RegisterUserSchema = z.object({
   email: z.string().email(),
-  name: z.string().min(1, "Name is required"),
-  phoneNumber: z.string().min(1, "Phone number is required"),
+  firstName: z.string().min(1, "First Name is required"),
+  lastName: z.string().min(1, "Last Name is required"),
+  phoneNumber: z.string().trim().min(17, "Phone number is required"),
   password: z.string().min(6, "Password must be at least 6 characters long"),
   agreeToPromotionalMessages: z.boolean().optional(),
 });
 
 export const ResetPasswordSchema = z.object({
   email: z.string().email(),
+  password: z.string().min(6),
+  confirmPassword: z.string().min(6),
 });
 
 export const ContactUsSchema = z.object({
@@ -24,6 +27,16 @@ export const ContactUsSchema = z.object({
   phoneNumber: z.string().min(1, "Phone number is required"),
   message: z.string().min(1, "Message is required"),
   agreeToPromotionalMessages: z.boolean().optional(),
+  file: z
+    .instanceof(FileList)
+    .refine((files) => files.length > 0, "File is required")
+    .refine(
+      (files) =>
+        Array.from(files).every((file) =>
+          ["application/pdf", "application/msword"].includes(file.type)
+        ),
+      "Only PDF or Word documents are allowed"
+    ),
 });
 
 export const ConsultationSchema = z.object({
@@ -38,9 +51,12 @@ export const ConsultationSchema = z.object({
   phoneNumber: z.string().min(1, "Phone number is required."),
 });
 
+// import { z } from 'zod'
+
 export const JobApplicationSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
+  jobTitle: z.string().min(1, "Job Title is required"),
   email: z.string().email(),
   phoneNumber: z.string().min(1, "Phone number is required"),
   agreeToPromotionalMessages: z.boolean().optional(),
@@ -48,23 +64,14 @@ export const JobApplicationSchema = z.object({
     required_error: "Date is required.",
   }),
   timeSlot: z.string().min(1, "Time slot is required"),
-
-  // file: z
-  //   .instanceof(FileList)
-  //   .refine((file) => file?.length == 1, "File is required."),
-
-  // file: z
-  //   .instanceof(File)
-  //   .refine(
-  //     (file) =>
-  //       [
-  //         "application/pdf",
-  //         "application/msword",
-  //         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  //       ].includes(file.type),
-  //     { message: "Invalid file type. Only PDF, DOC, and DOCX are allowed." }
-  //   )
-  // .refine((file) => file.size <= 2 * 1024 * 1024, {
-  //   message: "File size must be less than 2MB.",
-  // }),
+  file: z
+    .instanceof(FileList)
+    .refine((files) => files.length > 0, "File is required")
+    .refine(
+      (files) =>
+        Array.from(files).every((file) =>
+          ["application/pdf", "application/msword"].includes(file.type)
+        ),
+      "Only PDF or Word documents are allowed"
+    ),
 });

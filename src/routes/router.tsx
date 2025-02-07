@@ -12,6 +12,10 @@ import AuthLayout from "./layouts/AuthLayout";
 import LoginPage from "../pages/login-page";
 import RegisterUser from "../pages/register-user";
 import ForgetPassword from "../pages/forget-password";
+import DashboardHome from "../pages/dashboardHome";
+import PayEarly from "../pages/payEarly";
+import Transaction from "../pages/transaction";
+import ResetPassword from "../pages/reset-pasword";
 import OpenPositions from "../pages/open-positions";
 import JobDetails from "../pages/job-details";
 import JobApplication from "../pages/job-application";
@@ -21,6 +25,22 @@ import PrivacyPolicy from "../pages/privacy-policy";
 import TermsOfService from "../pages/terms-of-service";
 import CookiesPolicies from "../pages/cookies-policies";
 import DataProtectionPolicy from "../pages/data-protection";
+import DashboardLayout from "./layouts/DashboardLayout";
+import ProtectedRoute from "../components/ProtectedRoute";
+import Calendar from "../pages/calendar/page";
+import Profile from "../pages/profile";
+import CreditTransaction from '../pages/creditTransaction'
+
+import Dashboard from "../pages/Dashboard";
+import RewardTracker from "../pages/reward-tracker";
+import Refer from "../pages/refer";
+import CreateBill from "../components/ui/billForm/form";
+
+import PaymentHistory from "../pages/payments-history";
+import DocumentPage from "@/pages/documents";
+
+
+// import DashboardSettings from "../pages/DashboardSettings"
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +61,10 @@ export const router = createBrowserRouter([
           },
           {
             element: <ForgetPassword />,
+            path: "forget-password",
+          },
+          {
+            element: <ResetPassword />,
             path: "reset-password",
           },
           {
@@ -110,6 +134,171 @@ export const router = createBrowserRouter([
       {
         path: "/faqs",
         element: <FaqsPage />,
+      },
+    ],
+  },
+
+  {
+    path: "dashboard",
+    loader: jobLoader,
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DashboardHome />,
+      },
+    ],
+  },
+
+  {
+    path: "bills",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "create/:upload",
+        element: <CreateBill />,
+      },
+    ],
+  },
+
+  {
+    path: "payEarly",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <PayEarly />,
+      },
+    ],
+  },
+
+  {
+    path: "transaction",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Transaction />,
+      },
+      {
+        path:'/transaction/credit/add',
+        // index: true,
+        element: <CreditTransaction add={true} />,
+      },
+      {
+        path:'/transaction/credit/send',
+        // index: true,
+        element: <CreditTransaction add={false} />,
+      },
+    ],
+  },
+
+  {
+    path: "documents",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DocumentPage />,
+      },
+    ],
+  },
+
+  {
+    path: "payment-history",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <PaymentHistory />,
+      },
+    ],
+  },
+
+  {
+    path: "credit-tracker",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <RewardTracker />,
+      },
+    ],
+  },
+
+  {
+    path: "refer",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Refer />,
+      },
+    ],
+  },
+
+  {
+    path: "profile",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Profile />,
+      },
+    ],
+  },
+
+  {
+    path: "organizer",
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Calendar />,
       },
     ],
   },
