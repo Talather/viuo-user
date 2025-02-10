@@ -12,12 +12,13 @@ export const RegisterUserSchema = z.object({
   phoneNumber: z.string().trim().min(17, "Phone number is required"),
   password: z.string().min(6, "Password must be at least 6 characters long"),
   agreeToPromotionalMessages: z.boolean().optional(),
+  dob: z.string().min(5, "Date of birth is required"),
 });
 
 export const ResetPasswordSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(6),
-  confirmPassword: z.string().min(6),
+  // password: z.string().min(6),
+  // confirmPassword: z.string().min(6),
 });
 
 export const ContactUsSchema = z.object({
@@ -56,7 +57,7 @@ export const ConsultationSchema = z.object({
 export const JobApplicationSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
-  jobTitle: z.string().min(1, "Job Title is required"),
+  // jobTitle: z.string().min(1, "Job Title is required"),
   email: z.string().email(),
   phoneNumber: z.string().min(1, "Phone number is required"),
   agreeToPromotionalMessages: z.boolean().optional(),
