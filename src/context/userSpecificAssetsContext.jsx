@@ -63,7 +63,8 @@ export const UserAssetsProvider = ({ children }) => {
     // Real-time listener for bills
     const billsQuery = query(
       collection(db, "bills"),
-      where("user_id", "==", user.id)
+      where("user_id", "==", user.id),
+      where("isDeleted", "==", false)
     );
     const unsubscribeBills = onSnapshot(billsQuery, (querySnapshot) => {
       const bills = querySnapshot.docs.map((doc) => ({
@@ -73,33 +74,18 @@ export const UserAssetsProvider = ({ children }) => {
 
       const today = DateTime.now().setZone(user.timeZone);
 
-      bills.forEach((bill) => {
-        const dueDate = DateTime.fromISO(bill.dueDate, { zone: user.timeZone });
-        const daysEarly = Math.floor(dueDate.diff(today, "days").days);
-        if (bill.status === "paid") {
-          if (daysEarly < -1) {
-            const newDueDate = dueDate
-              .set({ month: (dueDate.month + 1) % 12 })
-              .toISO();
-            console.log(newDueDate);
-            const billRef = doc(db, "bills", bill.id);
-            updateDoc(billRef, { status: "unpaid", dueDate: newDueDate }).then(
-              () => {
-                console.log("BILL UPDATED");
-              }
-            );
-          }
-        }
-
-        console.log(daysEarly);
-      });
+      // bills.forEach((bill) => {
+      //   const dueDate = DateTime.fromISO(bill.dueDate, { zone: user.timeZone });
+      //   const daysEarly = Math.floor(dueDate.diff(today, "days").days);
+      // });
       dispatch({ type: "SET_ALL_BILLS", payload: bills });
     });
 
     // Real-time listener for documents
     const documentsQuery = query(
       collection(db, "documents"),
-      where("userId", "==", user.id)
+      where("userId", "==", user.id),
+      where("isDeleted", "==", false)
     );
     const unsubscribeDocuments = onSnapshot(documentsQuery, (querySnapshot) => {
       const documents = querySnapshot.docs.map((doc) => ({
@@ -138,6 +124,7 @@ export const UserAssetsProvider = ({ children }) => {
           id: doc.id,
           ...doc.data(),
         }));
+
         dispatch({
           type: "SET_USER_PREVIOUS_TRANSACTIONS",
           payload: transactions,
