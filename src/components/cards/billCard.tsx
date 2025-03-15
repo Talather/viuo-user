@@ -1,20 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
-import { Grid, IconButton, Stack, Chip } from "@mui/material";
-// import { useRouter } from "next/router";
+import { useState } from "react";
+import {
+  Grid,
+  IconButton,
+  Stack,
+  Chip,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
+
+// import { Grid, IconButton, Stack, Chip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-// import EditIcon from '@mui/icons-material/Edit'
-// import { format } from "date-fns";
+
 import EastIcon from "@mui/icons-material/East";
 import CurrencyFormat from "react-currency-format";
 
 import { deleteBill } from "@/lib/clientControllers/bills";
 import { Button } from "@nextui-org/button";
-// import { useNavigate } from "react-router-dom";
-// import { Button } from "@nextui-org/button";
-// import { on } from "events";
-// import * as moment from "moment/moment";
-
+import { db } from "@/lib/firebaseConfig";
+import { doc, updateDoc } from "firebase/firestore";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
 const Colors = [
   "#76D7C4",
   "#48C9B0",
@@ -38,13 +46,6 @@ const Colors = [
   "#8E44AD",
 ];
 
-// interface Bill {
-//   billName: string;
-//   amountDue: string;
-//   dueDate: string;
-//   priority?: boolean;
-// }
-
 interface BillCardProps {
   bill?: any;
   cardtype?: string;
@@ -55,8 +56,78 @@ interface BillCardProps {
 }
 
 export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
-  useEffect(() => {}, []);
+  const [autoPayEnabled, setAutoPayEnabled] = useState(bill?.autoPay || false);
+  const [nextPaymentDate, setNextPaymentDate] = useState(
+    bill?.nextPaymentDate || false
+  );
+  console.log(nextPaymentDate);
+  console.log(bill?.nextPaymentDate);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
+  const dueDateMoment = moment(bill?.dueDate.split("T")[0]).format(
+    "YYYY-MM-DD"
+  );
+
+  const getPaymentDate = (dueDate: any) => {
+    const today = new Date();
+    const due = new Date(dueDate);
+    if (due < today) {
+      const tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+      return tomorrow.toISOString().split("T")[0];
+    }
+    const paymentDate = new Date(due);
+    paymentDate.setDate(due.getDate() - 15);
+    if (paymentDate < today) {
+      const tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+      return tomorrow.toISOString().split("T")[0];
+    }
+    return paymentDate.toISOString().split("T")[0];
+  };
+
+  // Enable AutoPay and update Firestore
+  const enableAutoPay = async () => {
+    try {
+      if (!user) return;
+
+      if (!autoPayEnabled) {
+        if (!user.defaultPaymentMethod) {
+          navigate("/setupAutoPay");
+        }
+        const billRef = doc(db, "bills", bill.id);
+        await updateDoc(billRef, {
+          autoPay: true,
+          nextPaymentDate: getPaymentDate(bill.dueDate),
+          // status: "pending",
+        });
+
+        setAutoPayEnabled(true);
+      } else {
+        const billRef = doc(db, "bills", bill.id);
+        await updateDoc(billRef, {
+          autoPay: false,
+          // nextPaymentDate: getNextMonthDate(),
+          // status: "unpaid",
+        });
+
+        setAutoPayEnabled(false);
+      }
+    } catch (error) {
+      console.error("Error enabling AutoPay:", error);
+      // alert("Failed to enable AutoPay. Try again.");
+    }
+  };
+  const updatePaymentDate = async (date: string) => {
+    if (autoPayEnabled) {
+      const billRef = doc(db, "bills", bill.id);
+      await updateDoc(billRef, {
+        autoPay: true,
+        nextPaymentDate: date,
+      });
+    }
+  };
   const [isFlipped, setIsFlipped] = useState(false);
   // const navigate = useNavigate();
 
@@ -66,19 +137,18 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
 
   async function deleteCard() {
     await deleteBill(bill?.id);
-    // navigate("/bills");
-    // window.location.reload();
   }
-  // console.log('chytr', bill)
-  useEffect(() => {
-    // if (props.cardtype === "milestonecard") {
-    //   setIsFlipped(true);
-    // } else if (props.cardtype === "prioritycard") {
-    //   setIsFlipped(false);
-    // } else {
-    //   setIsFlipped(false);
-    // }
-  }, []);
+  const getTomorrowDate = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toISOString().split("T")[0];
+  };
+
+  // Format your due date into YYYY-MM-DD (you can pass a Date or string)
+  const formatDate = (date: string | Date) => {
+    const d = new Date(date);
+    return d.toISOString().split("T")[0];
+  };
 
   return (
     <Grid item sx={{ margin: "1em 1em" }}>
@@ -207,7 +277,7 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               wordWrap: "break-word",
             }}
           >
-            {bill?.dueDate.split("T")[0]}
+            {moment(dueDateMoment).format("MM-DD-YYYY")}
           </div>
           <div
             className="DueLabel"
@@ -245,8 +315,52 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               wordWrap: "break-word",
             }}
           >
-            {bill?.status || "unpaid"}
+            {bill?.status}
           </div>
+          {bill.autoPay === true && (
+            <div
+              className="Date"
+              style={{
+                width: 86,
+                height: 13,
+                left: 30,
+                top: 80,
+                position: "absolute",
+                opacity: 0.9,
+                color: "white",
+                fontSize: 14,
+                fontFamily: "Rubik",
+                fontWeight: "500",
+                letterSpacing: 0.5,
+                wordWrap: "break-word",
+              }}
+            >
+              AutoPay
+            </div>
+          )}
+          {bill.autoPay === true && bill.nextPaymentDate && (
+            <div
+              className="Date"
+              style={{
+                width: 300,
+                height: 13,
+                left: 100,
+                top: 80,
+                position: "absolute",
+                opacity: 0.9,
+                color: "white",
+                fontSize: 14,
+                fontFamily: "Rubik",
+                fontWeight: "500",
+                letterSpacing: 0.5,
+                wordWrap: "break-word",
+              }}
+            >
+              NextPaymentDate:
+              {moment(bill.nextPaymentDate).format("MM-DD-YYYY")}
+            </div>
+          )}
+
           <div
             className="DueLabel"
             style={{
@@ -327,7 +441,7 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
             }}
           ></div>
 
-          {/* <div
+          <div
             className="flipbutton"
             style={{
               // width: 75,
@@ -337,10 +451,10 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               position: "absolute",
             }}
           >
-            <IconButton aria-label="flip" color="primary" onClick={handleFlip}>
+            {/* <IconButton aria-label="flip" color="primary" onClick={handleFlip}>
               <EastIcon />
-            </IconButton>
-          </div> */}
+            </IconButton> */}
+          </div>
 
           <div
             className="editbuttons"
@@ -423,27 +537,76 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               src="https://firebasestorage.googleapis.com/v0/b/payoff-genius-app-8deb5/o/Frame.png?alt=media&token=81717bd6-32ac-4db5-8e4b-7b62979bf0b8"
             />
           </div>
-
-          {/* <Button name="Pay Now" /> */}
           <div
             className="lendername"
             style={{
-              width: 155,
-              height: 144,
-              left: 115,
-              top: 70,
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
               position: "absolute",
               color: "white",
               fontSize: 30,
               fontFamily: "Rubik",
               fontWeight: "1000",
               wordWrap: "break-word",
-              // backgroundColor:'red'
             }}
           >
-            <Button className="bg-blue-500 text-white p-5 shadow-lg rounded-md ">
-              Pay Now
-            </Button>
+            {/* RadioGroup Display */}
+
+            {autoPayEnabled ? (
+              <>
+                {/* Date Picker for Next Payment Date */}
+                {bill?.status === "unpaid" && (
+                  <>
+                    <label className="text-white text-lg mt-4 mb-2">
+                      Select Next Payment Date
+                    </label>
+                    <input
+                      type="date"
+                      value={nextPaymentDate}
+                      onChange={(e) => {
+                        setNextPaymentDate(e.target.value);
+                        updatePaymentDate(e.target.value);
+                      }}
+                      className="p-1 rounded-md text-black w-[70%] h-10 font-normal text-[1rem]"
+                      min={getTomorrowDate()} // tomorrow
+                      max={formatDate(bill?.dueDate)} // bill's due date
+                    />
+                  </>
+                )}
+                {/* Disable AutoPay Button */}
+                <Button
+                  onPress={enableAutoPay}
+                  className="bg-red-500 text-white p-3 shadow-lg rounded-md mt-4"
+                >
+                  Disable AutoPay
+                </Button>
+              </>
+            ) : (
+              <>
+                <RadioGroup value={autoPayEnabled ? "enabled" : "disabled"}>
+                  <FormControlLabel
+                    value="enabled"
+                    control={<Radio disabled />}
+                    label="AutoPay Enabled"
+                  />
+                  <FormControlLabel
+                    value="disabled"
+                    control={<Radio disabled />}
+                    label="AutoPay Disabled"
+                  />
+                </RadioGroup>
+                <Button
+                  onPress={enableAutoPay}
+                  className="bg-button-gpt text-white p-3 shadow-lg rounded-md mt-4"
+                >
+                  Enable AutoPay
+                </Button>
+              </>
+            )}
           </div>
 
           <div
@@ -466,225 +629,6 @@ export default function FileRow({ indexC = 1, onClick, bill }: BillCardProps) {
               <EastIcon />
             </IconButton>
           </div>
-
-          {/* <div
-            className="chartlabel"
-            style={{
-              width: 86,
-              height: 13,
-              left: 198,
-              top: 37,
-              position: "absolute",
-              opacity: 0.9,
-              color: "white",
-              fontSize: 14,
-              fontFamily: "Rubik",
-              fontWeight: "500",
-              letterSpacing: 0.5,
-              wordWrap: "break-word",
-              textAlign: "center",
-            }}
-          >
-            {(12.43).toFixed(0)}% <br /> Paid{" "}
-          </div> */}
-
-          {/* <div
-            className="chartlabel"
-            style={{
-              width: 86,
-              height: 13,
-              left: 198,
-              top: 37,
-              position: "absolute",
-              opacity: 0.9,
-              color: "white",
-              fontSize: 14,
-              fontFamily: "Rubik",
-              fontWeight: "500",
-              letterSpacing: 0.5,
-              wordWrap: "break-word",
-              textAlign: "center",
-            }}
-          >
-            {(10021.32).toFixed(0)}% <br /> Paid{" "}
-          </div>
-
-          <div>
-            <div
-              className="payoffDate"
-              style={{
-                width: 86,
-                height: 13,
-                left: 210,
-                top: 146,
-                position: "absolute",
-                opacity: 0.9,
-                color: "white",
-                fontSize: 14,
-                fontFamily: "Rubik",
-                fontWeight: "500",
-                letterSpacing: 0.5,
-                wordWrap: "break-word",
-              }}
-            >
-              12/12/2202
-            </div>
-            <div
-              className="DueLabel"
-              style={{
-                width: 115,
-                height: 13,
-                left: 210,
-                top: 124,
-                position: "absolute",
-                opacity: 0.75,
-                color: "white",
-                fontSize: 14,
-                fontFamily: "Rubik",
-                fontWeight: "500",
-                wordWrap: "break-word",
-              }}
-            >
-              Payoff Date
-            </div>
-          </div>
-
-          <div>
-            <div
-              className="nextDueDate"
-              style={{
-                width: 86,
-                height: 13,
-                left: 30,
-                top: 146,
-                position: "absolute",
-                opacity: 0.9,
-                color: "white",
-                fontSize: 14,
-                fontFamily: "Rubik",
-                fontWeight: "500",
-                letterSpacing: 0.5,
-                wordWrap: "break-word",
-              }}
-            >
-              12/12/2203
-            </div>
-            <div
-              className="nextDueDate"
-              style={{
-                width: 115,
-                height: 13,
-                left: 30,
-                top: 124,
-                position: "absolute",
-                opacity: 0.75,
-                color: "white",
-                fontSize: 14,
-                fontFamily: "Rubik",
-                fontWeight: "500",
-                wordWrap: "break-word",
-              }}
-            > */}
-          {/* Due Date
-            </div>
-          </div>  */}
-
-          {/* <div
-            className="minpay"
-            style={{
-              width: 86,
-              height: 13,
-              left: 110,
-              top: 146,
-              position: "absolute",
-              opacity: 0.9,
-              color: "white",
-              fontSize: 14,
-              fontFamily: "Rubik",
-              fontWeight: "500",
-              letterSpacing: 0.5,
-              wordWrap: "break-word",
-            }}
-          >
-            <NumericFormat
-              value={file.minpay}
-              displayType={"text"}
-              thousandSeparator={true}
-              prefix={"$"}
-            />
-          </div>
-          <div
-            className="minLabel"
-            style={{
-              width: 115,
-              height: 13,
-              left: 110,
-              top: 124,
-              position: "absolute",
-              opacity: 0.75,
-              color: "white",
-              fontSize: 14,
-              fontFamily: "Rubik",
-              fontWeight: "500",
-              wordWrap: "break-word",
-            }}
-          >
-            Min Payment
-          </div>
-
-          <div
-            className="flipbutton"
-            style={{
-              right: 5,
-              top: 65,
-              position: "absolute",
-            }}
-          >
-            <IconButton aria-label="flip" color="primary" onClick={handleFlip}>
-              <EastIcon />
-            </IconButton>
-          </div>
-
-          {/* <div
-            className="Balance"
-            style={{
-              width: 145,
-              height: 26,
-              left: 30,
-              top: 72,
-              position: "absolute",
-              color: "white",
-              fontSize: 14,
-              fontFamily: "Rubik",
-              fontWeight: "500",
-              wordWrap: "break-word",
-            }}
-          >
-            <NumericFormat
-              value={file.originalBalance}
-              displayType={"text"}
-              thousandSeparator={true}
-              prefix={"$"}
-            />
-          </div> */}
-          {/* <div
-            className="OrigBalance"
-            style={{
-              width: 126,
-              height: 13,
-              left: 30,
-              top: 50,
-              position: "absolute",
-              opacity: 0.75,
-              color: "white",
-              fontSize: 14,
-              fontFamily: "Rubik",
-              fontWeight: "500",
-              wordWrap: "break-word",
-            }}
-          >
-            Original Balance
-          </div> */}
         </div>
       </div>
     </Grid>

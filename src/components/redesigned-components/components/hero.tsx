@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
 import { Fragment } from "react/jsx-runtime";
 import ShinyButton from "./shiny-button";
@@ -19,8 +20,41 @@ const variants = {
 };
 
 const text = "Your Financial Future, Redefined with Vuior";
+import At from "./../../../../public/assets/icons/AT&T.png";
+import SouthernCompany from "./../../../../public/assets/icons/SouthernCompany.png";
+import Mastercard from "./../../../../public/assets/icons/mastercard.png";
+import Verizon from "./../../../../public/assets/icons/verizon.png";
+import Exelon from "./../../../../public/assets/icons/exelon.png";
 
+import { Image } from "@nextui-org/react";
 const Hero = () => {
+  const logos = [
+    {
+      src: At,
+      alt: "At",
+      width: 100,
+    },
+    {
+      src: SouthernCompany,
+      alt: "SouthernCompany",
+      width: 100,
+    },
+    {
+      src: Mastercard,
+      alt: "Mastercard",
+      width: 100,
+    },
+    {
+      src: Verizon,
+      alt: "Verizon",
+      width: 100,
+    },
+    {
+      src: Exelon,
+      alt: "Exelon",
+      width: "8rem",
+    },
+  ];
   const words = text.split(" ");
 
   return (
@@ -64,7 +98,7 @@ const Hero = () => {
           variants={variants}
         >
           <ShinyButton
-            href={"/consultation"}
+            href={"/create-account"}
             hideIcon
             className="relative px-16 z-10 h-14 w-full shadow-lg transition-shadow duration-300 hover:shadow-xl rounded-full font-semibold text-xl"
           >
@@ -99,6 +133,36 @@ const Hero = () => {
           delay={1.2}
         />
       </div>
+      <motion.div transition={transition} variants={variants}>
+        <section className="pt-[10vh] sm:pt-[20vh] px-2 opacity-60">
+          <div className="w-full">
+            <div className="flex flex-wrap justify-center items-center  gap-6 gap-x-20 ">
+              {logos.map((logo, index) => (
+                <div
+                  key={index}
+                  className="relative flex items-center justify-center flex-row"
+                >
+                  {logo.width !== 100 ? (
+                    <Image
+                      src={logo.src}
+                      alt={logo.alt}
+                      className="object-contain  rounded-none h-[10vw] sm:h-[5vw]"
+                      height={logo.width}
+                    />
+                  ) : (
+                    <Image
+                      src={logo.src}
+                      alt={logo.alt}
+                      className="object-contain h-[10vw] sm:h-[5vw] rounded-none"
+                      // width={logo.width}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </motion.div>
     </motion.div>
   );
 };
