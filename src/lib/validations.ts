@@ -57,14 +57,15 @@ export const ConsultationSchema = z.object({
 export const JobApplicationSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
+  whydoyouwanttoworkatvuior: z.string().min(1, "Is required"),
   // jobTitle: z.string().min(1, "Job Title is required"),
   email: z.string().email(),
   phoneNumber: z.string().min(1, "Phone number is required"),
   agreeToPromotionalMessages: z.boolean().optional(),
-  date: z.date({
-    required_error: "Date is required.",
-  }),
-  timeSlot: z.string().min(1, "Time slot is required"),
+  // date: z.date({
+  //   required_error: "Date is required.",
+  // }),
+  // timeSlot: z.string().min(1, "Time slot is required"),
   file: z
     .instanceof(FileList)
     .refine((files) => files.length > 0, "File is required")

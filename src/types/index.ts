@@ -5,7 +5,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
-  whydoyouwanttoworkatvuior: string;
+  whydoyouwanttoworkatvuior?: string;
   avatar?: string;
   role: "admin" | "user";
   dob: string;

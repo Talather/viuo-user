@@ -56,14 +56,13 @@ const ConsultationForm = () => {
     setIsLoading(true);
 
     try {
-      const selectedDate = format(values.date, "PPP");
+      //const selectedDate = format(values.date, "PPP");
 
       const formData = {
         name: values.name,
         email: values.email,
         phone: values.phoneNumber,
         // selectedDate: selectedDate,
-        whydoyouwanttoworkatvuior: values.whydoyouwanttoworkatvuior,
         agreeToPromotionalMessages: `${
           values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
         }`,

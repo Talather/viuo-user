@@ -62,6 +62,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 address: userData.address || "",
                 totalDocuments: userData.totalDocuments || 0,
                 phoneNo: userData.phoneNo,
+                whydoyouwanttoworkatvuior: userData.whydoyouwanttoworkatvuior,
                 referralCode: userData.referralCode,
                 profileLink: userData.profileLink,
                 redeemedReferralCode: userData.redeemedReferralCode,

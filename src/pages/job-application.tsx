@@ -13,19 +13,10 @@ import {
   FormLabel,
   FormMessage,
 } from "../components/ui/form";
-import { Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
+import { Checkbox, Input } from "@nextui-org/react";
 import { useToast } from "../hooks/use-toast";
 // import emailjs from "@emailjs/browser";
 import { NavLink } from "react-router-dom";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../components/ui/popover";
-import { cn } from "../lib/utils";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "../components/ui/calendar";
 import axios from "axios";
 import { storage } from "../lib/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -46,11 +37,9 @@ const JobApplication = () => {
       email: "",
       firstName: "",
       lastName: "",
-      whydoyouwanttoworkatvuior: "",
       agreeToPromotionalMessages: true,
       phoneNumber: "",
-      timeSlot: "",
-      date: new Date(),
+      whydoyouwanttoworkatvuior: "",
     },
   });
   // const fileRef = form.register("file");
@@ -66,24 +55,19 @@ const JobApplication = () => {
   };
 
   const onSubmit = async (values: JobApplicationData) => {
-    console.log(values);
     setIsLoading(true);
     const docRef = ref(storage, `docs/${uDoc.name}`);
     const snapshot = await uploadBytes(docRef, uDoc);
     // Get the download URL
     const docUrl = await getDownloadURL(snapshot.ref);
     setIsLoading(true);
-    const selectedDate = format(values.date, "PPP");
 
     const formData = {
       subject: `New Job Application Received ${values.email}`,
       jobTitle: `${job.title}`,
       name: `${values.firstName} ${values.lastName}`,
       email: `${values.email}`,
-      whydoyouwanttoworkatvuior: `${values.whydoyouwanttoworkatvuior}`,
       phone: values.phoneNumber,
-      // selectedDate: selectedDate,
-      // timeSlot: values.timeSlot,
       agreeToPromotionalMessages: `${
         values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
       }`,
@@ -119,7 +103,6 @@ const JobApplication = () => {
               <li><strong>Job Title:</strong> ${formData.jobTitle}</li>
 
               <li><strong>Phone:</strong> ${formData.phone}</li>
-              <li><strong>Why do you want to work at Vuior Billpay?:</strong> ${formData.whydoyouwanttoworkatvuior}</li>
               <li><strong>Promotional Messages:</strong> ${formData.agreeToPromotionalMessages}</li>
             </ul>
             <div style="width:500px; background-color:#10a37f; text-align:center; justify-content:center; color:white; border-radius:05px;">
@@ -132,7 +115,6 @@ const JobApplication = () => {
               Job Title: ${formData.jobTitle}
               Email: ${formData.email}
               Phone: ${formData.phone}
-              whydoyouwanttoworkatvuior: ${formData.whydoyouwanttoworkatvuior}
               Promotional Messages: ${formData.agreeToPromotionalMessages}
               Resume: ${docUrl}
 `,
@@ -365,8 +347,6 @@ const JobApplication = () => {
             size="md"
             label="Why do you want to work at Vuior Billpay?"
             maxLength={100}
-            errorMessage={errors.whydoyouwanttoworkatvuior?.message}
-            isInvalid={!!errors.whydoyouwanttoworkatvuior?.message}
             {...field}
             onChange={(e) => {
               if (e.target.value.length <= 1000) {
