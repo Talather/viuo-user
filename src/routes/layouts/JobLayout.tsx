@@ -81,7 +81,7 @@ const JobLayout = () => {
             variant={"underlined"}
             aria-label="Tabs "
           >
-            <Tab key={`/careers/jobs/${job.id}`} title="Overviewd" />
+            <Tab key={`/careers/jobs/${job.id}`} title="Overview" />
             <Tab
               key={`/careers/jobs/${job.id}/application`}
               title="Application"

@@ -443,7 +443,7 @@ export interface JobDescription {
   jobSummary?: string[];
   objectives?: string[];
   roleResponsibilities?: string[];
-  dailyAndWeeklyTasks: string[];
+  dailyAndWeeklyTasks?: string[];
   /*salaryExpectations: {
     min: number;
     max: number;
@@ -468,7 +468,7 @@ export const initialJobs: JobDescription[] = [
   {
     id: "41c41934-2a21-4ba6-afc2-752f3a1da3f3",
     title: "Billing Analyst ",
-    department: "Vuior Billpay - Billing Analyst",
+    department: "Accounting",
     location: "Remote",
     type: "Vuior Billpay",
     aboutTheRoleHeading:"About the Role",
@@ -511,18 +511,13 @@ export const initialJobs: JobDescription[] = [
       "Opportunities for growth in one of the most innovative bill payment platforms in the world.",
     ],
     contantSix:"We believe everyone deserves financial freedom. By joining our team, you’re not just taking a job—you’re becoming part of a global movement to make everyday finances better for millions.",
-    dailyAndWeeklyTasks: [
-      "1: Visit https://vuiorcom.vercel.app/",
-      "2: Complete the online application",
-      "3: Get your promo code and start earning immediately!",
-    ],
     salaryExpectations:"Up to 40/hr",
    
   },
   {
     id: "41c41934-2a21-4ba6-afc2-752f3a1da3f2",
     title: "Vuior Billpay Ambassador - Program Manager ",
-    department: "Vuior Billpay Ambassador",
+    department: "Administration",
     location: "Remote",
     type: "Independent Contractor 1099",
     aboutTheRoleHeading:"About the Role",
@@ -558,18 +553,14 @@ export const initialJobs: JobDescription[] = [
         "Opportunity to build and scale a national network of passionate brand advocates.", 
         "Be part of a movement to change how people handle their bills.",
     ],
-    dailyAndWeeklyTasks: [
-      "1: Visit https://vuiorcom.vercel.app/",
-      "2: Complete the online application",
-      "3: Get your promo code and start earning immediately!",
-    ],
+    
     salaryExpectations:"Up to 40/hr",
    
   },
   {
     id: "41c41934-2a21-4ba6-afc2-752f3a1da3f1",
     title: "Vuior Billpay Ambassador - Brand Ambassador ",
-    department: "Vuior Billpay Ambassador",
+    department: "Community Engagement",
     location: "Remote",
     type: "Flexible / Independent ",
     keyResponsibilitiesHeading:"Why Join?",
@@ -598,9 +589,8 @@ export const initialJobs: JobDescription[] = [
       "Entrepreneurs, students, influencers, gig workers, and side hustlers welcome!.",
     ],
     dailyAndWeeklyTasks: [
-      "1: Visit https://vuiorcom.vercel.app/",
-      "2: Complete the online application",
-      "3: Get your promo code and start earning immediately!",
+      "1: Complete the online application",
+      "2: Get your promo code and start earning immediately!",
     ],
     salaryExpectations:"3,500 per week ",
    

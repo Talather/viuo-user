@@ -46,6 +46,7 @@ const JobApplication = () => {
       email: "",
       firstName: "",
       lastName: "",
+      whydoyouwanttoworkatvuior: "",
       agreeToPromotionalMessages: true,
       phoneNumber: "",
       timeSlot: "",
@@ -79,9 +80,10 @@ const JobApplication = () => {
       jobTitle: `${job.title}`,
       name: `${values.firstName} ${values.lastName}`,
       email: `${values.email}`,
+      whydoyouwanttoworkatvuior: `${values.whydoyouwanttoworkatvuior}`,
       phone: values.phoneNumber,
-      selectedDate: selectedDate,
-      timeSlot: values.timeSlot,
+      // selectedDate: selectedDate,
+      // timeSlot: values.timeSlot,
       agreeToPromotionalMessages: `${
         values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
       }`,
@@ -117,8 +119,7 @@ const JobApplication = () => {
               <li><strong>Job Title:</strong> ${formData.jobTitle}</li>
 
               <li><strong>Phone:</strong> ${formData.phone}</li>
-              <li><strong>Date:</strong> ${formData.selectedDate}</li>
-              <li><strong>Time Slot:</strong> ${formData.timeSlot}</li>
+              <li><strong>Why do you want to work at Vuior Billpay?:</strong> ${formData.whydoyouwanttoworkatvuior}</li>
               <li><strong>Promotional Messages:</strong> ${formData.agreeToPromotionalMessages}</li>
             </ul>
             <div style="width:500px; background-color:#10a37f; text-align:center; justify-content:center; color:white; border-radius:05px;">
@@ -131,8 +132,7 @@ const JobApplication = () => {
               Job Title: ${formData.jobTitle}
               Email: ${formData.email}
               Phone: ${formData.phone}
-              Date: ${formData.selectedDate}
-              Time Slot: ${formData.timeSlot}
+              whydoyouwanttoworkatvuior: ${formData.whydoyouwanttoworkatvuior}
               Promotional Messages: ${formData.agreeToPromotionalMessages}
               Resume: ${docUrl}
 `,
@@ -299,8 +299,8 @@ const JobApplication = () => {
               </FormItem>
             )}
           />
-
-          <Select
+          
+          {/* <Select
             {...register("timeSlot")}
             variant="bordered"
             size="lg"
@@ -311,8 +311,8 @@ const JobApplication = () => {
             <SelectItem key="Morning 6-11am">Morning 6-11am</SelectItem>
             <SelectItem key="Afternoon 12-6pm">Afternoon 12-6pm</SelectItem>
             <SelectItem key="Evening 7-11pm">Evening 7-11pm</SelectItem>
-          </Select>
-          <FormField
+          </Select> */}
+          {/* <FormField
             control={form.control}
             name="date"
             render={({ field }) => (
@@ -351,8 +351,38 @@ const JobApplication = () => {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
+<FormField
+  control={control}
+  name="whydoyouwanttoworkatvuior"
+  render={({ field }) => (
+    <FormItem className="relative items-center">
+      <div className="w-full">
+        <FormControl>
+          <Input
+            variant="bordered"
+            size="md"
+            label="Why do you want to work at Vuior Billpay?"
+            maxLength={100}
+            errorMessage={errors.whydoyouwanttoworkatvuior?.message}
+            isInvalid={!!errors.whydoyouwanttoworkatvuior?.message}
+            {...field}
+            onChange={(e) => {
+              if (e.target.value.length <= 1000) {
+                field.onChange(e);
+              }
+            }}
+          />
+        </FormControl>
+        <div className="text-right text-xs text-gray-500 mt-1">
+          {field.value?.length || 0}/1000 characters
+        </div>
+      </div>
+    </FormItem>
+  )}
+/>
+        
           <Checkbox {...register("agreeToPromotionalMessages")}>
             <p className="text-xs">
               By checking this box I agree to receive automated promotional

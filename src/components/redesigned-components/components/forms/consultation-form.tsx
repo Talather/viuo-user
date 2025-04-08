@@ -62,8 +62,8 @@ const ConsultationForm = () => {
         name: values.name,
         email: values.email,
         phone: values.phoneNumber,
-        selectedDate: selectedDate,
-        timeSlot: values.timeSlot,
+        // selectedDate: selectedDate,
+        whydoyouwanttoworkatvuior: values.whydoyouwanttoworkatvuior,
         agreeToPromotionalMessages: `${
           values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
         }`,
