@@ -13,19 +13,10 @@ import {
   FormLabel,
   FormMessage,
 } from "../components/ui/form";
-import { Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
+import { Checkbox, Input } from "@nextui-org/react";
 import { useToast } from "../hooks/use-toast";
 // import emailjs from "@emailjs/browser";
 import { NavLink } from "react-router-dom";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../components/ui/popover";
-import { cn } from "../lib/utils";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "../components/ui/calendar";
 import axios from "axios";
 import { storage } from "../lib/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -48,8 +39,7 @@ const JobApplication = () => {
       lastName: "",
       agreeToPromotionalMessages: true,
       phoneNumber: "",
-      timeSlot: "",
-      date: new Date(),
+      whydoyouwanttoworkatvuior: "",
     },
   });
   // const fileRef = form.register("file");
@@ -65,14 +55,12 @@ const JobApplication = () => {
   };
 
   const onSubmit = async (values: JobApplicationData) => {
-    console.log(values);
     setIsLoading(true);
     const docRef = ref(storage, `docs/${uDoc.name}`);
     const snapshot = await uploadBytes(docRef, uDoc);
     // Get the download URL
     const docUrl = await getDownloadURL(snapshot.ref);
     setIsLoading(true);
-    const selectedDate = format(values.date, "PPP");
 
     const formData = {
       subject: `New Job Application Received ${values.email}`,
@@ -80,8 +68,6 @@ const JobApplication = () => {
       name: `${values.firstName} ${values.lastName}`,
       email: `${values.email}`,
       phone: values.phoneNumber,
-      selectedDate: selectedDate,
-      timeSlot: values.timeSlot,
       agreeToPromotionalMessages: `${
         values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
       }`,
@@ -117,8 +103,6 @@ const JobApplication = () => {
               <li><strong>Job Title:</strong> ${formData.jobTitle}</li>
 
               <li><strong>Phone:</strong> ${formData.phone}</li>
-              <li><strong>Date:</strong> ${formData.selectedDate}</li>
-              <li><strong>Time Slot:</strong> ${formData.timeSlot}</li>
               <li><strong>Promotional Messages:</strong> ${formData.agreeToPromotionalMessages}</li>
             </ul>
             <div style="width:500px; background-color:#10a37f; text-align:center; justify-content:center; color:white; border-radius:05px;">
@@ -131,8 +115,6 @@ const JobApplication = () => {
               Job Title: ${formData.jobTitle}
               Email: ${formData.email}
               Phone: ${formData.phone}
-              Date: ${formData.selectedDate}
-              Time Slot: ${formData.timeSlot}
               Promotional Messages: ${formData.agreeToPromotionalMessages}
               Resume: ${docUrl}
 `,
@@ -299,8 +281,8 @@ const JobApplication = () => {
               </FormItem>
             )}
           />
-
-          <Select
+          
+          {/* <Select
             {...register("timeSlot")}
             variant="bordered"
             size="lg"
@@ -311,8 +293,8 @@ const JobApplication = () => {
             <SelectItem key="Morning 6-11am">Morning 6-11am</SelectItem>
             <SelectItem key="Afternoon 12-6pm">Afternoon 12-6pm</SelectItem>
             <SelectItem key="Evening 7-11pm">Evening 7-11pm</SelectItem>
-          </Select>
-          <FormField
+          </Select> */}
+          {/* <FormField
             control={form.control}
             name="date"
             render={({ field }) => (
@@ -351,8 +333,36 @@ const JobApplication = () => {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
+<FormField
+  control={control}
+  name="whydoyouwanttoworkatvuior"
+  render={({ field }) => (
+    <FormItem className="relative items-center">
+      <div className="w-full">
+        <FormControl>
+          <Input
+            variant="bordered"
+            size="md"
+            label="Why do you want to work at Vuior Billpay?"
+            maxLength={100}
+            {...field}
+            onChange={(e) => {
+              if (e.target.value.length <= 1000) {
+                field.onChange(e);
+              }
+            }}
+          />
+        </FormControl>
+        <div className="text-right text-xs text-gray-500 mt-1">
+          {field.value?.length || 0}/1000 characters
+        </div>
+      </div>
+    </FormItem>
+  )}
+/>
+        
           <Checkbox {...register("agreeToPromotionalMessages")}>
             <p className="text-xs">
               By checking this box I agree to receive automated promotional

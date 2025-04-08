@@ -19,7 +19,7 @@ const variants = {
   },
 };
 
-const text = "Your Financial Future, Redefined with Vuior";
+const text = "Your Financial Future, Redefined with Vuior Billpay";
 import At from "./../../../../public/assets/icons/AT&T.png";
 import SouthernCompany from "./../../../../public/assets/icons/SouthernCompany.png";
 import Mastercard from "./../../../../public/assets/icons/mastercard.png";

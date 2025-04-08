@@ -15,25 +15,61 @@ const JobDetails = () => {
       {/* About us */}
       <Card className="">
         <CardHeader>
-          <CardTitle>About Us</CardTitle>
+          <CardTitle>Overview</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">{job.aboutUs}</p>
         </CardContent>
       </Card>
+
+      
+      {job.aboutTheRoleHeading && job.aboutTheRoleHeading.length > 0 && (
+      <Card>
+      <CardHeader>
+      <CardTitle>{job.aboutTheRoleHeading}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground">{job.aboutTheRole}</p>
+      </CardContent>
+      </Card>
+      )}
+
       {/* Summary */}
+      {job.keyResponsibilitiesHeading && job.keyResponsibilitiesHeading.length > 0 && (
       <Card className="">
         <CardHeader>
-          <CardTitle>Job Summary</CardTitle>
+          <CardTitle>{job.keyResponsibilitiesHeading}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">{job.jobSummary}</p>
+          <ul className="list-disc pl-4 space-y-2 text-muted-foreground">
+            {(job.jobSummary ?? []).map((objective, index) => (
+              <li key={index}>{objective}</li>
+            ))}
+          </ul>
         </CardContent>
       </Card>
-      {/* Key Objectives */}
+      )}
+
+       {/* Qualifications */}
+       {job.qualificationHeading && job.qualificationHeading.length > 0 && (
+      <Card className="">
+        <CardHeader>
+          <CardTitle>{job.qualificationHeading}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-disc pl-4 space-y-2 text-muted-foreground">
+            {(job.qualifications ?? []).map((objective, index) => (
+              <li key={index}>{objective}</li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+      )}
+
+    {job.objectives && job.objectives.length > 0 && (
       <Card>
         <CardHeader>
-          <CardTitle>Key Objectives</CardTitle>
+          <CardTitle>What You'll Do </CardTitle>
         </CardHeader>
         <CardContent>
           <ul className="list-disc pl-4 space-y-2 text-muted-foreground">
@@ -43,10 +79,59 @@ const JobDetails = () => {
           </ul>
         </CardContent>
       </Card>
+      )}
+
+       {/* Qualifications */}
+       {job.headingfour && job.headingfour.length > 0 && (
+      <Card className="">
+        <CardHeader>
+          <CardTitle>{job.headingfour}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-disc pl-4 space-y-2 text-muted-foreground">
+            {(job.contantfour ?? []).map((objective, index) => (
+              <li key={index}>{objective}</li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+      )}
+
+      {/* Qualifications */}
+      {job.headingfive && job.headingfive.length > 0 && (
+      <Card className="">
+        <CardHeader>
+          <CardTitle>{job.headingfive}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-disc pl-4 space-y-2 text-muted-foreground">
+            {(job.contantfive ?? []).map((objective, index) => (
+              <li key={index}>{objective}</li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+      )}
+
+    {job.headingSix && job.headingSix.length > 0 && (
+      <Card className="">
+        <CardHeader>
+          <CardTitle>{job.headingSix}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">{job.contantSix}</p>
+        </CardContent>
+      </Card>
+      )}
+
+      {/* Key Objectives */}
+     
+
       {/* Role responsibilities */}
+      {/* {job.roleResponsibilities && job.roleResponsibilities.length > 0 && (
       <Card>
         <CardHeader>
-          <CardTitle>Role responsibilities</CardTitle>
+          <CardTitle>Who We're Looking For </CardTitle>
         </CardHeader>
         <CardContent>
           <ul className="list-disc pl-4 space-y-2 text-muted-foreground">
@@ -56,23 +141,40 @@ const JobDetails = () => {
           </ul>
         </CardContent>
       </Card>
+      )} */}
 
       {/* Daily and weekly tasks */}
+      {job.dailyAndWeeklyTasks && job.dailyAndWeeklyTasks.length > 0 && (
       <Card>
         <CardHeader>
-          <CardTitle>Daily and Weekly Tasks</CardTitle>
+          <CardTitle>How to Apply</CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="list-disc pl-4 space-y-2 text-muted-foreground">
+          <ul className="pl-4 space-y-2 text-muted-foreground">
             {job.dailyAndWeeklyTasks.map((task, index) => (
               <li key={index}>{task}</li>
             ))}
           </ul>
         </CardContent>
       </Card>
+      )}
+      {job.benefits && job.benefits.length > 0 && (
+      <Card>
+      <CardHeader>
+      <CardTitle>Benefits</CardTitle>
+      </CardHeader>
+      <CardContent>
+      <ul className="list-disc pl-4 space-y-2 text-muted-foreground">
+        {job.benefits.map((benefit, index) => (
+          <li key={index}>{benefit}</li>
+        ))}
+      </ul>
+      </CardContent>
+      </Card>
+      )}
 
       {/* Benefits */}
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle> Benefits</CardTitle>
         </CardHeader>
@@ -83,7 +185,7 @@ const JobDetails = () => {
             ))}
           </ul>
         </CardContent>
-      </Card>
+      </Card> */}
       <ShinyButton
         href={`/careers/jobs/${job.id}/application`}
         className="py-3 rounded-full mt-3"

@@ -12,16 +12,7 @@ const Footer = () => {
               Vuior - Empowering Your Financial Future, One Payment at a Time.
             </p>
             <div className="mt-[40px]">
-              <div className="flex items-end gap-[30px] mt-[30px]">
-                <div className="cursor-pointer">
-                  <SocialIcon
-                    url="https://x.com/vuiorhq?t=bh45yGMB-pvwIZvkF_QKuQ&s=09"
-                    bgColor="#095C46"
-                    fgColor="white"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                </div>
+              <div className="flex items-end gap-[30px] mt-[30px]">                
                 <div className="cursor-pointer">
                   <SocialIcon
                     url="https://www.facebook.com/profile.php?id=61557178921559"
@@ -34,15 +25,6 @@ const Footer = () => {
                 <div className="cursor-pointer">
                   <SocialIcon
                     url="https://www.instagram.com/vuiorhq"
-                    bgColor="#095C46"
-                    fgColor="white"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  />
-                </div>
-                <div className="cursor-pointer">
-                  <SocialIcon
-                    url="https://www.linkedin.com/company/vuior-hq"
                     bgColor="#095C46"
                     fgColor="white"
                     target="_blank"
