@@ -12,7 +12,7 @@ const CareersPage = () => {
             Innovate, Empower, Thrive
           </h3>
           <h1 className="mb-6 md:max-w-[70%] text-4xl md:text-5xl font-extrabold lg:text-6xl text-primary-text ">
-            Join the Vuior Ecosystem
+            Join Vuior Billpay
           </h1>
           <p className="text-secondary-text md:max-w-[70%] font-bold md:text-lg mb-8">
             Vuior is on a mission to redefine how people manage and save on
@@ -32,7 +32,7 @@ const CareersPage = () => {
           <MaxWidthContainer>
             <div className="text-center px-2 md:max-w-[80%] mx-auto">
               <h2 className="text-5xl font-semibold text-white mb-2">
-                Why Join the Vuior Ecosystem
+              Why Work at Vuior Billpay?
               </h2>
             </div>
             <ServiceCards className="lg:grid-cols-2" services={whyJoinUs} />

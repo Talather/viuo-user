@@ -65,10 +65,7 @@ const JobLayout = () => {
             <Divider />
             <div className="flex items-center gap-2">
               <DollarSign className="h-4 w-4 text-muted-foreground" />
-              <span>
-                ${job.salaryExpectations.min.toLocaleString()} - $
-                {job.salaryExpectations.max.toLocaleString()}
-              </span>
+              <span>{job.salaryExpectations}</span>
             </div>
           </CardContent>
         </Card>

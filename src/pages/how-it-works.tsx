@@ -28,7 +28,7 @@ Saving Now
       <MaxWidthContainer className="">
         <FeatureSection
           title="Join for Free"
-          description="Sign up for Vuior with no fees or credit checks."
+          description="No credit checks. No fees. Just smart savings."
           imageSrc="/icons/join.svg"
           imageAlt="Join for Free"
           buttonText="Sign Up"
@@ -37,7 +37,7 @@ Saving Now
         />
         <FeatureSection
           title="Add Your Bills"
-          description="Connect your bills—utilities, rent, credit cards, and more—in one easy-to-use dashboard."
+          description="Upload your rent, auto loan, phone, internet, or credit bills."
           imageSrc="/icons/addBills.svg"
           imageAlt="Add Bills"
           buttonHref="#"
@@ -47,9 +47,7 @@ Saving Now
 
         <FeatureSection
           title="Pay Early, Save More"
-          description="Vuior rewards you for paying bills early. The earlier the payment,
-the higher your savings up to 25%! Whether it’s 5 days or 10 days before the due date,
-your savings grow with every proactive payment."
+          description="The earlier you pay, the more you save—up to 25%. "
           imageSrc="/icons/payEarly.svg"
           imageAlt="Pay Early"
           buttonHref="#"
@@ -58,9 +56,7 @@ your savings grow with every proactive payment."
 
         <FeatureSection
           title="Automated Alerts"
-          description="Vuior keeps you informed. Our automated alerts notify you when it's
-the perfect time to pay to maximize your savings. As the due date approaches, you’ll
-receive reminders showing exactly how much you’ll save by paying early."
+          description="Get real-time notifications on when to pay for the biggest savings."
           imageSrc="/icons/alerts.svg"
           imageAlt="Alerts"
           buttonHref="#"
@@ -69,10 +65,7 @@ receive reminders showing exactly how much you’ll save by paying early."
 
         <FeatureSection
           title="Exclusive Discounts"
-          description="Thanks to Vuior’s partnerships with top service providers, you’ll
-get access to negotiated rates that offer even more savings. Vuior automatically applies
-these discounts to your bills, so you’re always getting the best deal. Enjoy exclusive
-rates with Vuior’s negotiated discounts from top service providers."
+          description="Through Vuior's provider network, you get better rates automatically."
           imageSrc="/icons/discounts.svg"
           imageAlt="Discounts"
           buttonHref="#"
@@ -80,9 +73,7 @@ rates with Vuior’s negotiated discounts from top service providers."
         />
         <FeatureSection
           title="Track Your Savings"
-          description="The React Dashboard gives you a clear view of all your bills, how
-early you paid, and the total savings you’ve accumulated. The more you engage, the
-more you save."
+          description="Your REACT Dashboard shows total savings, early payment bonuses, and progress"
           imageSrc="/icons/track.svg"
           imageAlt="Savings"
           buttonHref="#"
