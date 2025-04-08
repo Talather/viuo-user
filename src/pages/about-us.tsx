@@ -17,12 +17,7 @@ const AboutPage = () => {
             A Smarter Way to Pay, A Rewarding Way to Save
           </h1>
           <p className="text-secondary-text md:max-w-[90%] font-semibold md:text-lg mb-8">
-            At Vuior, we believe your bills should work for you, not against
-            you. The Vuior Experience empowers you to save effortlessly by
-            paying your bills early. Through partnerships with top-tier service
-            providers, we bring you exclusive discounts and unbeatable rates—no
-            credit checks, no fees, just real savings. <br /> Join Vuior today
-            to turn your bills into opportunities.
+          At <strong>Vuior Billpay</strong>, we believe that paying your bills should benefit you—not just your providers. The <strong>Vuior Billpay Experience</strong> turns routine bill payments into moments of reward and financial growth. 
           </p>
           <ShinyButton
             href={"/create-account"}
@@ -66,9 +61,7 @@ reduce your monthly expenses."
               Our Mission
             </h2>
             <p className="text-[#9ba1a6] max-w-[70%] mx-auto text-md my-6 leading-relaxed">
-              Our mission is to transform everyday payments into powerful
-              savings opportunities. Whether you pay 5 or 15 days early, Vuior
-              rewards your forward-thinking approach.
+            To turn everyday payments into powerful opportunities for savings. Whether it's 5 or 15 days  early, <strong> Vuior Billpay rewards you </strong> for staying ahead. 
             </p>
             <ShinyButton
               href="/create-account"
@@ -86,12 +79,7 @@ reduce your monthly expenses."
               <div className="md:w-1/2">
                 <h2 className="text-3xl font-extrabold mb-4">Who We Are</h2>
                 <p className="text-xl mb-6">
-                  At Vuior, we believe financial responsibility should be
-                  rewarding. We’re a community-driven platform designed to
-                  empower you with real savings simply by staying ahead on your
-                  bills. Whether it's rent, utilities, credit cards, or loans,
-                  Vuior gives you the tools to take control of your finances and
-                  enjoy rewards along the way.
+                We're a <strong>community-driven platform</strong> built on the belief that every payment should reward responsibility. Whether it's rent, internet, mobile plans, loans, or utilities, we give you the tools to <strong> manage smarter, save bigger, and grow financially.</strong>
                 </p>
                 {/* <ShinyButton className="w-fit">Learn More About Us</ShinyButton> */}
               </div>
@@ -123,12 +111,7 @@ reduce your monthly expenses."
               <div className="md:w-1/2 mt-5 md:mt-0">
                 <h2 className="text-3xl font-extrabold mb-4">What We Do</h2>
                 <p className="text-xl mb-6">
-                  Vuior is here to make bill management simple, smart, and
-                  rewarding. By paying your bills early, you unlock savings of
-                  up to 25%. Plus, through partnerships with top service
-                  providers, we’ve negotiated exclusive discounts just for you.
-                  Vuior does the hard work in the background, tracking due dates
-                  and optimizing savings so you don’t have to.
+                By paying early, our users unlock <strong>exclusive savings of up to 25%.</strong>  We've partnered with top-tier providers to negotiate discounts, optimize payment plans, and <strong>put money back into your hands.</strong> 
                 </p>
                 {/* <ShinyButton className="w-fit">Learn More About Us</ShinyButton> */}
               </div>

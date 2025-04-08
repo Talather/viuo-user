@@ -340,33 +340,32 @@ export const services = [
 ];
 
 export const reactNow = [
-  {
+ /* {
     icon: Sparkles,
     title: "Huge savings",
     description: `Unlock savings of up to 25% by paying
 bills early. Make the most of every dollar with Vuior—'Pay Early, Save
 Big!'`,
-  },
+  },*/
   {
     icon: Layers,
     title: "No Credit Check, No Fees",
-    description: `At Vuior, we believe financial empowerment should be for
-everyone. That’s why Vuior REWARDS is free to join and requires no credit checks.`,
+    description: `At Vuior, we believe financial empowerment should be for everyone. That's why Vuior REWARDS is free to join and requires no credit checks.`,
   },
-  {
+  /*{
     icon: Wrench,
     title: "Savings Alerts",
     description: `Never miss out on a savings opportunity—Vuior’s automated
 system keeps you in the loop when better rates or offers become available.
 `,
-  },
-  {
+  },*/
+  /*{
     icon: Sparkles,
     title: "Consolidate Bills",
     description: `Vuior lets you consolidate multiple bills into one EASY payment.
 Consolidate and save BIG on all your bills.
 `,
-  },
+  },*/
   {
     icon: Wrench,
     title: "Simple, Transparent Bill Management",
@@ -384,63 +383,53 @@ ease.
 ];
 
 export const commitmentsArr = [
-  {
+  /*{
     icon: Sparkles,
     title: "Inclusive & Community-Driven",
     description:
       "We’re committed to fostering an inclusive, community-driven ecosystem where diversity, equity, and inclusion are at the heart of everything we do. Vuior is more than just a platform—it’s a community where everyone is welcome, and everyone can succeed.",
-  },
+  },*/
   {
     icon: Layers,
-    title: "Partnerships for Your Benefit",
-    description: `We partner with
-leading service providers to bring you exclusive discounts, better rates, and
-maximized savings—helping you stay ahead financially.`,
+    title: "Optimized for You",
+    description: `Our platform analyzes bills, tracks payment patterns, and suggests the best time to pay for maximum savings.`,
   },
   {
     icon: Wrench,
-    title: "A Better Way to Manage Bills",
-    description: `From automated alerts to AI-powered savings
-optimization, we’re constantly working to ensure you get the best value out of every
-payment.
-`,
+    title: "Powered by Partnerships",
+    description: `We negotiate exclusive discounts for our users with providers across industries and regions.`,
   },
   {
     icon: Sparkles,
-    title: "Customer-Focused Approach",
-    description: `At Vuior, you are at the heart of everything we do. We
-focus on understanding and meeting your needs, creating lifelong relationships, and
-building a supportive community. Our customer-focused approach ensures that we
-provide personalized support and services designed to help you achieve your financial
-goals.
-`,
+    title: "People First",
+    description: `You're not just a user—you're a member of a movement. Our support, features, and vision are built around you.`,
   },
 ];
 
 export const whyJoinUs = [
   {
     icon: Sparkles,
-    title: "Innovative Environment",
+    title: "Mission-Driven Work",
     description:
-      "Work with cutting-edge technology and help us revolutionize bill management.",
+      "Help people save and achieve financial freedom around the world.",
   },
   {
     icon: Layers,
-    title: "Collaborative Culture",
+    title: "Global, Remote Team",
     description:
-      "Our team is driven by collaboration and inclusivity. We value diversity, equity, and inclusion in every aspect of our work. You'll work alongside talented professionals who share your passion for making a positive impact.",
+      "Work from anywhere. Thrive together.",
   },
   {
     icon: Wrench,
-    title: "Growth Opportunities",
+    title: "Growth-Focused",
     description:
-      "Vuior is a rapidly growing company dedicated to fostering professional growth. Whether advancing your career or developing new skills, Vuior provides ample opportunities to shape your future.",
+      "Opportunities to lead, grow, and evolve with us.",
   },
   {
     icon: Sparkles,
-    title: "Work-Life Balance",
+    title: "Technology & Innovation",
     description:
-      "We believe that happy, balanced employees are crucial to both individual and organizational success.",
+      "Be part of building something truly game-changing.",
   },
 ];
 
@@ -451,406 +440,170 @@ export interface JobDescription {
   location: string;
   type: string;
   aboutUs: string;
-  jobSummary: string;
-  objectives: string[];
-  roleResponsibilities: string[];
+  jobSummary?: string[];
+  objectives?: string[];
+  roleResponsibilities?: string[];
   dailyAndWeeklyTasks: string[];
-  salaryExpectations: {
+  /*salaryExpectations: {
     min: number;
     max: number;
   };
-  benefits: string[];
+  */
+  salaryExpectations: string;
+  aboutTheRole?: string;
+  aboutTheRoleHeading?: string;
+  keyResponsibilitiesHeading?: string;
+  qualificationHeading?: string;
+  headingfour?: string;
+  headingfive?: string;
+  headingSix?: string;
+  contantfour?: string[];
+  contantfive?: string[];
+  contantSix?: string;
+  qualifications?: string[];
+  benefits?: string[];
 }
 
 export const initialJobs: JobDescription[] = [
   {
-    id: "5e9b21f9-eb25-4061-9674-52d48950deca",
-    title: "Sales Manager - Growth Division",
-    department: "Sales",
+    id: "41c41934-2a21-4ba6-afc2-752f3a1da3f3",
+    title: "Billing Analyst ",
+    department: "Vuior Billpay - Billing Analyst",
     location: "Remote",
-    type: "Full-time",
+    type: "Vuior Billpay",
+    aboutTheRoleHeading:"About the Role",
+    qualificationHeading:"Requirements",
+    keyResponsibilitiesHeading:"Key Responsibilities",    
+    headingfour:"Who We're Looking For",    
+    headingfive:"Perks of Joining Vuior Billpay",    
+    headingSix:"Why Vuior Billpay?",    
     aboutUs:
-      "At Vuior, we're dedicated to fostering a community that prioritizes financial empowerment. Our mission is to support individuals in achieving their financial goals through innovative solutions and unwavering support.",
-    jobSummary:
-      "The Sales Manager - Growth Division will lead and develop a high-performing sales team, driving revenue targets and team development to new heights.",
-    objectives: [
-      "Build and develop a motivated sales team focused on achieving sales targets.",
-      "Implement strategies to drive revenue growth and expand our customer base.",
-      "Foster a collaborative and supportive team environment focused on continuous improvement and excellence.",
+      "As a Billing Analyst, you'll play a critical role in our mission to transform everyday payments into savings opportunities. You’ll work with data, help users track their bills, and identify optimization strategies for early payments and rewards.",
+    aboutTheRole:
+    "As a Billing Analyst, you'll play a critical role in our mission to transform everyday payments into savings opportunities. You’ll work with data, help users track their bills, and identify optimization strategies for early payments and rewards.",  
+    jobSummary:[
+    "Lead national recruitment efforts to attract and onboard new Ambassadors.",
+    "Develop training materials to ensure Ambassadors effectively communicate Vuior Billpay’s mission, services, and savings opportunities. ",
+    "Manage performance by tracking KPIs, signup conversions, and engagement from Ambassador activities. ",
+    "Coordinate and support content production (UGC videos, testimonials, social posts, etc.) from Ambassadors.", 
+    "Organize monthly Ambassador events (virtual/in-person) to boost morale, encourage collaboration, and drive sign-ups.", 
+    "Work closely with Marketing and Community teams to align campaign goals and messaging. ",
+    "Implement bonus structures and incentive programs to drive Ambassador performance and retention.", 
+    "Foster an inclusive community among Ambassadors focused on impact, ownership, and empowerment.",
     ],
-    roleResponsibilities: [
-      "Recruit, onboard, and train sales representatives.",
-      "Set sales targets and develop strategies to achieve them.",
-      "Provide ongoing coaching, feedback, and support to sales team members.",
-      "Monitor sales performance and provide regular reports to senior management.",
-      "Collaborate with marketing and product teams to align sales efforts with company goals.",
+    qualifications:[
+      "3+ years in billing, finance, data analysis, or related fields (preferred, not required).",
+      "Strong attention to detail and comfort working with numbers .",
+      "Excellent written and verbal communication skills .",
+      "Comfortable using remote tools and collaborating online.", 
+      "Self-starter with a passion for helping others save and succeed .",
+    ],  
+    
+    contantfour: [
+      "At Vuior Billpay, we’re on a mission to make bill payments smarter, more rewarding, and globally accessible. We're looking for Billing Analysts who are detail-oriented, tech-savvy, and excited to join a movement that helps people save money—one payment at a time.",
+      "Whether you’ve got 3+ years of billing experience or are looking to launch your career, we provide the tools, training, and support to help you succeed.",
     ],
+    contantfive: [
+      "Up to $40/hr.",  
+      "Fully remote position – work from anywhere.",
+      "Paid training – no experience? No problem.",
+      "Join a global, mission-driven team that's transforming financial wellness.",
+      "Opportunities for growth in one of the most innovative bill payment platforms in the world.",
+    ],
+    contantSix:"We believe everyone deserves financial freedom. By joining our team, you’re not just taking a job—you’re becoming part of a global movement to make everyday finances better for millions.",
     dailyAndWeeklyTasks: [
-      "Conduct team meetings to discuss goals, strategies, and progress.",
-      "Review sales metrics and performance data to identify areas for improvement.",
-      "Coach individual team members on sales techniques and strategies.",
-      "Communicate with other departments to ensure alignment on sales initiatives.",
-      "Develop and implement sales training programs to enhance team skills.",
+      "1: Visit https://vuiorcom.vercel.app/",
+      "2: Complete the online application",
+      "3: Get your promo code and start earning immediately!",
     ],
-    salaryExpectations: {
-      min: 150000,
-      max: 200000,
-    },
-    benefits: [
-      "Competitive salary with performance-based bonuses",
-      "Comprehensive training and professional development opportunities",
-      "Flexible work schedule and remote work options",
-      "Supportive and collaborative team environment",
-      "Commitment to diversity, equity, and inclusion",
-    ],
+    salaryExpectations:"Up to 40/hr",
+   
   },
   {
-    id: "314bbd49-d534-46a1-a33a-e83b8300a23d",
-    title: "Marketing Manager - Awareness Campaigns",
-    department: "Marketing",
+    id: "41c41934-2a21-4ba6-afc2-752f3a1da3f2",
+    title: "Vuior Billpay Ambassador - Program Manager ",
+    department: "Vuior Billpay Ambassador",
     location: "Remote",
-    type: "Full-time",
+    type: "Independent Contractor 1099",
+    aboutTheRoleHeading:"About the Role",
+    qualificationHeading:"Qualification",
+    keyResponsibilitiesHeading:"Key Responsibilities",    
+    headingfour:"What We Offer",    
     aboutUs:
-      "Vuior is dedicated to creating a community where financial empowerment is accessible to all. Through innovative solutions and impactful campaigns, we strive to raise awareness and drive positive change.",
-    jobSummary:
-      "The Marketing Manager will develop and execute marketing strategies to increase brand awareness, engage target audiences, and drive growth through creative campaigns and digital initiatives.",
-    objectives: [
-      "Enhance brand visibility and recognition in the market.",
-      "Generate leads and drive customer acquisition through marketing efforts.",
-      "Develop engaging content and campaigns to educate and inspire our audience.",
+      "Join Vuior Billpay — the nation's #1 platform dedicated to helping people manage and pay bills smarter. We empower individuals to save more, stress less, and build stronger communities — and we're building a team that reflects our mission.",
+    aboutTheRole:
+    "Join Vuior Billpay — the nation's #1 platform dedicated to helping people manage and pay bills smarter. We empower individuals to save more, stress less, and build stronger communities — and we're building a team that reflects our mission.",  
+    jobSummary:[
+    "Lead national recruitment efforts to attract and onboard new Ambassadors.",
+    "Develop training materials to ensure Ambassadors effectively communicate Vuior Billpay’s mission, services, and savings opportunities. ",
+    "Manage performance by tracking KPIs, signup conversions, and engagement from Ambassador activities. ",
+    "Coordinate and support content production (UGC videos, testimonials, social posts, etc.) from Ambassadors.", 
+    "Organize monthly Ambassador events (virtual/in-person) to boost morale, encourage collaboration, and drive sign-ups.", 
+    "Work closely with Marketing and Community teams to align campaign goals and messaging. ",
+    "Implement bonus structures and incentive programs to drive Ambassador performance and retention.", 
+    "Foster an inclusive community among Ambassadors focused on impact, ownership, and empowerment.",
     ],
-    roleResponsibilities: [
-      "Develop and implement comprehensive marketing strategies to achieve business goals.",
-      "Create and manage marketing campaigns across various channels, including digital, social media, and email.",
-      "Produce high-quality content, including blog posts, articles, and social media posts.",
-      "Analyze marketing metrics and KPIs to measure the effectiveness of campaigns and make data-driven decisions.",
-      "Collaborate with internal teams, including sales and product development, to align marketing efforts with business objectives.",
+    qualifications:[
+      "3+ years in marketing,sales, community management, or program coordination (preferred, not required).",
+      "Strong interpersonal and communication skills .",
+      "Experience with event planning, outreach campaigns and team development.", 
+      "Highly organized with the ability to manage multiple Ambassadors and initiatives simultaneously.", 
+      "Passion for financial literacy, community development, or bill management is a plus.", 
+    ],  
+    
+    contantfour: [
+        "Competitive salary and performance bonuses.",
+        "Remote work and flexible schedule.",
+        "Direct impact on brand growth and user acquisition.", 
+        "Opportunity to build and scale a national network of passionate brand advocates.", 
+        "Be part of a movement to change how people handle their bills.",
     ],
     dailyAndWeeklyTasks: [
-      "Plan and schedule marketing campaigns and content calendar.",
-      "Monitor and respond to social media activity and engagement.",
-      "Review and analyze marketing performance data to identify areas for improvement.",
-      "Coordinate with external vendors and agencies for marketing initiatives.",
-      "Stay informed about industry trends and best practices in marketing.",
+      "1: Visit https://vuiorcom.vercel.app/",
+      "2: Complete the online application",
+      "3: Get your promo code and start earning immediately!",
     ],
-    salaryExpectations: {
-      min: 120000,
-      max: 160000,
-    },
-    benefits: [
-      "Competitive salary with performance-based bonuses",
-      "Opportunities for professional development and growth",
-      "Flexible work schedule and remote work options",
-      "Supportive and collaborative team environment",
-      "Commitment to diversity, equity, and inclusion",
-    ],
-  },
-  {
-    id: "c30a7c01-ac0a-49b0-a401-f24f73cc03a1",
-    title: "Recruiting Manager - Talent Acquisition",
-    department: "Human Resources",
-    location: "Remote",
-    type: "Full-time",
-    aboutUs:
-      "At Vuior, we believe in the power of community and the importance of empowering individuals to achieve their financial goals. As a Recruiting Manager, you'll play a crucial role in driving our growth and expanding our team.",
-    jobSummary:
-      "The Recruiting Manager will oversee recruitment efforts, implement scalable processes, and expand our team to meet increasing demands, driving Vuior's growth through effective talent acquisition.",
-    objectives: [
-      "Build and manage a high-performing recruiting team.",
-      "Implement strategies to attract top talent and support company growth.",
-      "Develop and maintain strong relationships with candidates and stakeholders.",
-    ],
-    roleResponsibilities: [
-      "Develop and execute recruitment strategies to meet hiring goals.",
-      "Source, screen, and interview candidates for various positions.",
-      "Manage the end-to-end recruitment process, from job posting to offer negotiation.",
-      "Collaborate with hiring managers to understand staffing needs and priorities.",
-      "Build and maintain relationships with external partners, such as recruiting agencies and job boards.",
-    ],
-    dailyAndWeeklyTasks: [
-      "Review resumes and applications to identify qualified candidates.",
-      "Conduct phone screens and initial interviews to assess candidate fit.",
-      "Coordinate interviews with hiring managers and other stakeholders.",
-      "Manage candidate communication and follow-up throughout the hiring process.",
-      "Track recruitment metrics and analyze data to identify areas for improvement.",
-    ],
-    salaryExpectations: {
-      min: 130000,
-      max: 170000,
-    },
-    benefits: [
-      "Competitive salary with performance-based bonuses",
-      "Opportunities for professional development and career growth",
-      "Flexible work schedule and remote work options",
-      "Supportive and collaborative team environment",
-      "Commitment to diversity, equity, and inclusion",
-    ],
-  },
-  {
-    id: "6377ddbe-66cb-42c0-8802-6cb89a0b06f6",
-    title: "Debt Management Specialist - Team Lead",
-    department: "Financial Services",
-    location: "Remote",
-    type: "Full-time",
-    aboutUs:
-      "At Vuior, we're dedicated to empowering individuals to take control of their finances and achieve their goals. As a Debt Management Specialist, you'll play a vital role in helping our clients manage debt effectively and achieve financial empowerment.",
-    jobSummary:
-      "The Debt Management Specialist will assist clients in managing debt, negotiate on their behalf, and provide financial guidance to help them achieve financial empowerment.",
-    objectives: [
-      "Help clients develop personalized debt management plans.",
-      "Negotiate with creditors to reduce interest rates and payment amounts.",
-      "Provide financial education and support to help clients improve their financial health.",
-    ],
-    roleResponsibilities: [
-      "Analyze clients' financial situations and develop customized debt management plans.",
-      "Negotiate with creditors to reduce interest rates, waive fees, or create repayment plans.",
-      "Provide ongoing support and guidance to clients throughout the debt management process.",
-      "Monitor clients' progress and adjust strategies as needed to help them achieve their goals.",
-      "Educate clients on financial literacy topics and provide resources to help them improve their financial habits.",
-    ],
-    dailyAndWeeklyTasks: [
-      "Review clients' financial documents and assess their debt situation.",
-      "Communicate with creditors to negotiate payment terms and resolve disputes.",
-      "Provide one-on-one counseling sessions to discuss debt management strategies.",
-      "Track clients' progress and update their debt management plans as needed.",
-      "Stay up-to-date on industry trends and best practices in debt management.",
-    ],
-    salaryExpectations: {
-      min: 100000,
-      max: 140000,
-    },
-    benefits: [
-      "Competitive salary with performance-based bonuses",
-      "Opportunities for professional development and career advancement",
-      "Flexible work schedule and remote work options",
-      "Supportive and collaborative team environment",
-      "Commitment to diversity, equity, and inclusion",
-    ],
+    salaryExpectations:"Up to 40/hr",
+   
   },
   {
     id: "41c41934-2a21-4ba6-afc2-752f3a1da3f1",
-    title: "Vuior Ambassador",
-    department: "Community Engagement",
+    title: "Vuior Billpay Ambassador - Brand Ambassador ",
+    department: "Vuior Billpay Ambassador",
     location: "Remote",
-    type: "Full-time",
+    type: "Flexible / Independent ",
+    keyResponsibilitiesHeading:"Why Join?",
+    headingfour:"Who We're Looking For",  
     aboutUs:
-      "Vuior is a free-to-join bill management platform that helps users pay early and save big. Our mission is to simplify bill payments, reduce expenses, and empower financial freedom—one bill at a time.",
-    jobSummary:
-      "Join Vuior as a Vuior Ambassador and become a vital part of our mission to empower individuals and communities through innovative bill management services. As a Vuior Ambassador, you'll represent our brand, promote our platform, and help drive user sign-ups and brand awareness. This role is perfect for motivated individuals who want to earn, engage, and make an impact in their communities.",
-    objectives: [
-      "Actively promote Vuior in your community and generate new user sign-ups through personalized referrals.",
-      "Increase brand awareness by sharing Vuior's mission and services through social media, community events, and direct outreach.",
-      "Engage with communities through events, online platforms, and personal networks to introduce people to Vuior and its benefits.",
+      "Vuior Billpay is looking for passionate, motivated individuals to help spread the word about our revolutionary bill payment platform! As a Vuior Billpay Ambassador, you'll be the face of our brand, engaging with communities, promoting financial wellness, and helping users save money on their bills. ",
+    jobSummary:[
+      "Earn up to $3,500 per week through signups & referrals.",
+      "Work on your schedule - No set hours, remote, and flexible.",
+      "Be part of something big - Help build the #1 bill payment platform .",
+      "No experience needed - Just passion, energy, and a drive to succeed .",
     ],
-    roleResponsibilities: [
-      "Promote Vuior and drive user sign-ups through referrals and social media engagement.",
-      "Share Vuior’s mission via social media posts, community events, and word-of-mouth marketing.",
-      "Attend local events or organize community activations to introduce Vuior to potential users.",
-      "Use personal social media platforms to share Vuior’s updates, promotions, and educational content.",
-      "Engage with Vuior’s online community by sharing educational articles, blog posts, and user testimonials.",
-      "Gather feedback from users to help improve Vuior’s platform and services.",
+      
+    objectives: [
+      "Promote Vuior Billpay across your community & online.",
+      "Share your personal promo code and earn commissions for every signup.", 
+      "Engage with individuals, businesses, and social groups to drive awareness.",
+      "Create & share content on social media, forums, and community spaces." ,
+      "Represent Vuior Billpay at local events and digital campaigns." ,
+      "Provide regular feedback from the community to help Vuior Billpay improve its services.",
+    ],
+    contantfour: [
+      "Motivated & outgoing individuals who enjoy networking.", 
+      "Strong social media presence (preferred, but not required).", 
+      "Passion for financial wellness and helping others save money .",
+      "Entrepreneurs, students, influencers, gig workers, and side hustlers welcome!.",
     ],
     dailyAndWeeklyTasks: [
-      "Promote Vuior to your network using referral links.",
-      "Post about Vuior at least 3 times a week on social media.",
-      "Host community info sessions or participate in local events to discuss Vuior’s benefits.",
-      "Educate people about Vuior’s bill management platform and how they can save up to 25% on their bills.",
-      "Join weekly team calls for updates and marketing strategy discussions.",
+      "1: Visit https://vuiorcom.vercel.app/",
+      "2: Complete the online application",
+      "3: Get your promo code and start earning immediately!",
     ],
-    salaryExpectations: {
-      min: 70000,
-      max: 176000,
-    },
-    benefits: [
-      "Performance-based commission with unlimited earning potential.",
-      "Monthly bonuses for reaching signup targets.",
-      "Opportunities for growth into leadership positions.",
-      "Valuable marketing and sales experience.",
-      "Flexible work schedule—you choose when and how you work.",
-      "Be part of a mission-driven company that’s reshaping financial wellness.",
-    ],
+    salaryExpectations:"3,500 per week ",
+   
   },
 
-  {
-    id: "466691de-381b-4e50-9570-6b525d20668a",
-    title: "Customer Service Manager - Excellence Team",
-    department: "Customer Support",
-    location: "Remote",
-    type: "Full-time",
-    aboutUs:
-      "At Vuior, we prioritize client satisfaction and are dedicated to providing exceptional customer service. As the Customer Service Manager, you'll play a crucial role in ensuring our clients receive the support they need to succeed.",
-    jobSummary:
-      "The Customer Service Manager will lead a team dedicated to delivering top-notch customer service, resolving issues, and enhancing customer satisfaction.",
-    objectives: [
-      "Ensure a positive customer experience throughout the entire customer journey.",
-      "Resolve customer inquiries and issues in a timely and efficient manner.",
-      "Build and maintain strong relationships with clients to foster loyalty and satisfaction.",
-    ],
-    roleResponsibilities: [
-      "Lead and motivate a team of customer service representatives to deliver exceptional service.",
-      "Develop and implement customer service policies and procedures to ensure consistency and efficiency.",
-      "Handle escalated customer inquiries and complaints, providing resolutions and ensuring customer satisfaction.",
-      "Monitor customer service metrics and KPIs to identify areas for improvement and implement corrective actions.",
-      "Collaborate with other departments to address customer feedback and improve processes.",
-    ],
-    dailyAndWeeklyTasks: [
-      "Supervise and support customer service representatives in handling customer inquiries via phone, email, and chat.",
-      "Review customer feedback and complaints to identify trends and areas for improvement.",
-      "Conduct regular team meetings and training sessions to address performance and provide ongoing development.",
-      "Develop and implement strategies to improve customer satisfaction and loyalty.",
-      "Maintain accurate records of customer interactions and resolutions.",
-    ],
-    salaryExpectations: {
-      min: 110000,
-      max: 150000,
-    },
-    benefits: [
-      "Competitive salary with performance-based bonuses",
-      "Opportunities for professional development and career growth",
-      "Flexible work schedule and remote work options",
-      "Supportive and collaborative team environment",
-      "Commitment to diversity, equity, and inclusion",
-    ],
-  },
-  {
-    id: "ce8317a8-34d4-47e2-b8b3-f75ea3ff25f2",
-    title: "Project Manager - Growth Initiatives",
-    department: "Strategy",
-    location: "Remote",
-    type: "Full-time",
-    aboutUs:
-      "Vuior is committed to driving innovation and growth through strategic initiatives. As the Project Manager for Growth Initiatives, you'll lead projects that support our mission and drive our business forward.",
-    jobSummary:
-      "The Project Manager will oversee and manage projects aimed at driving growth and innovation, ensuring successful completion on time and within budget.",
-    objectives: [
-      "Plan and execute projects that align with Vuior's growth objectives.",
-      "Manage project timelines, budgets, and resources to ensure successful completion.",
-      "Collaborate with cross-functional teams to drive project success and achieve business goals.",
-    ],
-    roleResponsibilities: [
-      "Define project scope, objectives, and deliverables in collaboration with stakeholders.",
-      "Develop detailed project plans, including timelines, budgets, and resource allocation.",
-      "Monitor project progress and make adjustments as needed to ensure successful completion.",
-      "Communicate project status, risks, and issues to stakeholders and senior management.",
-      "Lead project teams and provide guidance and support to ensure project success.",
-    ],
-    dailyAndWeeklyTasks: [
-      "Conduct project planning meetings and define project scope and objectives.",
-      "Develop and maintain project schedules and budgets.",
-      "Monitor project progress and adjust plans as needed to stay on track.",
-      "Communicate regularly with stakeholders to provide updates and address any issues.",
-      "Conduct post-project evaluations to identify lessons learned and areas for improvement.",
-    ],
-    salaryExpectations: {
-      min: 130000,
-      max: 170000,
-    },
-    benefits: [
-      "Competitive salary with performance-based bonuses",
-      "Opportunities for professional development and career growth",
-      "Flexible work schedule and remote work options",
-      "Supportive and collaborative team environment",
-      "Commitment to diversity, equity, and inclusion",
-    ],
-  },
-
-  {
-    id: "4d9b4a88-2467-493b-b3c6-ca1ac5c53326",
-    title: "Community Engagement Manager",
-    department: "Strategy",
-    location: "Remote",
-    type: "Full-time",
-    aboutUs: `Vuior is dedicated to fostering a sense of community and empowering individuals to
-achieve financial success. As the Community Engagement Manager, you'll play a key role in
-building and nurturing relationships within the community.
-`,
-    jobSummary: `The Community Engagement Manager will develop and implement strategies to
-engage and connect with the community, promoting Vuior's mission and services.
-`,
-    objectives: [
-      "Build and maintain strong relationships with community members and organizations.      ",
-      `Develop and implement community engagement strategies to drive awareness and
-support for Vuior's mission.`,
-      `Foster a sense of community and belonging among Vuior's clients and partners`,
-    ],
-    roleResponsibilities: [
-      `Develop and execute community engagement plans and initiatives.
-`,
-      `Build and maintain relationships with community organizations, leaders, and influencers.`,
-      `Plan and coordinate community events and activities to promote Vuior's mission and
-services.
-`,
-      `Monitor and evaluate the effectiveness of community engagement efforts and make
-adjustments as needed.`,
-      `Collaborate with internal teams to align community engagement activities with overall
-business goals.
-`,
-    ],
-    dailyAndWeeklyTasks: [
-      `Conduct outreach to community organizations and leaders to build partnerships.
-`,
-      `Plan and coordinate community events and activities, including workshops, webinars,
-and volunteer opportunities.`,
-      `Monitor and respond to community feedback and inquiries.
-`,
-      `Track and analyze community engagement metrics to measure success and identify
-areas for improvement.
-`,
-      `Stay informed about community trends and best practices in community engagement
-      `,
-    ],
-    salaryExpectations: {
-      min: 120000,
-      max: 160000,
-    },
-    benefits: [
-      `Competitive salary with performance-based bonuses`,
-      `Opportunities for professional development and career growth.`,
-      ` Flexible work schedule and remote work options.`,
-      `Supportive and collaborative team environment.
-      `,
-      `Commitment to diversity, equity, and inclusion`,
-    ],
-  },
-  {
-    id: "46bb7748-2f35-4159-b735-67cf9d0473b3",
-    title: "Strategic Partnerships Manager",
-    department: "Partnerships",
-    location: "Remote",
-    type: "Full-time",
-    aboutUs:
-      "At Vuior, we're committed to building strategic partnerships that drive mutual growth and success. As the Strategic Partnerships Manager, you'll play a crucial role in identifying and nurturing key partnerships.",
-    jobSummary:
-      "The Strategic Partnerships Manager will identify and cultivate strategic partnerships, working closely with partners to drive mutual growth and success.",
-    objectives: [
-      "Identify and evaluate potential partners to drive growth and support Vuior's mission.",
-      "Develop and maintain strong relationships with partners to ensure mutual success.",
-      "Collaborate with internal teams to align partnership activities with business objectives.",
-    ],
-    roleResponsibilities: [
-      "Identify and evaluate potential partners based on strategic fit and business goals.",
-      "Develop and execute partnership strategies to achieve mutual growth objectives.",
-      "Build and maintain strong relationships with partners, including regular communication and collaboration.",
-      "Monitor and evaluate the performance of partnerships and make adjustments as needed.",
-      "Collaborate with internal teams to ensure alignment of partnership activities with overall business goals.",
-    ],
-    dailyAndWeeklyTasks: [
-      "Conduct research to identify potential partners and evaluate their fit with Vuior's goals.",
-      "Develop partnership proposals and negotiate terms with potential partners.",
-      "Communicate regularly with partners to provide updates and address any issues.",
-      "Monitor partnership performance and track key metrics to measure success.",
-      "Collaborate with internal teams to ensure alignment and support for partnership activities.",
-    ],
-    salaryExpectations: {
-      min: 130000,
-      max: 170000,
-    },
-    benefits: [
-      "Competitive salary with performance-based bonuses",
-      "Opportunities for professional development and career growth",
-      "Flexible work schedule and remote work options",
-      "Supportive and collaborative team environment",
-      "Commitment to diversity, equity, and inclusion",
-    ],
-  },
 ];
