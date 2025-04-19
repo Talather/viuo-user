@@ -2,7 +2,6 @@ import BenefitItem from "./benefit-item";
 
 const Benefits = ({
   hideList,
-  heading,
   content,
 }: {
   content: string;

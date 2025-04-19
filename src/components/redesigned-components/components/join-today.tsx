@@ -1,9 +1,5 @@
 import MaxWidthContainer from "../../max-width-container";
-import ShinyButton from "./shiny-button";
 import { NavLink } from "react-router-dom";
-import { cn } from "../../../lib/utils";
-
-
 const JoinToday = ({
   title = "It's Free to Join",
   content = "No credit check. No hidden fees. Just real savings.",

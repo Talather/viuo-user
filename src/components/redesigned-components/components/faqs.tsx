@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 
 import { useState } from "react";
-import ShinyButton from "./shiny-button";
 import {
   Accordion,
   AccordionContent,

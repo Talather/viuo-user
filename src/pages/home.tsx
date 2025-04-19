@@ -6,7 +6,6 @@ import ServiceCards from "../components/redesigned-components/components/service
 import JoinToday from "../components/redesigned-components/components/join-today";
 import FAQs from "../components/redesigned-components/components/faqs";
 import { reactNow } from "../data";
-import ShinyButton from "../components/redesigned-components/components/shiny-button";
 import { useEffect } from "react";
 declare global {
   interface Window {

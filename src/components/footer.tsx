@@ -9,7 +9,7 @@ const Footer = () => {
           <div className="max-w-[517px] mx-auto">
             <img src="/assets/icons/logo.png" alt="logo" />
             <p className="font-poppins text-white mt-[20px] text-[14px] lg:text-[1vw]">
-              Vuior - Billpay Simplified.
+              Vuior - Empowering Your Financial Future, One Payment at a Time.
             </p>
             <div className="mt-[40px]">
               <h1 className="text-white text-[16px] lg:text-[1.2vw] mb-2">

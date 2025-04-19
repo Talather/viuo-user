@@ -10,7 +10,6 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({
-  icon: Icon,
   title,
   description,
   className,

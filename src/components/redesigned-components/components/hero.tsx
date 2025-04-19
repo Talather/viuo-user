@@ -1,26 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { motion } from "framer-motion";
-import { Fragment } from "react/jsx-runtime";
-import ShinyButton from "./shiny-button";
-import { ArrowTopRightIcon, CardStackIcon } from "@radix-ui/react-icons";
-import { FileDiffIcon, Stars } from "lucide-react";
 import MaxWidthContainer from "../../max-width-container";
 import { NavLink } from "react-router-dom";
-const transition = { duration: 1.4, ease: [0.25, 0.1, 0.25, 1] };
-const variants = {
-  hidden: {
-    filter: "blur(10px)",
-    transform: "translateY(20%)",
-    opacity: 0,
-  },
-  visible: {
-    filter: "blur(0px)",
-    transform: "translateY(0)",
-    opacity: 1,
-  },
-};
 
-const text = "Your Financial Future, Redefined with Vuior Billpay";
 import At from "./../../../../public/assets/icons/AT&T.png";
 import SouthernCompany from "./../../../../public/assets/icons/SouthernCompany.png";
 import Mastercard from "./../../../../public/assets/icons/mastercard.png";
@@ -56,7 +37,6 @@ const Hero = () => {
       width: "8rem",
     },
   ];
-  const words = text.split(" ");
 
   return (
 
