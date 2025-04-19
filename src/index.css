@@ -1,11 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+/*@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+   font-family: "Manrope", sans-serif;
 }
 
 @layer base {
@@ -70,7 +74,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Inter", sans-serif;
+     font-family: "Manrope", sans-serif;
   }
   .blurred {
     filter: blur(8px);
@@ -237,4 +241,54 @@ input[type="number"] {
 .cms strong {
   background-color: rgb(255 176 213);
   font-weight: 600;
+}
+
+.msg-wrapper{
+  white-space: pre-wrap;
+}
+.font-manrope-200{
+  font-family: Manrope, sans-serif;
+  font-weight:200;
+  font-style: normal;
+  font-optical-sizing:auto;
+}
+.font-manrope-600{
+  font-family: Manrope, sans-serif;
+  font-weight:600;
+  font-style: normal;
+  font-optical-sizing:auto;
+}
+.font-manrope-100{
+  font-family: Manrope, sans-serif;
+  font-weight:100;
+  font-style: normal;
+  font-optical-sizing:auto;
+}
+.font-12{ font-size: 12px; }
+.font-14{ font-size: 14px; }
+.font-28{ font-size: 28px; }
+.faq-accordin svg{ display: none; }
+.line-height-30{ line-height: 30px }
+
+.services-container{ border:0.75px solid #CDFFED; border-radius: 20px;  }
+.rounded-50{ border-radius: 20px; }
+.saving-btn{ padding: 15px 50px; display: inline-block; }
+.hero-container{ background-image: url('../public/assets/hero-bg.jpg'); background-repeat: no-repeat; background-size: cover;  width: 100%; border-radius: 30px; padding: 30px}
+.hero-text{font-size: 40px;line-height: 45px;}
+.header-navbar li{ position: relative; padding: 0 20px; font-family: 'Manrope'; font-weight: 600; }
+.header-navbar li:not(:last-child)::after{
+   content: "";
+   position: absolute;
+   right: 0;
+   top: 0;
+   height: 100%;
+   width: 1px;
+   background-color: #24A580;
+}
+.service-grid .service-grid-list{ position: relative; }
+.service-grid .service-grid-list:nth-child(1)::after{
+   content: url("../public/assets/icons/choose.png");
+   position: absolute;
+   left: -50px;
+   top: -50px;
 }

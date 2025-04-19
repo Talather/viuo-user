@@ -4,7 +4,8 @@ import { Fragment } from "react/jsx-runtime";
 import ShinyButton from "./shiny-button";
 import { ArrowTopRightIcon, CardStackIcon } from "@radix-ui/react-icons";
 import { FileDiffIcon, Stars } from "lucide-react";
-
+import MaxWidthContainer from "../../max-width-container";
+import { NavLink } from "react-router-dom";
 const transition = { duration: 1.4, ease: [0.25, 0.1, 0.25, 1] };
 const variants = {
   hidden: {
@@ -58,84 +59,30 @@ const Hero = () => {
   const words = text.split(" ");
 
   return (
-    <motion.div
-      className="pt-14 relative pb-20 md:pt-24 md:pb-32  md:min-h-[86vh] lg:min-h-screen flex flex-col items-center justify-center mx-auto text-center "
-      initial="hidden"
-      animate={"visible"}
-      transition={{ staggerChildren: 0.04 }}
-    >
-      <h1 className="mb-6 md:max-w-[70%] text-4xl md:text-5xl font-extrabold lg:text-6xl text-primary-text ">
-        {words.map((word: string, index: number) => {
-          return (
-            <Fragment key={index}>
-              <motion.span
-                className="inline-block "
-                transition={transition}
-                variants={variants}
-              >
-                {word}
-              </motion.span>
-              {index < words.length - 1 && " "}
-            </Fragment>
-          );
-        })}
-      </h1>
-      <motion.p
-        className="text-secondary-text px-2 md:max-w-[70%]  md:text-lg mb-8"
-        transition={transition}
-        variants={variants}
-      >
-        <span className="font-bold">
-          Welcome to Vuior, where paying your bills early rewards you with huge
-          savings while putting up to 25% savings back in your pocket.
-        </span>
-      </motion.p>
 
-      <div className="flex gap-4 items-center">
-        <motion.div
-          className="flex items-center md:flex-row flex-col gap-5"
-          transition={transition}
-          variants={variants}
-        >
-          <ShinyButton
-            href={"/create-account"}
-            hideIcon
-            className="relative px-16 z-10 h-14 w-full shadow-lg transition-shadow duration-300 hover:shadow-xl rounded-full font-semibold text-xl"
-          >
-            Start Saving Now
-          </ShinyButton>
-        </motion.div>
-      </div>
-      <div className="hidden md:block">
-        <Icon
-          Component={Stars}
-          position="top-[340px] left-10 bg-[#1a3b3b] text-white"
-          delay={0.4}
-        />
-        {/* <Icon
-          Component={Waves}
-          position="top-[320px] lg:top-[330px] left-40"
-          delay={0.4}
-        /> */}
-        <Icon
-          Component={CardStackIcon}
-          position="top-[400px]  left-40 bg-[#1a3b3b] text-white"
-          delay={0.8}
-        />
-        <Icon
-          Component={ArrowTopRightIcon}
-          position="top-[330px] right-20"
-          delay={1}
-        />
-        <Icon
-          Component={FileDiffIcon}
-          position="top-96 right-52 bg-[#1a3b3b] text-white"
-          delay={1.2}
-        />
-      </div>
-      <motion.div transition={transition} variants={variants}>
-        <section className="pt-[10vh] sm:pt-[20vh] px-2 opacity-60">
-          <div className="w-full">
+    <div className="bg-[#D7E0DC] ">
+      <MaxWidthContainer className="px-20 py-10">
+        <div className="flex my-5 gap-10">
+          <div className="hero-container flex">
+            <div className="md:max-w-[50%] md:hidden lg:block text-left p-10 pr-0">
+              <h1 className="hero-text font-normal font-manrope-200 text-[#F4F4FC] mb-5">Your Financial Future,{"\n"}<strong className="font-manrope-600">Redefined With Vuior</strong> Billpay</h1>
+              
+              <span className="font-normal text-[#F4F4FC] msg-wrapper line-height-30 font-18">
+                Welcome to Vuior, where paying your bills early{"\n"}rewards you with huge
+                savings while putting{"\n"}up to 25% savings back in your pocket. 
+              </span>
+
+              <NavLink to="/create-account" className="mt-10 shadow-lg text-white transition-shadow duration-300 bg-black rounded-50 font-semibold text-4xl saving-btn">Start Saving Now
+              </NavLink>             
+              </div>
+              <div className="md:max-w-[50%] md:hidden lg:block text-left ">
+                <Image className="w-full" src="/assets/hero-banner-img.png"  />  
+              </div>
+          </div>
+        </div>
+      </MaxWidthContainer>
+      <section className=" pb-10">
+          <div className="w-full bg-[#FFF]">
             <div className="flex flex-wrap justify-center items-center  gap-6 gap-x-20 ">
               {logos.map((logo, index) => (
                 <div
@@ -162,30 +109,10 @@ const Hero = () => {
             </div>
           </div>
         </section>
-      </motion.div>
-    </motion.div>
+    </div>    
   );
 };
 
 export default Hero;
 
-const Icon = ({
-  Component,
-  position,
-  delay,
-}: {
-  Component: any;
-  position: string;
-  delay: number;
-}) => {
-  return (
-    <motion.div
-      className={`absolute flex items-center justify-center border border-black p-3 rounded-full ${position}`}
-      initial={{ scale: 0, opacity: 0, filter: "blur(10px)" }}
-      animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-      transition={{ ...transition, delay }}
-    >
-      <Component className="size-8" />
-    </motion.div>
-  );
-};
+

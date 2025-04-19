@@ -13,7 +13,7 @@ const RootLayout = () => {
       <Navbar />
       <MobileNavbar />
 
-      <main id="bodyBlur" className="pt-14">
+      <main id="bodyBlur">
         <Outlet />
       </main>
       <Footer />

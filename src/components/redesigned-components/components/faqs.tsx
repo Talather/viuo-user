@@ -18,24 +18,20 @@ const FAQs = () => {
         {/* <h2 className="text-4xl text-center lg:text-left leading-[60px] font-bold">
           Frequently Asked Questions
         </h2> */}
-        <h2 className="text-3xl mb-5 text-center md:text-left font-extrabold md:text-5xl text-primary-text">
-          Frequently Asked Questions
-        </h2>
-
-        <ShinyButton className="w-fit font-semibold py-2 px-4" href={"/faqs"}>
-          See All Questions
-        </ShinyButton>
-        <div className="flex items-center gap-2">
+        <h2 className="text-3xl text-center md:text-left font-extrabold md:text-5xl text-primary-text msg-wrapper">
+          Frequently Asked {"\n"}Questions
+        </h2>        
+        <div className="flex items-center gap-2 font-manrope-100">
           <p className="text-secondary-text">Still need help?</p>
           <NavLink
-            className={"text-button-gpt font-semibold hover:underline"}
+            className={"text-button-gpt hover:underline"}
             to={"/contact-us"}
           >
             Contact Us
           </NavLink>
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-full faq-accordin">
         <Accordion
           type="single"
           collapsible
@@ -62,8 +58,8 @@ const FAQs = () => {
                 px-4 text-left hover:no-underline
                 ${
                   activeItem === value
-                    ? "text-primary-text font-bold"
-                    : "font-bold"
+                    ? "text-primary-text font-normal"
+                    : "font-normal"
                 }
               `}
               >
