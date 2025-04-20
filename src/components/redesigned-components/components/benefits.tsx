@@ -2,7 +2,6 @@ import BenefitItem from "./benefit-item";
 
 const Benefits = ({
   hideList,
-  heading,
   content,
 }: {
   content: string;
@@ -12,8 +11,8 @@ const Benefits = ({
   return (
     <div className="lg:max-w-[50%]">
       <div className="mb-4">
-        <h2 className="text-3xl font-semibold mb-2 leading-tight">{heading}</h2>
-        <p className="text-[#9ba1a6] text-md leading-relaxed">{content}</p>
+        <h2 className="text-4xl font-semibold mb-5 leading-tight text-[#4F4F4F] msg-wrapper">Start Your Vuior <strong className="text-[#207D6C]">REWARDS</strong> {"\n"}Journey Today!</h2>
+        <p className="text-[#052424] text-md leading-relaxed font-semibold font-manrope msg-wrapper font-14 line-height-30">{content}</p>
       </div>
       {!hideList && (
         <ul className="flex flex-col gap-4">

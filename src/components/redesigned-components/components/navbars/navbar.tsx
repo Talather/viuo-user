@@ -28,18 +28,18 @@ const Navbar = () => {
   return (
     <div className="">
       <div
-        className={`nav-container bg-bg-navigation z-50 md:flex hidden  min-h-[60px] max-w-[97%]  mx-auto transition-all duration-100  top-3 fixed w-full left-1/2 -translate-x-1/2 ${
+        className={`nav-container z-50 py-10 md:flex hidden  min-h-[60px] max-w-[97%]  mx-auto transition-all duration-100  w-full ${
           isHovered ? "rounded-t-2xl" : "rounded-2xl"
         }`}
       >
         <ul className="flex w-full text-[14px] font-bold text-menu-items  items-center justify-evenly ">
           <li>
             <NavLink to="/">
-              <img src="/assets/icons/logo.png" alt="logo" width={100} />
+              <img src="/assets/icons/logo-black.png" alt="logo" width={150} />
             </NavLink>
           </li>
 
-          <div className="flex items-center gap-10">
+          <div className="flex items-center bg-bg-navigation py-3 px-5 rounded-full header-navbar">
             <li>
               <NavLink
                 to={"/"}
@@ -140,8 +140,8 @@ const Navbar = () => {
               <>
                 <li className="relative z-50">
                   <Button
-                    className="relative z-10 flex items-center overflow-hidden text-white  justify-center w-full px-4  bg-button-gpt hover:bg-[#095c46] transition-all duration-200 before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-[200%] before:h-full 
-                    rounded-full
+                    className="relative z-10 flex items-center overflow-hidden text-white  justify-center w-full px-4  bg-black hover:bg-[#095c46] transition-all duration-200 before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-[200%] before:h-full 
+                    rounded-20
             "
                     to="/login"
                     as={NavLink}
@@ -151,8 +151,8 @@ const Navbar = () => {
                 </li>
                 <li className="relative z-50">
                   <Button
-                    className="relative z-10 flex items-center overflow-hidden text-black  justify-center w-full px-4  bg-white hover:bg-slate-100 border border-black transition-all duration-200 before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-[200%] before:h-full 
-                    rounded-full            "
+                    className="relative z-10 flex items-center overflow-hidden text-black  justify-center w-full px-4 bg-white hover:bg-slate-100 border border-black transition-all duration-200 before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-[200%] before:h-full 
+                    rounded-20            "
                     to="create-account"
                     as={NavLink}
                   >
