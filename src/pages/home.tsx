@@ -44,16 +44,11 @@ const HomePage = () => {
             <h2 className="text-5xl font-semibold text-[#99E1D3] mb-2">
               Turning Your Payments into Savings!
             </h2>
-            <p className="text-white font-normal font-12 font-manrope-100 text-md my-6 mb-10 leading-relaxed">
-              Managing bills can be overwhelming. Vuior transforms every payment
-              into an opportunity to save more and stress less— empowering you
-              to take control of your finances, one early payment at a time.
-            </p>
             <hr/>
           </div>
 
           <h2 className="text-4xl mt-10 text-center font-extrabold text-white mb-5">
-            Why Choose Vuior?
+            Why Choose Vuior Billpay?
           </h2>
           <ServiceCards services={reactNow} className="home-service-grid" />
 
@@ -71,7 +66,7 @@ const HomePage = () => {
           <Benefits
             hideList
             heading="Start Your Vuior <strong>REWARDS</strong> Journey Today!"
-            content={`Start managing your bills smarter and saving more. Vuior is easy to use, \nand joining is completely free—no strings attached, no hidden fees.\nYou’ll even earn your first rewards within days!\nManaging your bills should put money back in your pocket.\nSign up for free and start saving! Join Vuior Today
+            content={`Start managing your bills smarter and saving more. Vuior is easy to use, \nand joining is completely free—no strings attached, no hidden fees.
 `}
           />
         </div>
