@@ -41,29 +41,34 @@ const Hero = () => {
   return (
 
     <div className="bg-[#D7E0DC] ">
-      <MaxWidthContainer className="px-20 py-10">
+      <MaxWidthContainer className="px-20 py-10 hero-main-container">
         <div className="flex my-5 gap-10">
           <div className="hero-container flex">
-            <div className="md:max-w-[50%] md:hidden lg:block text-left p-10 pr-0">
+            <div className="md:max-w-[50%] hero-container-1 lg:block text-md-center text-left p-10 pr-md-0">
               <h1 className="hero-text font-normal font-manrope-200 text-[#F4F4FC] mb-5">Your Financial Future,{"\n"}<strong className="font-manrope-600">Redefined With Vuior</strong> Billpay</h1>
               
-              <span className="font-normal text-[#F4F4FC] msg-wrapper line-height-30 font-18">
+              <span className="font-normal text-[#F4F4FC] msg-wrapper line-height-30 font-18 show-on-desktop">
                 Welcome to Vuior, where paying your bills early{"\n"}rewards you with huge
                 savings while putting{"\n"}up to 25% savings back in your pocket. 
+              </span>
+
+              <span className="font-normal text-[#F4F4FC] msg-wrapper line-height-30 font-18 show-on-mobile">
+                Welcome to Vuior, where paying your bills early rewards you with huge
+                savings while putting up to 25% savings back in your pocket. 
               </span>
 
               <NavLink to="/create-account" className="mt-10 shadow-lg text-white transition-shadow duration-300 bg-black rounded-50 font-semibold text-4xl saving-btn">Start Saving Now
               </NavLink>             
               </div>
-              <div className="md:max-w-[50%] md:hidden lg:block text-left ">
+              <div className="md:max-w-[50%] hero-container-2 lg:block text-left ">
                 <Image className="w-full" src="/assets/hero-banner-img.png"  />  
               </div>
           </div>
         </div>
       </MaxWidthContainer>
-      <section className=" pb-10">
-          <div className="w-full bg-[#FFF]">
-            <div className="flex flex-wrap justify-center items-center  gap-6 gap-x-20 ">
+      <section className="pb-10">
+          <div className="w-full bg-[#FFF] client-icons-cont">
+            <div className="flex flex-wrap justify-center items-center gap-6 gap-x-20 ">
               {logos.map((logo, index) => (
                 <div
                   key={index}

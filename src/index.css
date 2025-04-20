@@ -285,10 +285,41 @@ input[type="number"] {
    width: 1px;
    background-color: #24A580;
 }
-.service-grid .service-grid-list{ position: relative; }
-.service-grid .service-grid-list:nth-child(1)::after{
+.home-service-grid .service-grid-list{ position: relative; }
+.home-service-grid .service-grid-list:nth-child(1)::after{
    content: url("../public/assets/icons/choose.png");
    position: absolute;
    left: -50px;
    top: -50px;
+}
+.show-on-mobile{ display: none; }
+.show-on-desktop {display: block;}
+
+@media screen and (max-width:767px){
+  #bodyBlur{ padding-top: 50px; }
+  .font-28{ font-size: 20px; }
+  .hero-container-1{ width: 100%; padding: 0.5rem; }
+  .hero-container-2{ width: 100%; }
+  .show-on-mobile{ display: block;text-align: center; }
+  .show-on-desktop {display: none;}
+  .saving-btn {font-size: 24px;width: 100%;text-align: center; padding: 15px 20px}
+  .hero-container {flex-direction: column; padding: 20px;}
+  .client-icons-cont{ padding-top: 40px }
+  .hero-main-container{ padding: 20px; }
+  .services-main-container{padding: 1rem;}
+  .services-container{padding: 1.5rem;}
+  .home-service-grid .service-grid-list:nth-child(1)::after{ left: -30px }
+  .hero-text {
+    font-size: 30px;
+    line-height: 35px;
+    text-align: center;
+}
+
+}
+@media screen and (min-width:768px) and (max-width:1024px){
+    .hero-container {flex-direction: row;}
+    .hero-container-1{ width: 100%; padding: 0.5rem; }
+    .hero-main-container{ padding: 20px; }
+    .services-main-container{padding: 1rem;}
+    .saving-btn {font-size: 24px;}
 }

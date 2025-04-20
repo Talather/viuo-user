@@ -39,7 +39,7 @@ const CareersPage = () => {
             <ShinyButton
               hideIcon
               href={"/careers/open-positions"}
-              className="relative mx-auto w-fit px-10 mt-5 z-10 h-14  shadow-lg transition-shadow duration-300 hover:shadow-xl rounded-full font-semibold text-xl"
+              className="relative mx-auto w-fit px-10 mt-5 z-10 h-14 shadow-lg transition-shadow duration-300 hover:shadow-xl rounded-full font-semibold text-xl"
             >
               Explore our remote positions
             </ShinyButton>

@@ -2,7 +2,7 @@ import { Image } from "@nextui-org/react";
 import MaxWidthContainer from "../components/max-width-container";
 import Benefits from "../components/redesigned-components/components/benefits";
 import Hero from "../components/redesigned-components/components/hero";
-import ServiceCards from "../components/redesigned-components/components/service-cards";
+import ServiceCards from "../components/redesigned-components/components/home-service-cards";
 import JoinToday from "../components/redesigned-components/components/join-today";
 import FAQs from "../components/redesigned-components/components/faqs";
 import { reactNow } from "../data";
@@ -38,9 +38,9 @@ const HomePage = () => {
         <Hero />
       </MaxWidthContainer>
       <div className="bg-[#207D6C] text-white">
-        <MaxWidthContainer className="p-20">
+        <MaxWidthContainer className="p-20 services-main-container">
           <div className="services-container p-20">
-          <div className="text-center px-2 md:max-w-[90%] mx-auto">
+          <div className="text-center px-md-2 md:max-w-[90%] mx-auto">
             <h2 className="text-5xl font-semibold text-[#99E1D3] mb-2">
               Turning Your Payments into Savings!
             </h2>
@@ -55,14 +55,14 @@ const HomePage = () => {
           <h2 className="text-4xl mt-10 text-center font-extrabold text-white mb-5">
             Why Choose Vuior?
           </h2>
-          <ServiceCards services={reactNow} />
+          <ServiceCards services={reactNow} className="home-service-grid" />
 
          </div>
         </MaxWidthContainer>
       </div>
       <MaxWidthContainer className="p-4 px-4 md:px-10">
         <div className="flex flex-col items-center justify-center md:flex-row my-20 gap-10">
-          <div className="md:max-w-[50%] md:hidden lg:block ">
+          <div className="md:max-w-[50%] lg:block ">
             <Image
               className="w-full"
               src="/assets/brand/start.png"

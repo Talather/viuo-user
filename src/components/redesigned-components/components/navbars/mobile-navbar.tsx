@@ -66,11 +66,11 @@ const MobileNavbar = () => {
         initial="closed"
         animate={isOpen ? "open" : "closed"}
         variants={containerVariants}
-        className={`nav-container rounded-2xl flex flex-col shadow-sm min-h-[48px] md:max-w-[80%] max-w-[97%] mx-auto justify-start items-center transition-all duration-100 bg-bg-navigation top-3 fixed w-full left-1/2 -translate-x-1/2 overflow-hidden z-50`}
+        className={`nav-container flex flex-col shadow-sm min-h-[48px] md:max-w-[80%] max-w-[97%] mx-auto justify-start items-center transition-all duration-100 bg-bg-navigation top-2 fixed w-full left-1/2 -translate-x-1/2 overflow-hidden z-50`}
       >
         <div className="w-full flex justify-between items-center">
           <NavLink to={"/"} className={"flex ml-3 items-center justify-center"}>
-            <img src={"/assets/icons/logo.png"} width={60} alt="Logo" />
+            <img src={"/assets/icons/logo-black.png"} width={60} alt="Logo" />
           </NavLink>
           <div className="flex items-center gap-2">
             {isAuthenticated ? (
@@ -80,7 +80,7 @@ const MobileNavbar = () => {
             ) : (
               <>
                 <Button
-                  className="relative z-10 flex items-center overflow-hidden text-white h-8 justify-center w-fit px-4 rounded-sm bg-button-gpt hover:bg-[#095c46] transition-all duration-200 before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-[200%] before:h-full 
+                  className="relative z-10 flex items-center overflow-hidden text-white h-8 justify-center w-fit px-4 rounded-sm bg-black hover:bg-[#095c46] transition-all duration-200 before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-[200%] before:h-full 
              shadow-lg hover:shadow-xl
             "
                   to="/login"

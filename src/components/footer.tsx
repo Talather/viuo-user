@@ -4,7 +4,7 @@ import { SocialIcon } from "react-social-icons";
 const Footer = () => {
   return (
     <footer className="w-full bg-[#051a15] py-10">
-      <div className="w-full px-4 xl:px-0 xl:w-[90%] flex flex-col md:flex-row items-start justify-center mx-auto gap-[10vw] pt-[30px]">
+      <div className="w-full px-5 xl:px-0 xl:w-[90%] flex flex-col md:flex-row items-start justify-center mx-auto gap-[10vw] pt-[30px]">
         <div className="w-full md:w-[40vw]">
           <div className="max-w-[517px] mx-auto">
             <img src="/assets/icons/logo.png" alt="logo" />
@@ -91,7 +91,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="w-full px-10">
+      <div className="w-full px-5 lg:px-10">
         <hr className="mt-[30px] bg-[#0F4A3F]  h-[1px] border-0"></hr>
         <div className="w-full mx-auto mt-[30px]">
           <div className="md:mx-[40px] flex flex-wrap gap-4 pb-4 justify-between">
