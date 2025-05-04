@@ -82,9 +82,18 @@ const JobApplication = () => {
       console.log("formData.file:", values.file);
 
       const data = {
+        sender: {
+          connector: {
+            identifierValue: "info@vuior.com",
+            annotations: {
+              name: "Vuior BillPay",
+            },
+          },
+        },
         receiver: {
           contacts: [
             {
+              identifierKey: "Vuior BillPay",
               identifierValue: email,
             },
           ],

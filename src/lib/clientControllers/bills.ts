@@ -80,6 +80,24 @@ const fetchBillsForSpecificUser = async (userId: string) => {
     throw new Error("Error fetching bills");
   }
 };
+const fetchBills = async () => {
+  try {
+    const billsQuery = query(
+      collection(db, "bills"),
+      where("isDeleted", "==", false)
+    );
+    const querySnapshot = await getDocs(billsQuery);
+    const bills = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return bills;
+  } catch (error) {
+    console.error("Error fetching bills:", error);
+    throw new Error("Error fetching bills");
+  }
+};
 
 // Update an existing bill with new data
 const updateBill = async (
@@ -125,4 +143,4 @@ const deleteBill = async (billId: string): Promise<void> => {
 //   }
 // }
 
-export { createBill, fetchBillsForSpecificUser, updateBill, deleteBill };
+export { createBill, fetchBillsForSpecificUser, updateBill, deleteBill , fetchBills };
