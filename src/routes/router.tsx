@@ -31,6 +31,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import Calendar from "../pages/calendar/page";
 import Profile from "../pages/profile";
 import CreditTransaction from "../pages/creditTransaction";
+import VerifyPage from "../pages/verifyPage";
 
 import Dashboard from "../pages/Dashboard";
 import RewardTracker from "../pages/reward-tracker";
@@ -141,7 +142,10 @@ export const router = createBrowserRouter([
       },
     ],
   },
-
+  {
+    path: "verify",
+    element: <VerifyPage />,
+  },
   {
     path: "dashboard",
     loader: jobLoader,

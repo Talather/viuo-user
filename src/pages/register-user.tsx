@@ -15,6 +15,7 @@ import { Checkbox, Image } from "@nextui-org/react";
 import CurrencyFormat from "react-currency-format";
 import {
   sendEmailVerificationOTP,
+  sendEmailVerificationLink,
   verifyOTP,
 } from "@/lib/firebaseClientUniversalFunctions";
 
@@ -129,12 +130,21 @@ const RegisterUser = () => {
 
     setIsLoading(true);
     try {
-      const result = await sendEmailVerificationOTP(
+      /*const result = await sendEmailVerificationOTP(
         values.email,
         values.firstName
+      );*/
+      const timeZone: any = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const result = await sendEmailVerificationLink(
+        values.email,
+        values.password,
+        values.firstName,
+        values.lastName,
+        values.phoneNumber,
+        values.dob,
+        timeZone
       );
 
-      const timeZone: any = Intl.DateTimeFormat().resolvedOptions().timeZone;
       setEmail(values.email);
       setPassword(values.password);
       setFirstName(values.firstName);
@@ -152,7 +162,7 @@ const RegisterUser = () => {
       } else {
         toast({
           title: "Success",
-          description: `Otp has sent successfully to your email`,
+          description: `Email verification link successfully sent to ${values.email}`,
         });
         setShowOTPForm(true);
       }
@@ -395,13 +405,13 @@ const RegisterUser = () => {
           <>
             <div className="w-full mb-5">
               <h2 className="text-4xl font-semibold md:text-3xl md:mb-2 md:mt-5">
-                Verify OTP
+                Verification Email Sent
               </h2>
               <p className="mb-3 text-xs text-secondary-text">
-                Please enter the OTP codes sent to your phone and email.
+                Please verify yourself by sent email to your phone and email.
               </p>
             </div>
-            <div className="flex flex-col w-full gap-5">
+            {/*<div className="flex flex-col w-full gap-5">
               <Input
                 variant="bordered"
                 size="md"
@@ -420,7 +430,7 @@ const RegisterUser = () => {
               >
                 Verify OTPs
               </Button>
-            </div>
+            </div>*/}
           </>
         )}
       </div>
