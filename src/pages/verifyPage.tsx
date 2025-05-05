@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { verifyEmailToken } from "../lib/firebaseClientUniversalFunctions"; // Adjust the import path as needed
-import { useAuth } from "../hooks/useAuth";
 import { useToast } from "../hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -10,63 +9,29 @@ const VerifyPage: React.FC = () => {
   const [status, setStatus] = useState<"loading" | "success" | "error">(
     "loading"
   );
-  const { registerUser } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   useEffect(() => {
     const verifyEmail = async () => {
       const token = searchParams.get("token");
-      const email = searchParams.get("email");
-      const password = searchParams.get("pass");
-      const firstName = searchParams.get("firstName");
-      const lastName = searchParams.get("lastName");
-      const phoneNo = searchParams.get("phoneNo");
-      const timeZone = searchParams.get("timeZone");
-      const dob = searchParams.get("dob");
-      console.log("Token:", token);
-      console.log("Email:", email);
-      console.log("Password:", password);
-      console.log("First Name:", firstName);
-      console.log("Last Name:", lastName);
-      console.log("Phone No:", phoneNo);
-      console.log("Time Zone:", timeZone);
-      console.log("DOB:", dob);
-      if (
-        !token ||
-        !email ||
-        !password ||
-        !firstName ||
-        !lastName ||
-        !phoneNo ||
-        !timeZone ||
-        !dob
-      ) {
+
+      if (!token) {
         setStatus("error");
         return;
       }
 
       try {
         // Use the verifyEmailToken method directly
-        const result = await verifyEmailToken(email, token);
-        console.log("Verification result:", result); // Log the result for debugging
+        const result = await verifyEmailToken(token);
         if (result.success) {
           setStatus("success");
-          await registerUser(
-            email,
-            password,
-            firstName,
-            lastName,
-            phoneNo,
-            timeZone,
-            dob
-          ).then(() => {
-            toast({
-              title: "Account Created Successfully.",
-              description:
-                "Use your email and password to login again anytime.",
-            });
-            navigate("/login", { replace: true });
+          toast({
+            title: "Account Created Successfully.",
+            description: "Use your email and password to login again anytime.",
           });
+          setTimeout(() => {
+            navigate("/login", { replace: true });
+          }, 2000); // Redirect after 2 seconds
         } else {
           setStatus("error");
         }

@@ -7,6 +7,7 @@ import {
   query,
   where,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
 import { FirebaseApp, initializeApp } from "firebase/app";
 // import { getAuth, } from "firebase/auth";
@@ -183,12 +184,7 @@ async function sendWelcomeEmail(email: string, firstName: string) {
 
 export async function sendEmailVerificationLink(
   email: string,
-  password: string,
   firstName: string,
-  lastName: string,
-  phoneNo: string,
-  dob: string,
-  timeZone: any,
   reset: boolean = false
 ): Promise<{ success: boolean; error?: string }> {
   try {
@@ -220,17 +216,10 @@ export async function sendEmailVerificationLink(
 
     const params = new URLSearchParams({
       token: verificationToken,
-      email: email,
-      pass: password,
-      firstName: firstName,
-      lastName: lastName,
-      timeZone: timeZone,
-      dob: dob,
-      phoneNo: phoneNo,
     }).toString();  
 
     // Construct the verification link
-    const verificationLink = `http://localhost:5173/verify?${params}`;
+    const verificationLink = `${import.meta.env.VITE_VERIFICATION_PAGE_BASE_URL}verify?${params}`;
     const formData = {
       subject: `Email Verification for VUIOR`,
       description: `Hello ${firstName},
@@ -310,43 +299,40 @@ async function storeVerificationToken(email: string, token: string) {
 }
 
 export async function verifyEmailToken(
-  email: string,
   token: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const emailCollection = collection(db, "emailVerifications");
+    const emailVerificationCollection = collection(db, "emailVerifications");
 
-    // Query Firestore where email and token match
-    const q = query(
-      emailCollection,
-      where("email", "==", email),
-      where("token", "==", token) // Ensure token matches
-    );
-
+    // ✅ Query Firestore for the token only
+    const q = query(emailVerificationCollection, where("token", "==", token));
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
-      return { success: false, error: "Invalid token or email." };
+      return { success: false, error: "Invalid or expired token." };
     }
 
     let tokenDocRef = null;
     let expiryTime = new Date();
-    let firstName = "User"; // Default name in case first name isn't stored
+    let email = "";
+    let firstName = "User";
 
-    querySnapshot.forEach((doc) => {
-      tokenDocRef = doc.ref;
-      expiryTime = doc.data().expiry.toDate(); // Convert Firestore timestamp to Date object
-      firstName = doc.data().firstName || "User"; // Retrieve first name if available
+    querySnapshot.forEach((docSnap) => {
+      tokenDocRef = docSnap.ref;
+      const data = docSnap.data();
+      email = data.email;
+      expiryTime = data.expiry.toDate();
+      firstName = data.firstName || "User";
     });
 
-    if (!tokenDocRef || !expiryTime) {
+    if (!tokenDocRef || !email || !expiryTime) {
       return {
         success: false,
         error: "Token verification failed due to missing data.",
       };
     }
 
-    // Check if token has expired
+    // ✅ Check if token expired
     if (new Date() > expiryTime) {
       return {
         success: false,
@@ -354,9 +340,31 @@ export async function verifyEmailToken(
       };
     }
 
-    // Delete token document after successful verification
+    // ✅ Find user in users collection by email
+    const usersCollection = collection(db, "users");
+    const userQuery = query(usersCollection, where("email", "==", email));
+    const userSnapshot = await getDocs(userQuery);
+
+    if (userSnapshot.empty) {
+      return {
+        success: false,
+        error: "User not found for this email.",
+      };
+    }
+
+    // ✅ Update user document → emailVerified = true
+    const userDocRef = userSnapshot.docs[0].ref;
+    await updateDoc(userDocRef, {
+      emailVerified: true,
+    });
+
+    await sendWelcomeEmail(email, firstName); // Send welcome email
+    console.log("Welcome email sent to:", email);
+
+    // ✅ Delete verification token
     await deleteDoc(tokenDocRef);
 
+    // ✅ Send welcome email
     await sendWelcomeEmail(email, firstName);
 
     return { success: true };
