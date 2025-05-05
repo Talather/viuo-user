@@ -81,6 +81,7 @@ import {
 import Notification from "@/components/notificationBar/component";
 import logo from "../../../public/assets/icons/logo.png";
 import { useAuth } from "@/hooks/useAuth";
+import { useInactivityLogout } from "@/hooks/useInactivityLogout";
 // import { toggle } from '@nextui-org/theme'
 
 const menuItems = [
@@ -99,6 +100,9 @@ const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar is open by default on large screens
   const { logout } = useAuth();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  // Initialize the auto-logout feature with 10 minutes timeout
+  useInactivityLogout(10, 1);
 
   useEffect(() => {
     const handleResize = () => {

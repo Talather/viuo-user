@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm } from "react-hook-form";
-import { useNavigate, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -8,28 +8,22 @@ import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { RegisterUserSchema } from "../lib/validations";
-import { useAuth } from "../hooks/useAuth";
 import { useToast } from "../hooks/use-toast";
 import { Form, FormControl, FormField, FormItem } from "../components/ui/form";
 import { Checkbox, Image } from "@nextui-org/react";
 import CurrencyFormat from "react-currency-format";
-import {
-  sendEmailVerificationOTP,
-  verifyOTP,
-} from "@/lib/firebaseClientUniversalFunctions";
+import { sendEmailVerificationLink } from "@/lib/firebaseClientUniversalFunctions";
+import { useAuth } from "../hooks/useAuth";
 
 type RegisterUserFormData = z.infer<typeof RegisterUserSchema>;
 
 const RegisterUser = () => {
-  const { registerUser } = useAuth();
-
   const { toast } = useToast();
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // New state to toggle between the registration form and the OTP form.
   const [showOTPForm, setShowOTPForm] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   const form = useForm<RegisterUserFormData>({
     resolver: zodResolver(RegisterUserSchema),
@@ -51,54 +45,8 @@ const RegisterUser = () => {
     formState: { errors },
   } = form;
   const toggleVisibility = () => setIsVisible(!isVisible);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [timeZone, setTimeZone] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [enteredOtp, setEnteredOtp] = useState("");
-  const [dob, setDob] = useState("");
+  const { registerUser } = useAuth();
 
-  const verifyOtp = async () => {
-    try {
-      if (enteredOtp.length !== 6) {
-        toast({
-          title: "Error",
-          description: `Unable to verify Otp`,
-          variant: "destructive",
-        });
-        return;
-      }
-      const isValid = await verifyOTP(email, enteredOtp);
-      console.log(isValid);
-      if (isValid.success) {
-        registerUser(
-          email,
-          password,
-          firstName,
-          lastName,
-          phoneNumber,
-          timeZone,
-          dob
-        ).then(() => {
-          toast({
-            title: "Account Created Successfully.",
-            description: "Use your email and password to login again anytime.",
-          });
-          navigate("/dashboard", { replace: true });
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: `Unable to Verify Otp. Plz try again`,
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error("Error verifying OTP:", error);
-    }
-  };
   const calculateAge = (dob: string): number => {
     const birthDate = new Date(dob);
     const today = new Date();
@@ -129,19 +77,11 @@ const RegisterUser = () => {
 
     setIsLoading(true);
     try {
-      const result = await sendEmailVerificationOTP(
+      const timeZone: any = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const result = await sendEmailVerificationLink(
         values.email,
         values.firstName
       );
-
-      const timeZone: any = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      setEmail(values.email);
-      setPassword(values.password);
-      setFirstName(values.firstName);
-      setLastName(values.lastName);
-      setTimeZone(timeZone);
-      setPhoneNumber(values.phoneNumber);
-      setDob(values.dob);
 
       if (!result.success) {
         console.error("Failed to send OTP:", result.error);
@@ -152,8 +92,17 @@ const RegisterUser = () => {
       } else {
         toast({
           title: "Success",
-          description: `Otp has sent successfully to your email`,
+          description: `Email verification link successfully sent to ${values.email}`,
         });
+        await registerUser(
+          values.email,
+          values.password,
+          values.firstName,
+          values.lastName,
+          values.phoneNumber,
+          timeZone,
+          values.dob
+        ).then(() => {});
         setShowOTPForm(true);
       }
       setIsLoading(false);
@@ -395,13 +344,13 @@ const RegisterUser = () => {
           <>
             <div className="w-full mb-5">
               <h2 className="text-4xl font-semibold md:text-3xl md:mb-2 md:mt-5">
-                Verify OTP
+                Verification Email Sent
               </h2>
               <p className="mb-3 text-xs text-secondary-text">
-                Please enter the OTP codes sent to your phone and email.
+                Please verify yourself by sent email to your phone and email.
               </p>
             </div>
-            <div className="flex flex-col w-full gap-5">
+            {/*<div className="flex flex-col w-full gap-5">
               <Input
                 variant="bordered"
                 size="md"
@@ -420,7 +369,7 @@ const RegisterUser = () => {
               >
                 Verify OTPs
               </Button>
-            </div>
+            </div>*/}
           </>
         )}
       </div>

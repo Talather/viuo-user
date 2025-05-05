@@ -59,6 +59,7 @@ export const useAuth = () => {
         avatar: DEFAULT_AVATAR,
         timeZone: timeZone,
         dob: dob,
+        emailVerified: false,
         createdAt: new Date(),
       });
 
@@ -138,35 +139,43 @@ export const useAuth = () => {
         password
       );
       const user = userCredential.user;
-
+  
       // Fetch user data from Firestore
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        // console.log("cheel", userData);
-
+  
+        // ✅ Check if user is verified
+        if (!userData.emailVerified) {
+          throw new Error("Your email is not verified. Please verify your email before logging in.");
+        }
+  
         toast({
           title: "Login Successful",
-          description: `Welcome back, ${userData.name}!`,
+          description: `Welcome back, ${userData.firstName || userData.name}!`,
         });
       } else {
         throw new Error("User data not found");
       }
-
+  
       setIsLoading(false);
       return { success: true, user };
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login error:", error);
       setIsLoading(false);
+  
       toast({
         title: "Error",
         description:
+          error?.message ||
           "Unable to log in. Please check your credentials and try again.",
         variant: "destructive",
       });
+  
       throw error;
     }
   };
+  
   const handleGoogleSignIn = async (googleProvider: any) => {
     setIsLoading(true);
     try {

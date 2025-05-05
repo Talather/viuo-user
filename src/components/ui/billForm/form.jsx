@@ -10,12 +10,12 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./form.module.css";
 import { useAuth } from "../../../hooks/useAuth";
 import StatusAutocompleteComponent from "@/components/autoComplete/status";
-import { createBill } from "@/lib/clientControllers/bills";
+import { createBill, fetchBills } from "@/lib/clientControllers/bills";
 import { useToast } from "@/hooks/use-toast";
 import pdfToText from "react-pdftotext";
 import { useParams } from "react-router-dom";
@@ -30,8 +30,10 @@ import {
   doc,
   updateDoc,
   addDoc,
+  where,
 } from "firebase/firestore";
 import { format, parse } from "date-fns";
+import { fetchBillsForSpecificUser } from "@/lib/clientControllers/bills";
 
 export default function BillFormComponent({ bill = {}, update = false }) {
   const {
@@ -44,10 +46,16 @@ export default function BillFormComponent({ bill = {}, update = false }) {
   } = useForm();
   const [state, setState] = useState({});
   const [extractedText, setExtractedText] = useState(null);
+  const [serviceProviders, setServiceProviders] = useState([]);
+  const [filteredProviders, setFilteredProviders] = useState([]);
+  const [showProviderDropdown, setShowProviderDropdown] = useState(false);
+  const [name,setName] = useState("");
+  const providerInputRef = useRef(null);
   const navigate = useNavigate();
   const { user } = useAuth();
   const { toast } = useToast();
   const { upload } = useParams();
+  console.log(serviceProviders);
 
   const isUploadMode = upload === "true";
 
@@ -186,9 +194,70 @@ export default function BillFormComponent({ bill = {}, update = false }) {
     }
   }, [state, navigate]);
 
-  console.log(watch("amount"));
+  // Fetch all bills to extract service provider names
+  useEffect(() => {
+    const fetchServiceProviders = async () => {
+      if (!user?.id) return;
+      
+      try {
+        const bills = await fetchBills();
+        
+        // Extract unique service provider names from bills
+        const providers = bills.map(bill => bill.name).filter(Boolean);
+        const uniqueProviders = [...new Set(providers)];
+        
+        setServiceProviders(uniqueProviders);
+        // Initialize filtered providers with up to 5 service providers
+        setFilteredProviders(uniqueProviders.slice(0, 5));
+      } catch (error) {
+        console.error("Error fetching service providers:", error);
+      }
+    };
+    
+    fetchServiceProviders();
+  }, [user]);
+
+  // Handle clicks outside the dropdown to close it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (providerInputRef.current && !providerInputRef.current.contains(event.target)) {
+        setShowProviderDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Filter service providers based on user input
+  const handleProviderInputChange = (e) => {
+    const value = e.target.value;
+    setValue("name", value);
+    setName(value);
+    
+    if (value.trim() === "") {
+      setFilteredProviders(serviceProviders.slice(0, 5));
+    } else {
+      const filtered = serviceProviders
+        .filter(provider => 
+          provider.toLowerCase().includes(value.toLowerCase()))
+        .slice(0, 5);
+      setFilteredProviders(filtered);
+    }
+    
+    setShowProviderDropdown(true);
+  };
+
+  const selectProvider = (provider) => {
+    setValue("name", provider);
+    setShowProviderDropdown(false);
+  };
+
+  
   let formLabels = {
-    name: "Bill Name",
+    name: "Service Provider",
     amount: "Bill Amount",
     dueDate: "Bill Due Date",
     accountNumber: "Bill Account Number",
@@ -228,17 +297,39 @@ export default function BillFormComponent({ bill = {}, update = false }) {
             </div>
             <div className={styles.formWrapper}>
               <div className={styles.formElementsWrapper}>
-                <Input
-                  className={styles.formInput}
-                  errorMessage={!!errors.name && "Please provide the bill name"}
-                  isInvalid={!!errors.name}
-                  label={formLabels.name}
-                  labelPlacement="outside"
-                  {...register("name", { required: true })}
-                  radius="sm"
-                  type="text"
-                  variant="bordered"
-                />
+                <div className={styles.autocompleteContainer} ref={providerInputRef}>
+                  <Input
+                    errorMessage={!!errors.name && "Please provide the bill name"}
+                    isInvalid={!!errors.name}
+                    label={formLabels.name}
+                    labelPlacement="outside"
+                    {...register("name", { required: true })}
+                    value={name}
+                    
+                    radius="sm"
+                    type="text"
+                    variant="bordered"
+                    onChange={handleProviderInputChange}
+                    onFocus={() => setShowProviderDropdown(true)}
+                  />
+                  {showProviderDropdown && filteredProviders.length > 0 && (
+                    <div className={styles.dropdownContainer}>
+                      {filteredProviders.map((provider, index) => (
+                        <div 
+                          key={index} 
+                          className={styles.dropdownItem}
+                          onClick={() => {
+                            setValue("name", provider)
+                            setName(provider)
+                            setShowProviderDropdown(false)
+                          }}
+                        >
+                          {provider}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <CurrencyFormat
                   customInput={Input}
                   label={formLabels.amount}
