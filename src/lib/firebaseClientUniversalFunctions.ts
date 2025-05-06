@@ -226,7 +226,7 @@ export async function sendEmailVerificationLink(
 
       Thank you for registering with VUIOR. Please click the button below to verify your account:
 
-      <a href="${formData.verificationLink}" style="display: inline-block; padding: 10px 20px; background-color: #10a37f; color: white; text-decoration: none; border-radius: 5px;">Yes, it's me</a>
+      <a href="${verificationLink}" style="display: inline-block; padding: 10px 20px; background-color: #10a37f; color: white; text-decoration: none; border-radius: 5px;">Yes, it's me</a>
 
       This link is valid for 24 hours. If you did not request this, please ignore this email.
 
