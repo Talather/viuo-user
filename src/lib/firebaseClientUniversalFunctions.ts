@@ -219,14 +219,14 @@ export async function sendEmailVerificationLink(
     }).toString();  
 
     // Construct the verification link
-    const verificationLink = `${import.meta.env.VITE_VERIFICATION_PAGE_BASE_URL}verify?${params}`;
+    const verificationLink = `${import.meta.env.VITE_VERIFICATION_PAGE_BASE_URL}/verify?${params}`;
     const formData = {
       subject: `Email Verification for VUIOR`,
       description: `Hello ${firstName},
 
       Thank you for registering with VUIOR. Please click the button below to verify your account:
 
-      <a href="/${verificationLink}" style="display: inline-block; padding: 10px 20px; background-color: #10a37f; color: white; text-decoration: none; border-radius: 5px;">Yes, it's me</a>
+      <a href="${verificationLink}" style="display: inline-block; padding: 10px 20px; background-color: #10a37f; color: white; text-decoration: none; border-radius: 5px;">Yes, it's me</a>
 
       This link is valid for 24 hours. If you did not request this, please ignore this email.
 
