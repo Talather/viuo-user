@@ -219,7 +219,8 @@ export async function sendEmailVerificationLink(
     }).toString();  
 
     // Construct the verification link
-    const verificationLink = `${import.meta.env.VITE_VERIFICATION_PAGE_BASE_URL}verify?${params}`;
+    const baseUrl = import.meta.env.VITE_VERIFICATION_PAGE_BASE_URL;
+    const verificationLink = `${baseUrl.replace(/\/?$/, "/")}verify?${params}`;
     const formData = {
       subject: `Email Verification for VUIOR`,
       description: `Hello ${firstName},
