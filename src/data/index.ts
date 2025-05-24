@@ -145,158 +145,69 @@ export const joinUsArr = [
     imgSrc: "/assets/icons/three.svg",
   },
 ];
+
 export const faqs = [
   {
     value: "q1",
-    title: "What is Vuior?",
-    content: `Vuior is a free, innovative platform designed to help you manage your household bills and 
-    save money by paying them early. By consolidating your bills in one place, Vuior analyzes your 
-    payment patterns and negotiates exclusive rates, enabling you to save up to 25% on your bills.`,
+    title: "What is Vuior Billpay?",
+    content: `Vuior Billpay is a bill payment platform designed to help users pay their bills on time, manage recurring payments, and track savings by optimizing how and when bills are paid.`,
   },
   {
     value: "q2",
-    title: "Who can join Vuior?",
-    content: `Vuior is open to everyone! There are no credit checks or fees to join. If you manage 
-    household bills, Vuior is here to help you streamline payments and unlock savings.`,
+    title: "How does Vuior Billpay work?",
+    content: `Users link their bills to the platform, choose a payment method, and schedule or automate payments. Vuior tracks due dates and offers savings insights based on early payments and bill behavior.`,
   },
   {
     value: "q3",
-    title: "How does Vuior help me save money?",
-    content: `Vuior’s platform is built around the principle of “Pay Early, Save Big.” By analyzing your bills, 
-    due dates, and payment habits, our system identifies opportunities for early payment discounts 
-    and exclusive negotiated rates. In some cases, you can save up to 25% simply by paying ahead 
-    of your bill’s due date.`,
+    title: "Is there a fee to use Vuior Billpay?",
+    content: `Vuior Billpay is free to join. Some advanced features, such as early payment rewards or special financing options, may include optional service fees, which are clearly disclosed before use.`,
   },
-  // Bill Management Services
   {
     value: "q4",
-    title: "What types of bills can I manage with Vuior?",
-    content: `Vuior is designed to handle a wide variety of household bills, including:
-    - Utilities (electricity, water, gas)
-    - Rent and mortgages
-    - Phone and internet services
-    - Cable and streaming subscriptions
-    - Insurance premiums
-    - And more!`,
+    title: "How do I get started with Vuior Billpay?",
+    content: `Simply sign up at [www.vuior.com], complete your profile, link your bills, and start managing or paying them directly from your dashboard.`,
   },
   {
     value: "q5",
-    title: "How does the early payment discount work?",
-    content: `When you pay your bills before the due date, Vuior automatically applies savings based on 
-    our negotiated rates. For example, if your utility bill is $300 due on the 10th and you pay on the 
-    3rd (7 days early), you could save around 10% or $30. Our platform calculates these savings for 
-    each bill, giving you a clear view of your total monthly savings.`,
+    title: "What types of bills can I pay with Vuior?",
+    content: `You can pay utilities, credit cards, phone bills, rent, car loans, and more. We're continuously expanding our supported bill categories.`,
   },
   {
     value: "q6",
-    title: "How do I know how much I can save?",
-    content: `Your Vuior dashboard displays:
-    - A detailed Bill Overview with due dates, amounts, and savings estimates.
-    - A Savings Tracker that shows your cumulative savings (e.g., “Total Monthly Savings: $255”).
-    - Automated Alerts that remind you of upcoming bills and the benefits of paying early.
-    
-    **Example:**  
-    Imagine you have two bills:  
-    - A $300 utility bill due on the 10th. You pay on the 3rd, saving 10% ($30).  
-    - A $1,500 rent payment due on the 1st. You pay on the 24th of the previous month, saving 15% ($225).  
-    
-    Your dashboard would show:  
-    **Total Monthly Savings: $30 + $225 = $255.**`,
+    title: "Is Vuior Billpay secure?",
+    content: `Yes. Vuior Billpay uses encryption, secure servers, and industry-standard practices to keep your financial data safe. We do not sell or share your data without your consent.`,
   },
-  // Membership and Costs
   {
     value: "q7",
-    title: "Is Vuior free to join?",
-    content: `Yes, Vuior is completely free to join. You can sign up, manage your bills, and access our 
-    savings tools at no cost. Our revenue comes from partnerships and negotiated rates, so there 
-    are no hidden fees for you.`,
+    title: "Can I cancel or edit a scheduled payment?",
+    content: `Yes, payments can be edited or canceled up to 24 hours before the scheduled processing date.`,
   },
   {
     value: "q8",
-    title: "Are there any ongoing fees?",
-    content: `No. Vuior does not charge subscription or management fees for basic bill management 
-    services. Any premium features or value-added services would be clearly communicated and 
-    optional.`,
+    title: "What happens if a payment fails?",
+    content: `If a payment fails due to insufficient funds or a processing error, you will be notified immediately. You can retry the payment or update your payment method.`,
   },
-  // How Vuior Works
   {
     value: "q9",
-    title: "What is the process for managing my bills with Vuior?",
-    content: `The process is simple:
-    1. **Sign Up:** Create a free Vuior account.
-    2. **Link Your Bills:** Manually enter or sync your bills with our platform.
-    3. **Dashboard Overview:** View your upcoming bills, due dates, and potential savings.
-    4. **Pay Early:** Use our platform to make early payments and instantly save on your bills.
-    5. **Track Savings:** Monitor your savings through our detailed dashboard and receive 
-       automated alerts.`,
+    title: "What is Vuior Billpay's refund policy?",
+    content: `Refunds are available only if a payment was processed in error or duplicated due to a system malfunction. Refund requests must be submitted within 7 days of the transaction.
+    
+    Please contact info@vuior.com with your transaction details to begin the refund process. Note: Refunds do not apply to successfully processed bill payments.`,
   },
   {
     value: "q10",
-    title: "What role does AI play in Vuior’s platform?",
-    content: `Our AI analyzes your bill data, payment history, and due dates to:
-    - Identify the optimal time to pay each bill for maximum savings.
-    - Recommend personalized strategies for restructuring your payment schedule.
-    - Continuously update your Savings Tracker to reflect new opportunities. 
-    
-    This intelligent system makes managing your bills easier and more effective.`,
+    title: "Is there a mobile app?",
+    content: `A mobile app is currently in development. For now, you can access Vuior Billpay through any mobile browser with full functionality.`,
   },
-  // Loan Pre-Approval (Partner-Based)
   {
     value: "q11",
-    title: "Does Vuior offer loans?",
-    content: `No, Vuior does not directly offer loans. However, we prequalify eligible members for loan 
-    offers from our trusted lending partners. Our role is to analyze your financial data and help 
-    connect you with lenders who can provide competitive loan options. All final loan terms are set 
-    by our partner lenders.`,
+    title: "How can I track my bill payment history?",
+    content: `Your dashboard includes a full payment history, including pending, scheduled, and completed transactions, along with downloadable reports.`,
   },
   {
     value: "q12",
-    title: "How do I access pre-approved loan offers?",
-    content: `After completing our Debt Assessment Questionnaire (sent via welcome email), you may see 
-    a notification on your dashboard indicating your pre-qualification status. If you’re eligible, you 
-    can view estimated loan offers and schedule a free consultation to discuss these options further.`,
-  },
-  // Educational Resources
-  {
-    value: "q13",
-    title: "What kind of educational resources does Vuior offer?",
-    content: `Vuior provides a comprehensive Resource Center, which includes:
-    - **Articles and Guides:** Learn best practices for bill management and saving.
-    - **Video Tutorials:** Step-by-step videos on how to optimize your payments.
-    - **Interactive Tools:** Calculators to estimate savings, compare payment strategies, and 
-      plan your budget.
-    - **Webinars:** Regular sessions with financial experts to help you improve your financial 
-      literacy.`,
-  },
-  // Security and Compliance
-  {
-    value: "q14",
-    title: "How does Vuior protect my financial data?",
-    content: `Vuior uses industry-standard encryption and robust security measures to ensure your 
-    personal and financial information is secure. We adhere to all relevant data protection laws and 
-    regulations.`,
-  },
-  {
-    value: "q15",
-    title: "Is my data shared with third parties?",
-    content: `Vuior does not sell your data. We may share limited information with trusted partners solely 
-    for the purpose of providing better rates and loan pre-approval services, always in compliance 
-    with data protection regulations.`,
-  },
-  // Customer Support
-  {
-    value: "q16",
-    title: "How can I get help if I have a question or issue?",
-    content: `Vuior offers multiple support channels:
-    - **Email Support:** Reach out to our dedicated support team.
-    - **Live Chat:** Available on the Vuior dashboard during business hours.
-    - **Help Center:** Access a range of articles and FAQs for instant answers.`,
-  },
-  {
-    value: "q17",
-    title: "Can I provide feedback about Vuior?",
-    content: `Yes! We value your input. You can submit feedback directly through your dashboard, which 
-    helps us improve our platform and services.`,
+    title: "Does Vuior Billpay offer customer support?",
+    content: `Yes. Our support team is available Monday–Friday, 9am–6pm EST. You can reach us via email at info@vuior.com or through the help section on our website.`,
   },
 ];
 
@@ -465,44 +376,89 @@ export interface JobDescription {
 }
 
 export const initialJobs: JobDescription[] = [  
-  
   {
-    id: "41c41934-2a21-4ba6-afc2-752f3a1da3f1",
-    title: "Vuior Billpay Ambassador - Brand Ambassador ",
-    department: "Community Engagement",
+    id: "9b86f4a7-3e12-45d9-b28c-84e15d33ae81",
+    title: "Billing Analyst – Vuior Billpay",
+    department: "Finance",
     location: "Remote",
-    type: "Flexible / Independent ",
-    keyResponsibilitiesHeading:"Why Join?",
-    headingfour:"Who We're Looking For",  
-    aboutUs:
-      "Vuior Billpay is looking for passionate, motivated individuals to help spread the word about our revolutionary bill payment platform! As a Vuior Billpay Ambassador, you'll be the face of our brand, engaging with communities, promoting financial wellness, and helping users save money on their bills. ",
-    jobSummary:[
-      "Earn up to $3,500 per week through signups & referrals.",
-      "Work on your schedule - No set hours, remote, and flexible.",
-      "Be part of something big - Help build the #1 bill payment platform .",
-      "No experience needed - Just passion, energy, and a drive to succeed .",
+    type: "1099 Independent Contractor",
+    aboutTheRoleHeading: "About the Role:",
+    aboutTheRole: "Vuior Billpay is seeking motivated individuals to join our team as Billing Analysts. In this role, you'll process and audit bills, help users track payments, and build relationships with service providers to identify savings and early payment opportunities. You'll also support our business development efforts by helping grow our provider network.",
+    keyResponsibilitiesHeading: "What You'll Do:",
+    qualificationHeading: "What We're Looking For:",
+    headingfour: "Why Join Vuior Billpay?",
+    aboutUs: "Vuior Billpay is revolutionizing how people manage their bills, helping users save money and reduce financial stress.",
+    jobSummary: [
+      "Compensation: Up to $40/hr",
+      "Type: 1099 Independent Contractor",
+      "Location: Fully Remote – Work from Anywhere",
+      "Experience Required: None – Training Provided"
     ],
-      
-    objectives: [
-      "Promote Vuior Billpay across your community & online.",
-      "Share your personal promo code and earn commissions for every signup.", 
-      "Engage with individuals, businesses, and social groups to drive awareness.",
-      "Create & share content on social media, forums, and community spaces." ,
-      "Represent Vuior Billpay at local events and digital campaigns." ,
-      "Provide regular feedback from the community to help Vuior Billpay improve its services.",
+    roleResponsibilities: [
+      "Review and manage user-submitted bills",
+      "Process and track bill payments",
+      "Audit payment history for accuracy and optimization",
+      "Identify early payment opportunities and reward strategies",
+      "Build and maintain relationships with utility, telecom, and other service providers",
+      "Collaborate with our team to improve user experience and backend processes",
+      "Use data to uncover insights and savings opportunities"
+    ],
+    qualifications: [
+      "Strong attention to detail and comfort working with numbers",
+      "Excellent communication skills",
+      "Self-starter who can work independently and remotely",
+      "Comfortable using web-based tools and spreadsheets",
+      "Interest in financial health, bill management, or tech startups",
+      "(Preferred, not required) Prior billing, finance, or customer service experience"
     ],
     contantfour: [
-      "Motivated & outgoing individuals who enjoy networking.", 
-      "Strong social media presence (preferred, but not required).", 
-      "Passion for financial wellness and helping others save money .",
-      "Entrepreneurs, students, influencers, gig workers, and side hustlers welcome!.",
+      "No Experience? No Problem: We offer paid training, mentorship, and support to help you succeed—even if you're just getting started.",
+      "Work from Anywhere: Enjoy the freedom of a fully remote position with flexible hours. Your office is wherever you are.",
+      "Competitive Pay: Earn up to $40/hour based on performance, effort, and results.",
+      "Build Meaningful Relationships: Collaborate with service providers and contribute to shaping a nationwide bill savings network.",
+      "Impactful Work: Help real people optimize their bills, reduce stress, and build financial confidence.",
+      "Learn & Grow: Gain hands-on experience in billing, auditing, customer relations, and business development."
     ],
-    dailyAndWeeklyTasks: [
-      "1: Complete the online application",
-      "2: Get your promo code and start earning immediately!",
-    ],
-    salaryExpectations:"3,500 per week ",
-   
+    salaryExpectations: "Up to $40/hr"
   },
+  
+  // {
+  //   id: "41c41934-2a21-4ba6-afc2-752f3a1da3f2",
+  //   title: "Vuior Billpay Ambassador - Brand Ambassador ",
+  //   department: "Community Engagement",
+  //   location: "Remote",
+  //   type: "Flexible / Independent ",
+  //   keyResponsibilitiesHeading:"Why Join?",
+  //   headingfour:"Who We're Looking For",  
+  //   aboutUs:
+  //     "Vuior Billpay is looking for passionate, motivated individuals to help spread the word about our revolutionary bill payment platform! As a Vuior Billpay Ambassador, you'll be the face of our brand, engaging with communities, promoting financial wellness, and helping users save money on their bills. ",
+  //   jobSummary:[
+  //     "Earn up to $3,500 per week through signups & referrals.",
+  //     "Work on your schedule - No set hours, remote, and flexible.",
+  //     "Be part of something big - Help build the #1 bill payment platform .",
+  //     "No experience needed - Just passion, energy, and a drive to succeed .",
+  //   ],
+      
+  //   objectives: [
+  //     "Promote Vuior Billpay across your community & online.",
+  //     "Share your personal promo code and earn commissions for every signup.", 
+  //     "Engage with individuals, businesses, and social groups to drive awareness.",
+  //     "Create & share content on social media, forums, and community spaces." ,
+  //     "Represent Vuior Billpay at local events and digital campaigns." ,
+  //     "Provide regular feedback from the community to help Vuior Billpay improve its services.",
+  //   ],
+  //   contantfour: [
+  //     "Motivated & outgoing individuals who enjoy networking.", 
+  //     "Strong social media presence (preferred, but not required).", 
+  //     "Passion for financial wellness and helping others save money .",
+  //     "Entrepreneurs, students, influencers, gig workers, and side hustlers welcome!.",
+  //   ],
+  //   dailyAndWeeklyTasks: [
+  //     "1: Complete the online application",
+  //     "2: Get your promo code and start earning immediately!",
+  //   ],
+  //   salaryExpectations:"3,500 per week ",
+   
+  // },
 
 ];

@@ -138,10 +138,10 @@ const JobApplication = () => {
 
       axios
         .post(url, data, { headers })
-        .then((response) => {
+        .then((response:any) => {
           console.log("Email sent successfully:", response.data);
         })
-        .catch((error) => {
+        .catch((error:any) => {
           console.error(
             "Error sending email:",
             error.response?.data || error.message

@@ -13,6 +13,7 @@ import { Switch, FormControlLabel } from "@mui/material";
 
 import { useBillPaymentContext } from "@/context/paymentBillsContext";
 import { useAuth } from "@/context/AuthContext";
+import { useUserAssets } from "@/context/userSpecificAssetsContext";
 import { DateTime } from "luxon";
 import { useToast } from "@/hooks/use-toast";
 import { loadStripe } from "@stripe/stripe-js";
@@ -24,15 +25,14 @@ const Transaction = () => {
   const { user }: any = useAuth();
   const { selectedBills, removeBill, clearBills, calculateTotalBills } =
     useBillPaymentContext();
+  const { userPreviousTransactions } = useUserAssets();
   const [visibleItems, setVisibleItems] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [availableCredits] = useState(user?.availableCredits || 0);
   const [creditInput, setCreditInput] = useState(0);
   const [creditApplied, setCreditApplied] = useState(0);
   const [autoPayIds, setAutoPayIds] = useState([]);
-  useEffect(() => {
-    setVisibleItems(selectedBills);
-  }, [selectedBills]);
+
   const savingsForBill = useMemo(() => {
     if (visibleItems.length > 0) {
       return calculateSavingsForBills(user, visibleItems);
@@ -46,12 +46,37 @@ const Transaction = () => {
   }, [user, visibleItems]);
   const subtotal = calculateTotalBills();
   const savings = savingsForBill.totalSavings;
-  const discount = subtotal * 0.03;
-  const total = useMemo(() => {
-    return subtotal + discount - creditApplied;
-  }, [subtotal, creditApplied, discount]);
+  const processingFee = subtotal * 0.03;
+  const discount = user?.role === "admin" || user?.role === "powerUser" ? subtotal * 0.05 : 0;
+  useEffect(() => {
+    if(discount > 0){
+      setVisibleItems(selectedBills.map((bill) => {
+        return {
+          ...bill,
+          amount: bill.amount - (bill.amount * 0.05),
+        };
+      }))
+    }else{
 
-  const handleOpenModal = () => setIsModalOpen(true);
+      setVisibleItems(selectedBills);
+    }
+  }, [selectedBills , discount]);
+  const total = useMemo(() => {
+    return subtotal + processingFee - creditApplied - discount ;
+  }, [subtotal, creditApplied, processingFee, discount]);
+
+  const handleOpenModal = () => {
+    // Check if user has made at least one payment before
+    if (userPreviousTransactions && userPreviousTransactions.length > 0) {
+      setIsModalOpen(true);
+    } else {
+      toast({
+        title: "Credit not available",
+        description: "You need to make at least one payment before you can utilize credits for discount.",
+        variant: "destructive"
+      });
+    }
+  };
   const handleCloseModal = () => setIsModalOpen(false);
 
   const handleApplyCredits = () => {
@@ -78,6 +103,7 @@ const Transaction = () => {
       if (!stripe) {
         return;
       }
+      console.log(subtotal,total,savings,processingFee);
       const apiUrl =
         "https://createbillscheckoutsession-5risxnudva-uc.a.run.app";
       const response = await fetch(apiUrl, {
@@ -163,6 +189,7 @@ const Transaction = () => {
             <OrderSummary
               visibleItems={visibleItems}
               subtotal={subtotal}
+              processingFee={processingFee}
               discount={discount}
               total={total}
               creditApplied={creditApplied}
@@ -353,7 +380,7 @@ const CartItem: React.FC<any> = ({
 const OrderSummary: React.FC<any> = ({
   visibleItems,
   subtotal,
-  // discount,
+  discount,
   total,
   creditApplied,
   unifiedDueDate,
@@ -446,6 +473,26 @@ const OrderSummary: React.FC<any> = ({
             3%
           </span>
         </div>
+
+        {discount > 0 && (
+          <div className="flex items-center justify-between py-2 border-b border-gray-300">
+            <span className="text-lg text-gray-700">Discount</span>
+            <span className="text-lg text-green-500">
+              <CurrencyFormat
+                value={`-${
+                  discount.toString().includes(".")
+                    ? discount.toLocaleString(undefined, {
+                        maximumFractionDigits: 2,
+                      })
+                    : `-${discount}.00`
+                }`}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"$"}
+              />
+            </span>
+          </div>
+        )}
         {creditApplied > 0 && (
           <div className="flex items-center justify-between py-2 border-b border-gray-300">
             <span className="text-lg text-gray-700">Credit </span>

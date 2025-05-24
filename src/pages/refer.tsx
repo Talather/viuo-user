@@ -1,5 +1,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { useUserAssets } from "@/context/userSpecificAssetsContext";
+import { useState, useEffect } from "react";
 
 const Refer = () => {
   return (
@@ -16,11 +18,59 @@ export default Refer;
 const ReferAFriend = () => {
   const { toast } = useToast();
   const { user } = useAuth();
+  const { userCredits } = useUserAssets();
+  const [totalReferrals, setTotalReferrals] = useState<number>(0);
+  const [totalEarned, setTotalEarned] = useState<number>(0);
+
+  // Define credit history type
+  interface CreditHistoryItem {
+    id: string;
+    type: string;
+    credits: number;
+    date: string;
+    // Add other properties as needed
+  }
+
+  useEffect(() => {
+    if (userCredits && userCredits.length > 0) {
+      // Filter referral type credits
+      const referralCredits = userCredits.filter((credit: CreditHistoryItem) => credit.type === "referral");
+      setTotalReferrals(referralCredits.length);
+      
+      // Calculate total earnings from referrals
+      const totalAmount = referralCredits.reduce((sum: number, credit: CreditHistoryItem) => sum + (credit.credits || 0), 0);
+      setTotalEarned(totalAmount);
+    }
+  }, [userCredits]);
+
+  // Currency formatter helper
+  const formatCurrency = (amount: number): string => {
+    return amount.toString().includes(".")
+      ? amount.toLocaleString(undefined, { maximumFractionDigits: 2 })
+      : `${amount}.00`;
+  };
 
   const referralCode: string = user?.referralCode || "";
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-b from-gray-100 to-button-gpt">
+      {/* Stats Cards */}
+      <div className="flex flex-wrap justify-center w-full max-w-4xl gap-8 mb-10">
+        {/* Total Referrals Card */}
+        <div className="w-full max-w-xs px-6 py-6 text-center bg-white shadow-lg rounded-xl">
+          <h2 className="mb-2 text-lg font-semibold text-gray-600">Total Referrals</h2>
+          <div className="mb-2 text-4xl font-bold text-button-gpt">{totalReferrals}</div>
+          <p className="text-sm text-gray-500">Friends who joined using your code</p>
+        </div>
+
+        {/* Total Earnings Card */}
+        <div className="w-full max-w-xs px-6 py-6 text-center bg-white shadow-lg rounded-xl">
+          <h2 className="mb-2 text-lg font-semibold text-gray-600">Total Earnings</h2>
+          <div className="mb-2 text-4xl font-bold text-button-gpt">${formatCurrency(totalEarned)}</div>
+          <p className="text-sm text-gray-500">Amount earned from referrals</p>
+        </div>
+      </div>
+
       {/* Header */}
       <h1 className="mb-6 text-4xl font-bold text-center text-gray-800">
         Refer a Friend for More Savings!

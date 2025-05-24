@@ -108,8 +108,21 @@ export async function sendEmailVerificationOTP(
     const url = `https://api.bird.com/workspaces/${workspaceId}/channels/${channelId}/messages`;
 
     const data = {
+      sender: {
+        connector: {
+          identifierValue: "info@vuior.com",
+          annotations: {
+            name: "Vuior BillPay",
+          },
+        },
+      },
       receiver: {
-        contacts: [{ identifierValue: email }],
+        contacts: [
+          {
+            identifierKey: "Vuior BillPay",
+            identifierValue: email,
+          },
+        ],
       },
       body: {
         type: "html",

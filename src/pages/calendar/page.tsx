@@ -26,22 +26,3 @@ const CalendarPage = () => {
 };
 
 export default CalendarPage;
-// console.log(upcomingBills);
-// useEffect(() => {
-//   if (!upcomingBills[currentYear][currentMonth]) {
-//     // Find the first month in upcomingBills[currentYear] and navigate to it
-//     let upcomingMonths = Object.keys(upcomingBills[currentYear] || null);
-//     upcomingMonths = upcomingMonths.reverse();
-//     if (upcomingMonths.length > 0 || !upcomingMonths) {
-//       const firstAvailableMonth = upcomingMonths[0];
-//       const targetMonthIndex = new Date(
-//         `${firstAvailableMonth} 1, ${currentYear}`
-//       ).getMonth();
-//       const currentMonthIndex = currentDate.getMonth();
-//       const monthDifference = targetMonthIndex - currentMonthIndex;
-//       if (monthDifference !== 0) {
-//         navigateMonth(monthDifference);
-//       }
-//     }
-//   }
-// }, []);
