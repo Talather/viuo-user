@@ -1,5 +1,5 @@
 // import { Building2Icon, MailIcon } from "lucide-react";
-import { MailIcon } from "lucide-react";
+import { MailIcon , PhoneIcon } from "lucide-react";
 import { Card, CardBody } from "@nextui-org/react";
 import GetHelpCard from "../components/redesigned-components/components/get-help";
 import MaxWidthContainer from "../components/max-width-container";
@@ -24,11 +24,11 @@ const ContactUs = () => {
                     content="info@vuior.com"
                     icon={MailIcon}
                   />
-                  {/* <GetHelpCard
+                  <GetHelpCard
                     header="Phone Number"
-                    content="1-833-337-1826"
+                    content="+1 (833) 367-1826"
                     icon={PhoneIcon}
-                  /> */}
+                  />
                   {/* <GetHelpCard
                     header="Address"
                     content="Vuior HQ, 1207 Delaware Ave #3968, Wilmington, DE 19806"
