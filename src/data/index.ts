@@ -386,7 +386,7 @@ export const initialJobs: JobDescription[] = [
     aboutTheRole: "Vuior Billpay is seeking motivated individuals to join our team as Billing Analysts. In this role, you'll process and audit bills, help users track payments, and build relationships with service providers to identify savings and early payment opportunities. You'll also support our business development efforts by helping grow our provider network.",
     // keyResponsibilitiesHeading: "What You'll Do:",
     qualificationHeading: "What We're Looking For:",
-    headingfour: "Why Join Vuior Billpay?",
+    headingfour: "Why Join Vuior Billpay?",  
     aboutUs: "Vuior Billpay is revolutionizing how people manage their bills, helping users save money and reduce financial stress.",
     // jobSummary: [
     //   "Compensation: Up to $40/hr",
