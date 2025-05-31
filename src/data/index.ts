@@ -386,7 +386,7 @@ export const initialJobs: JobDescription[] = [
     aboutTheRole: "Vuior Billpay is seeking motivated individuals to join our team as Billing Analysts. In this role, you'll process and audit bills, help users track payments, and build relationships with service providers to identify savings and early payment opportunities. You'll also support our business development efforts by helping grow our provider network.",
     // keyResponsibilitiesHeading: "What You'll Do:",
     qualificationHeading: "What We're Looking For:",
-    headingfour: "Why Join Vuior Billpay?",
+    headingfour: "Why Join Vuior Billpay?",  
     aboutUs: "Vuior Billpay is revolutionizing how people manage their bills, helping users save money and reduce financial stress.",
     // jobSummary: [
     //   "Compensation: Up to $40/hr",
@@ -421,6 +421,43 @@ export const initialJobs: JobDescription[] = [
     ],
     salaryExpectations: "Up to $40/hr"
   },
+  {
+    id: "6f2a8c5d-9e3b-4b7f-a1d5-7c9f2e3d1b0a",
+    title: "Business Development Partner",
+    department: "Growth",
+    location: "Remote",
+    type: "Flexible",
+    aboutTheRoleHeading: "About the Role:",
+    aboutTheRole: "Vuior Billpay is looking for motivated and outgoing individuals to help us grow! As a Business Development Partner, you'll promote our platform, sign up new users, and help more people manage and pay their bills smarter. This is a flexible, remote role with high earning potential.",
+    qualificationHeading: "What We're Looking For:",
+    headingfour: "No Experience? No Problem.",
+    aboutUs: "Vuior Billpay is revolutionizing how people manage their bills, helping users save money and reduce financial stress.",
+    roleResponsibilities: [
+      "Share Vuior Billpay with individuals, businesses, and communities",
+      "Help users sign up, complete their profile, and start paying bills",
+      "Use your custom referral link or code to track verified users",
+      "Represent the brand through outreach, networking, and digital channels",
+      "Report sign-up activity and collaborate with our growth team"
+    ],
+    qualifications: [
+      "Confidence and reliability",
+      "Strong communication skills",
+      "Self-motivated with ability to work independently",
+      "Networking and relationship-building abilities",
+      "Interest in financial technology and helping others save money"
+    ],
+    contantfour: [
+      "If you're confident, reliable, and ready to connect with others, we'll teach you the rest.",
+      "$25/hour for outreach, training, and campaign work",
+      "$50-$100 bonus per verified user (who pays at least $500 in bills)",
+      "Flexible hours — work from anywhere",
+      "Paid training and full support",
+      "Opportunity to grow into leadership roles"
+    ],
+    salaryExpectations: "$25/hour + $50-$100 bonus per verified user"
+  },
+  
+
   
   // {
   //   id: "41c41934-2a21-4ba6-afc2-752f3a1da3f2",
