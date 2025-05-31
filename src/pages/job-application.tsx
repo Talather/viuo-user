@@ -114,6 +114,7 @@ const JobApplication = () => {
 
               <li><strong>Phone:</strong> ${formData.phone}</li>
               <li><strong>Promotional Messages:</strong> ${formData.agreeToPromotionalMessages}</li>
+              <li><strong>How did you hear about us?:</strong> ${formData.whydoyouwanttoworkatvuior}</li>
             </ul>
             <div style="width:500px; background-color:#10a37f; text-align:center; justify-content:center; color:white; border-radius:05px;">
               <a href="${docUrl}" style="color:white;">Click Here to Download Resume</a>
