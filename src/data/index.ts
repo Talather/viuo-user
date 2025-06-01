@@ -421,6 +421,48 @@ export const initialJobs: JobDescription[] = [
     ],
     salaryExpectations: "Up to $40/hr"
   },
+  {
+    id: "6f2a8c5d-9e3b-4b7f-a1d5-7c9f2e3d1b0a",
+    title: "Business Development Partner",
+    department: "Growth",
+    location: "Remote",
+    type: "Flexible",
+    aboutTheRoleHeading: "About the Role:",
+    keyResponsibilitiesHeading:"What You'll Do:",
+    aboutTheRole: "Vuior Billpay is looking for motivated and outgoing individuals to help us grow! As a Business Development Partner, you'll promote our platform, sign up new users, and help more people manage and pay their bills smarter. This is a flexible, remote role with high earning potential.",
+    qualificationHeading: "What You Get: ",
+    headingfour: "No Experience? No Problem.",
+    aboutUs: "Vuior Billpay is revolutionizing how people manage their bills, helping users save money and reduce financial stress.",
+    jobSummary: [
+      "Share Vuior Billpay with individuals, businesses, and communities",
+      "Help users sign up, complete their profile, and start paying bills",
+      "Use your custom referral link or code to track verified users",
+      "Represent the brand through outreach, networking, and digital channels",
+      "Report sign-up activity and collaborate with our growth team",
+      
+    ],
+    roleResponsibilities: [
+      "$25/hour for outreach, training, and campaign work ",
+      "$50-$100 bonus per verified user (who pays at least $500 in bills) ",
+      "Flexible hours — work from anywhere ",
+      "Paid training and full support ",
+      "Opportunity to grow into leadership roles"
+    ],
+    qualifications: [
+      "$25/hour for outreach, training, and campaign work ",
+      "$50-$100 bonus per verified user (who pays at least $500 in bills) ",
+      "Flexible hours — work from anywhere ",
+      "Paid training and full support ",
+      "Opportunity to grow into leadership roles"
+    ],
+    contantfour: [
+      "If you're confident, reliable, and ready to connect with others, we’ll teach you the rest. ",
+      "Apply now and start building the future of bill payments with Vuior! ",
+    ],
+    salaryExpectations: "$25/hour + $50-$100 bonus per verified user"
+  },
+  
+
   
   // {
   //   id: "41c41934-2a21-4ba6-afc2-752f3a1da3f2",

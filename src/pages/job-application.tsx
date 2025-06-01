@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../components/ui/form";
-import { Checkbox, Input } from "@nextui-org/react";
+import { Checkbox, Input , Select,SelectItem } from "@nextui-org/react";
 import { useToast } from "../hooks/use-toast";
 // import emailjs from "@emailjs/browser";
 import { NavLink } from "react-router-dom";
@@ -71,6 +71,7 @@ const JobApplication = () => {
       agreeToPromotionalMessages: `${
         values.agreeToPromotionalMessages ? "Agreed" : "Not Agreed"
       }`,
+      whydoyouwanttoworkatvuior: `${values.whydoyouwanttoworkatvuior}`,
     };
 
     try {
@@ -113,6 +114,7 @@ const JobApplication = () => {
 
               <li><strong>Phone:</strong> ${formData.phone}</li>
               <li><strong>Promotional Messages:</strong> ${formData.agreeToPromotionalMessages}</li>
+              <li><strong>How did you hear about us?:</strong> ${formData.whydoyouwanttoworkatvuior}</li>
             </ul>
             <div style="width:500px; background-color:#10a37f; text-align:center; justify-content:center; color:white; border-radius:05px;">
               <a href="${docUrl}" style="color:white;">Click Here to Download Resume</a>
@@ -125,6 +127,7 @@ const JobApplication = () => {
               Email: ${formData.email}
               Phone: ${formData.phone}
               Promotional Messages: ${formData.agreeToPromotionalMessages}
+              How did you hear about us?: ${formData.whydoyouwanttoworkatvuior}
               Resume: ${docUrl}
 `,
           },
@@ -291,18 +294,19 @@ const JobApplication = () => {
             )}
           />
           
-          {/* <Select
-            {...register("timeSlot")}
+          <Select
+            {...register("whydoyouwanttoworkatvuior")}
             variant="bordered"
             size="lg"
-            placeholder="Select a time slot"
-            errorMessage={errors.timeSlot?.message}
-            isInvalid={!!errors.timeSlot?.message}
+            placeholder="How did you hear about us?"
+            // control={control}
+            name="whydoyouwanttoworkatvuior"
           >
-            <SelectItem key="Morning 6-11am">Morning 6-11am</SelectItem>
-            <SelectItem key="Afternoon 12-6pm">Afternoon 12-6pm</SelectItem>
-            <SelectItem key="Evening 7-11pm">Evening 7-11pm</SelectItem>
-          </Select> */}
+            <SelectItem key="Social Media">Social Media</SelectItem>
+            <SelectItem key="Search Engine">Search Engine</SelectItem>
+            <SelectItem key="Referral">Referral</SelectItem>
+            <SelectItem key="Other">Other</SelectItem>
+          </Select>
           {/* <FormField
             control={form.control}
             name="date"
@@ -344,33 +348,27 @@ const JobApplication = () => {
             )}
           /> */}
 
-<FormField
-  control={control}
-  name="whydoyouwanttoworkatvuior"
-  render={({ field }) => (
-    <FormItem className="relative items-center">
-      <div className="w-full">
-        <FormControl>
-          <Input
-            variant="bordered"
-            size="md"
-            label="Why do you want to work at Vuior Billpay?"
-            maxLength={100}
-            {...field}
-            onChange={(e) => {
-              if (e.target.value.length <= 1000) {
-                field.onChange(e);
-              }
-            }}
-          />
-        </FormControl>
-        <div className="text-right text-xs text-gray-500 mt-1">
-          {field.value?.length || 0}/1000 characters
-        </div>
-      </div>
-    </FormItem>
-  )}
-/>
+          {/* <FormField
+          
+            render={({ field }) => (
+              <FormItem className="relative items-center">
+                <div className="w-full">
+                  <FormControl>
+                    <select
+                      className="w-full h-12 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      {...field}
+                    >
+                      <option value="" disabled selected>How did you hear about us?</option>
+                      <option value="Social Media">Social Media</option>
+                      <option value="Search Engine">Search Engine</option>
+                      <option value="Referral">Referral</option>
+                    </select>
+                  </FormControl>
+                </div>
+              </FormItem>
+            )}
+          /> */}
+
         
           <Checkbox {...register("agreeToPromotionalMessages")}>
             <p className="text-xs">
