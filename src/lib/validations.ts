@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isValidPhoneNumber } from 'react-phone-number-input';
 
 export const LoginSchema = z.object({
   email: z.string().email(),
@@ -25,7 +26,10 @@ export const ContactUsSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email(),
   subject: z.string().min(1, "Subject is required"),
-  phoneNumber: z.string().trim().min(17, "Phone number is required"),
+  phoneNumber: z.string().optional().refine((value) => {
+    if (!value) return true; // Allow empty phone number
+    return isValidPhoneNumber(value);
+  }, "Please enter a valid phone number"),
   message: z.string().min(1, "Message is required"),
   agreeToPromotionalMessages: z.boolean().optional(),
   // file: z
@@ -60,7 +64,10 @@ export const JobApplicationSchema = z.object({
   whydoyouwanttoworkatvuior: z.string().min(1, "Is required"),
   // jobTitle: z.string().min(1, "Job Title is required"),
   email: z.string().email(),
-  phoneNumber: z.string().min(1, "Phone number is required"),
+  phoneNumber: z.string().optional().refine((value) => {
+    if (!value) return true; // Allow empty phone number
+    return isValidPhoneNumber(value);
+  }, "Please enter a valid phone number"),
   agreeToPromotionalMessages: z.boolean().optional(),
   // date: z.date({
   //   required_error: "Date is required.",
