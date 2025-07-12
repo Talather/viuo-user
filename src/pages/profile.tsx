@@ -7,8 +7,10 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
 import { Button } from "@nextui-org/button";
 import { useToast } from "../hooks/use-toast";
-import CurrencyFormat from "react-currency-format";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
+import flags from 'react-phone-number-input/flags';
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const ProfilePage: React.FC = () => {
@@ -82,8 +84,8 @@ const ProfilePage: React.FC = () => {
       console.error("User is not authenticated or user ID is missing.");
       return;
     }
-    if (phoneNo.trim().length !== 17) {
-      toast({ title: "Error", description: "Phone no is not correct" });
+    if (phoneNo && !isValidPhoneNumber(phoneNo)) {
+      toast({ title: "Error", description: "Please enter a valid phone number" });
       return;
     }
 
@@ -248,17 +250,23 @@ const ProfilePage: React.FC = () => {
 
         <div className="mb-6">
           <label className="block mb-2 text-white">Phone No:</label>
-
-          <CurrencyFormat
-            type="text"
-            value={phoneNo}
-            onValueChange={(value) => {
-              setPhoneNo(value.formattedValue);
-            }}
-            className="w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50"
-            format="+1 (###) ###-####"
-            // mask="_"
-          />
+          <div className="relative">
+            <PhoneInput
+              flags={flags}
+              international
+              defaultCountry="US"
+              countryCallingCodeEditable={true}
+              className="phone-input-container"
+              value={phoneNo}
+              onChange={(value) => setPhoneNo(value || "")}
+              placeholder="Enter phone number"
+              style={{
+                color: "black",
+                backgroundColor: "white",
+                borderRadius: "10px",
+              }}
+            />
+          </div>
         </div>
         {/* Date of Birth */}
         <div className="mb-6">

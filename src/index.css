@@ -323,3 +323,56 @@ input[type="number"] {
     .services-main-container{padding: 1rem;}
     .saving-btn {font-size: 24px;}
 }
+
+/* Phone Input Styles */
+.phone-input-container {
+  width: 100%;
+}
+
+.phone-input-container .PhoneInputInput {
+  width: 100%;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 0.875rem; /* text-sm */
+  background-color: transparent;
+  border: 2px solid #e5e7eb; /* border-gray-200 */
+  border-radius: 0.75rem; /* rounded-xl */
+  transition: border-color 0.2s;
+  outline: none;
+  font-family: "Manrope", sans-serif;
+  min-height: 56px;
+}
+
+.phone-input-container .PhoneInputInput::placeholder {
+  color: #9ca3af; 
+}
+
+.phone-input-container .PhoneInputInput:focus {
+  border-color: black !important; /* focus:border-blue-500 */
+}
+
+/* .phone-input-container .PhoneInputCountrySelect {
+  border: none;
+  background-color: transparent;
+  margin-right: 0.5rem;
+  outline: none;
+  font-family: "Manrope", sans-serif;
+} */
+
+/* .phone-input-container .PhoneInputCountryIcon {
+  width: 1.5rem; 
+  height: 1.5rem;
+  border-radius: 0.125rem; 
+} */
+
+.phone-input-container .PhoneInputCountrySelectArrow {
+  margin-left: 0.25rem;
+  color: #9ca3af;
+}
+
+.phone-input-container.phone-input-error .PhoneInputInput {
+  border-color: #ef4444 !important; /* border-red-500 */
+}
+

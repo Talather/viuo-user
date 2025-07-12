@@ -147,7 +147,7 @@ const JobDetails = () => {
       {job.dailyAndWeeklyTasks && job.dailyAndWeeklyTasks.length > 0 && (
       <Card>
         <CardHeader>
-          <CardTitle>How to Apply</CardTitle>
+          <CardTitle>Apply Now</CardTitle>
         </CardHeader>
         <CardContent>
           <ul className="pl-4 space-y-2 text-muted-foreground">

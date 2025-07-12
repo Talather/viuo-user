@@ -14,6 +14,10 @@ import { Checkbox, Image } from "@nextui-org/react";
 import CurrencyFormat from "react-currency-format";
 import { sendEmailVerificationLink } from "@/lib/firebaseClientUniversalFunctions";
 import { useAuth } from "../hooks/useAuth";
+import PhoneInput , { isValidPhoneNumber } from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
+import flags from 'react-phone-number-input/flags'
+
 
 type RegisterUserFormData = z.infer<typeof RegisterUserSchema>;
 
@@ -70,6 +74,14 @@ const RegisterUser = () => {
       toast({
         title: "Age Restriction",
         description: "You must be at least 18 years old to register.",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (!isValidPhoneNumber(values.phoneNumber)) {
+      toast({
+        title: "Invalid Phone Number",
+        description: "Please enter a valid phone number.",
         variant: "destructive",
       });
       return;
@@ -256,16 +268,24 @@ const RegisterUser = () => {
                     <FormItem className="relative items-center">
                       <div className="w-full">
                         <FormControl>
-                          <CurrencyFormat
-                            customInput={Input}
-                            variant="bordered"
-                            size="md"
-                            label="Phone number"
-                            errorMessage={errors.phoneNumber?.message}
-                            isInvalid={!!errors.phoneNumber?.message}
-                            format="+1 (###) ###-####"
-                            {...(field as any)}
-                          />
+                          <div className="relative">
+                            <PhoneInput
+                              flags={flags}
+                              international
+                              defaultCountry="US"
+                              countryCallingCodeEditable={true}
+                              className={`phone-input-container ${errors.phoneNumber?.message ? 'phone-input-error' : ''}`}
+                              value={field.value}
+                              onChange={field.onChange}
+                              placeholder="Enter phone number"
+                          
+                            />
+                            {errors.phoneNumber?.message && (
+                              <div className="text-red-500 text-sm mt-1">
+                                {errors.phoneNumber.message}
+                              </div>
+                            )}
+                          </div>
                         </FormControl>
                       </div>
                     </FormItem>
