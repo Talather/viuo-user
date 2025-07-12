@@ -425,41 +425,51 @@ export const initialJobs: JobDescription[] = [
     id: "6f2a8c5d-9e3b-4b7f-a1d5-7c9f2e3d1b0a",
     title: "Business Development Partner",
     department: "Growth",
-    location: "Remote",
-    type: "Flexible",
+    location: "Remote (U.S. & International Opportunities)",
+    type: "1099 Independent Contractor Position",
     aboutTheRoleHeading: "About the Role:",
-    keyResponsibilitiesHeading:"What You'll Do:",
-    aboutTheRole: "Vuior Billpay is looking for motivated and outgoing individuals to help us grow! As a Business Development Partner, you'll promote our platform, sign up new users, and help more people manage and pay their bills smarter. This is a flexible, remote role with high earning potential.",
-    qualificationHeading: "What You Get: ",
+    keyResponsibilitiesHeading:"What You’ll Do & What You’ll Get:",
+    aboutTheRole:"Vuior Billpay is changing the way people manage and pay household bills and we're looking for ambitious, outgoing individuals to help us grow our community. As a Business Development Partner, you'll be the face of Vuior Billpay in your area and online. This flexible, performance-based opportunity is perfect for self-starters, networkers, and people who enjoy connecting with others and promoting a mission-driven product.",
+    qualificationHeading: "What You Need:",
     headingfour: "No Experience? No Problem.",
+    // objectives:["sad"],
+    dailyAndWeeklyTasks:[
+      "Join a growing movement to make bill payments smarter and more affordable. Become a Business Development Partner with Vuior Billpay and start building a flexible, high-potential income stream on your own terms."
+    ],
     aboutUs: "Vuior Billpay is revolutionizing how people manage their bills, helping users save money and reduce financial stress.",
     jobSummary: [
-      "Share Vuior Billpay with individuals, businesses, and communities",
-      "Help users sign up, complete their profile, and start paying bills",
-      "Use your custom referral link or code to track verified users",
-      "Represent the brand through outreach, networking, and digital channels",
-      "Report sign-up activity and collaborate with our growth team",
-      
+      "Earn $25/hour for verified fieldwork, event outreach, and campaign execution",
+      "Earn $50-$100 bonus per verified user who signs up and pays at least $500 in bills",
+      "Use your unique referral link/code to sign up users in person or online",
+      "Attend community events, expos, business fairs, or set up your own outreach tables at places like apartment complexes, churches, salons, or small businesses ",
+      "Work remotely with flexible hours, on your own schedule ",
+      "Represent Vuior Billpay professionally using approved branded materials (shirts, banners, QR codes, etc.)",
+      "Purchase of Vuior-branded accessories is required for outreach and event work",
+      "Receive paid training to help you succeed, along with continuous support from our growth team",
+      "Opportunity to grow into Leadership, Trainer, or Regional Partner roles",
+      "Gain valuable experience in sales, community engagement, event marketing, and digital outreach",
+      "Build your own book of business, track performance, and grow your earnings",
     ],
     roleResponsibilities: [
-      "$25/hour for outreach, training, and campaign work ",
-      "$50-$100 bonus per verified user (who pays at least $500 in bills) ",
-      "Flexible hours — work from anywhere ",
-      "Paid training and full support ",
-      "Opportunity to grow into leadership roles"
+      "Reliable transportation to attend events and meet potential users ",
+      "A smartphone, tablet, or laptop with internet access ",
+      "Ability to purchase Vuior-branded accessories for field representation (starter kits available) ",
+      "Confidence, strong communication skills, and a self-motivated attitude ",
+      "Willingness to work independently and uphold Vuior’s brand values ",
+      "A passion for helping others save money and improve their financial lives"
     ],
     qualifications: [
-      "$25/hour for outreach, training, and campaign work ",
-      "$50-$100 bonus per verified user (who pays at least $500 in bills) ",
-      "Flexible hours — work from anywhere ",
-      "Paid training and full support ",
-      "Opportunity to grow into leadership roles"
+      "Reliable transportation to attend events and meet potential users ",
+      "A smartphone, tablet, or laptop with internet access ",
+      "Ability to purchase Vuior-branded accessories for field representation (starter kits available) ",
+      "Confidence, strong communication skills, and a self-motivated attitude ",
+      "Willingness to work independently and uphold Vuior’s brand values ",
+      "A passion for helping others save money and improve their financial lives"
     ],
     contantfour: [
-      "If you're confident, reliable, and ready to connect with others, we’ll teach you the rest. ",
-      "Apply now and start building the future of bill payments with Vuior! ",
+      "Whether you're a student, a community leader, an influencer, or just someone looking to earn extra income — if you’re reliable, social, and ready to learn, we’ll teach you everything you need to know.",
     ],
-    salaryExpectations: "$25/hour + $50-$100 bonus per verified user"
+    salaryExpectations: "$25/hour for verified outreach and campaign efforts , $50–$100 bonus per verified user (users who pay at least $500 in bills through the platform) "
   },
   
 

@@ -9,7 +9,7 @@ export const RegisterUserSchema = z.object({
   email: z.string().email(),
   firstName: z.string().min(1, "First Name is required"),
   lastName: z.string().min(1, "Last Name is required"),
-  phoneNumber: z.string().trim().min(17, "Phone number is required"),
+  phoneNumber: z.string().min(1, "Phone number is required"),
   password: z.string().min(6, "Password must be at least 6 characters long"),
   agreeToPromotionalMessages: z.boolean().optional(),
   dob: z.string().min(5, "Date of birth is required"),
