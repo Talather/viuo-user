@@ -1,16 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "./button";
 import InfoCard from "./cards/info-card";
 import ContactInput from "./contact-input";
 import { ContactSchema } from "../validations/schema";
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
+import flags from 'react-phone-number-input/flags';
 
 export type ContactFormData = z.infer<typeof ContactSchema>;
 
 const ContactInfo = () => {
-  const { register, handleSubmit } = useForm<ContactFormData>({
+  const { register, handleSubmit, control } = useForm<ContactFormData>({
     resolver: zodResolver(ContactSchema),
     defaultValues: {
       fullName: "",
@@ -88,13 +91,45 @@ const ContactInfo = () => {
                 id="fullName"
                 type="text"
               />
-              <ContactInput
-                register={register}
-                name="phoneNumber"
-                label="Phone Number"
-                id="phoneNumber"
-                type="number"
-              />
+              <div className="w-full text-left">
+                <label
+                  htmlFor="phoneNumber"
+                  className="block text-lg font-medium text-gray-700 lg:hidden mb-2 px-4"
+                >
+                  Phone Number
+                </label>
+                <div className="w-full bg-gray-50 rounded-2xl shadow-sm">
+                  <div className="flex flex-col lg:flex-row items-start lg:items-center lg:gap-4 px-4 lg:px-10 py-4 lg:py-5">
+                    <div className="flex lg:w-[30%] w-full justify-between items-center">
+                      <label htmlFor="phoneNumber" className="hidden lg:block lg:mr-2">
+                        Phone Number
+                      </label>
+                      <p className="hidden lg:block">:</p>
+                    </div>
+                    <div className="w-full lg:w-[60%]">
+                      <Controller
+                        name="phoneNumber"
+                        control={control}
+                        render={({ field }) => (
+                          <PhoneInput
+                            flags={flags}
+                            international
+                            defaultCountry="US"
+                            countryCallingCodeEditable={true}
+                            className="phone-input-container"
+                            value={field.value}
+                            onChange={field.onChange}
+                            placeholder="Enter phone number"
+                            style={{
+                              backgroundColor: "transparent",
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
               <ContactInput
                 register={register}
                 name="email"

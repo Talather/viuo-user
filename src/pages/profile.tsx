@@ -261,6 +261,7 @@ const ProfilePage: React.FC = () => {
               onChange={(value) => setPhoneNo(value || "")}
               placeholder="Enter phone number"
               style={{
+                paddingLeft: "10px",
                 color: "black",
                 backgroundColor: "white",
                 borderRadius: "10px",

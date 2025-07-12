@@ -22,6 +22,9 @@ import { storage } from "../lib/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useOutletContext } from "react-router-dom";
 import { JobDescription } from "../data/index";
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
+import flags from 'react-phone-number-input/flags';
 
 type JobApplicationData = z.infer<typeof JobApplicationSchema>;
 
@@ -173,7 +176,7 @@ const JobApplication = () => {
     <div className="flex flex-col items-center justify-center w-full ">
       <div className="w-full mb-5">
         <h2 className="mb-5 text-4xl font-semibold md:text-3xl md:mb-2">
-          Details about you
+          Details about you 
         </h2>
       </div>
       <Form {...form}>
@@ -256,14 +259,28 @@ const JobApplication = () => {
               <FormItem className="relative items-center ">
                 <div className="w-full">
                   <FormControl>
-                    <Input
-                      variant="bordered"
-                      size="md"
-                      label="Phone Number"
-                      errorMessage={errors.phoneNumber?.message}
-                      isInvalid={!!errors.phoneNumber?.message}
-                      {...field}
-                    />
+                    <div className="phone-input-wrapper">
+                      <PhoneInput
+                        flags={flags}
+                        international
+                        defaultCountry="US"
+                        countryCallingCodeEditable={true}
+                        className="phone-input-container"
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder="Enter phone number"
+                        style={{
+                          backgroundColor: 'transparent',
+                          fontSize: '14px',
+                          minHeight: '40px'
+                        }}
+                      />
+                      {errors.phoneNumber && (
+                        <p className="text-xs text-danger mt-1">
+                          {errors.phoneNumber.message}
+                        </p>
+                      )}
+                    </div>
                   </FormControl>
                 </div>
               </FormItem>

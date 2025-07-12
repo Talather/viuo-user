@@ -22,7 +22,9 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { storage } from "@/lib/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import CurrencyFormat from "react-currency-format";
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
+import flags from 'react-phone-number-input/flags';
 type ContactUsFormData = z.infer<typeof ContactUsSchema>;
 
 const ContactForm = () => {
@@ -241,27 +243,28 @@ const ContactForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <CurrencyFormat
-                      customInput={Input}
-                      label="Phone Number"
-                      isInvalid={!!errors.phoneNumber}
-                      labelPlacement="outside"
-                      onValueChange={(value) => {
-                        setValue("phoneNumber", value.formattedValue); // Set the float value or an empty string if undefined
-                      }}
-                      {...register("phoneNumber", {
-                        required: "Please provide the phone number",
-                      })}
-                      radius="sm"
-                      type="text"
-                      variant="bordered"
-                      errorMessage={
-                        !!errors.phoneNumber &&
-                        "Please provide the phone number"
-                      }
-                      format="+1 (###) ###-####"
-                      {...field}
-                    />
+                    <div className="phone-input-wrapper">
+                      <PhoneInput
+                        flags={flags}
+                        international
+                        defaultCountry="US"
+                        countryCallingCodeEditable={true}
+                        className="phone-input-container"
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder="Enter phone number"
+                        style={{
+                          backgroundColor: 'transparent',
+                          fontSize: '14px',
+                          minHeight: '40px'
+                        }}
+                      />
+                      {errors.phoneNumber && (
+                        <p className="text-xs text-danger mt-1">
+                          {errors.phoneNumber.message}
+                        </p>
+                      )}
+                    </div>
                   </FormControl>
                 </FormItem>
               )}

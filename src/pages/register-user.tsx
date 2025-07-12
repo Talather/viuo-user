@@ -11,7 +11,6 @@ import { RegisterUserSchema } from "../lib/validations";
 import { useToast } from "../hooks/use-toast";
 import { Form, FormControl, FormField, FormItem } from "../components/ui/form";
 import { Checkbox, Image } from "@nextui-org/react";
-import CurrencyFormat from "react-currency-format";
 import { sendEmailVerificationLink } from "@/lib/firebaseClientUniversalFunctions";
 import { useAuth } from "../hooks/useAuth";
 import PhoneInput , { isValidPhoneNumber } from 'react-phone-number-input'
