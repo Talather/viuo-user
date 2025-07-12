@@ -50,7 +50,7 @@ const ContactForm = () => {
     handleSubmit,
     reset,
     register,
-    setValue,
+    // setValue,
     formState: { errors },
   } = form;
   const handleFileUpload = (event: any) => {
